@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-charcoal:    #1A1A1A;
+  --color-warm-white:  #F7F4EF;
+  --color-cream:       #EDE8E0;
+  --color-gold:        #C9A84C;
+  --color-deep-navy:   #1B2D4F;
+  --color-mid-gray:    #6B6B6B;
+  --color-light-gray:  #D9D9D9;
+  --color-white:       #FFFFFF;
+  --color-black:       #000000;
+  --font-display: 'Cormorant Garamond', serif;
+  --font-sans:    'DM Sans', sans-serif;
+  --font-mono:    'DM Mono', monospace;
+}
+
+/* Mobile-first base */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%; /* prevent iOS auto-zoom */
+}
+
+body {
+  background-color: var(--color-warm-white);
+  color: var(--color-charcoal);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  min-height: 100vh;
+  font-size: 16px; /* prevents iOS zoom on inputs */
+}
+
+/* All inputs/selects use 16px to prevent iOS zoom */
+input, select, textarea {
+  font-size: 16px !important;
+}
+
+/* Touch targets */
+a, button { min-height: 44px; }
+
+.font-display { font-family: var(--font-display); }
+
+.label-tag {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  font-weight: 500;
+}
+
+/* Smooth scrollbar on mobile */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-light-gray); border-radius: 2px; }
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+}
