@@ -105,6 +105,7 @@ public/images/
 | Địa chỉ      | 181 Nguyễn Đình Thi, Tây Hồ, Hà Nội            |
 | Điện thoại   | 024 3847 4646                                   |
 | Facebook     | https://www.facebook.com/venhohotel             |
+| Instagram    | https://www.instagram.com/venhohotel            |
 | Website      | https://venhohotel.com                          |
 | Số phòng     | 12 phòng                                        |
 | Agoda        | 8.5/10 tổng thể · 9.2/10 vị trí (45 reviews)   |
@@ -229,7 +230,8 @@ src/lib/data/rooms.ts
 - [x] Xây dựng content pillars — `content-pillars.md`
 - [x] Soạn lịch đăng tháng 7/2026 — `lich-dang-thang-7-2026.md`
 - [x] Viết caption mẫu + quy cách ảnh — `caption-mau.md`
-- [ ] Hướng dẫn tạo tài khoản Instagram & Zalo OA
+- [x] Instagram (@venhohotel) và Facebook (facebook.com/venhohotel) đã có
+- [ ] Hướng dẫn tạo Zalo OA
 - [ ] Setup Meta Business Suite để lên lịch tự động
 
 ### Nền tảng & ưu tiên
@@ -237,7 +239,7 @@ src/lib/data/rooms.ts
 | Kênh | Trạng thái | Ưu tiên |
 |------|-----------|---------|
 | Facebook | Đã có — facebook.com/venhohotel | Cao |
-| Instagram | Chưa có | Trung bình |
+| Instagram | Đã có — @venhohotel | Cao |
 | Zalo OA | Chưa có | Trung bình |
 
 ---
