@@ -6,13 +6,36 @@ import Footer from "@/components/ui/Footer";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const [form, setForm] = useState({
     name: "", phone: "", email: "", checkin: "", checkout: "", room: "", guests: "", note: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch("/api/booking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        setError(data.error || "Không thể gửi yêu cầu. Vui lòng thử lại.");
+      }
+    } catch {
+      setError("Lỗi kết nối. Vui lòng kiểm tra mạng và thử lại.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -123,11 +146,15 @@ export default function ContactPage() {
                       />
                     </div>
 
+                    {error && (
+                      <p className="font-sans text-sm text-red-600 text-center">{error}</p>
+                    )}
                     <button
                       type="submit"
-                      className="w-full bg-[#C9A84C] text-white font-sans font-medium text-sm tracking-wide py-4 hover:bg-[#b8963d] transition-colors min-h-[44px]"
+                      disabled={isLoading}
+                      className="w-full bg-[#C9A84C] text-white font-sans font-medium text-sm tracking-wide py-4 hover:bg-[#b8963d] transition-colors min-h-[44px] disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                      Gửi Yêu Cầu Đặt Phòng
+                      {isLoading ? "Đang gửi..." : "Gửi Yêu Cầu Đặt Phòng"}
                     </button>
                   </form>
                 )}
