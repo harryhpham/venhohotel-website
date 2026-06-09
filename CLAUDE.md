@@ -190,9 +190,12 @@ src/lib/data/rooms.ts
 
 ---
 
-## Phần 3: Deploy lên Vercel
+## Phần 3: Form Đặt Phòng & Email (Resend)
 
-> Bước tiếp theo sau khi email integration đã hoạt động.
+> Kết nối form với email + deploy lên Vercel.
+
+### Thư mục làm việc
+`Ven Ho Hotel/Form email/` — xem `notes.md` để biết chi tiết đầy đủ.
 
 ### Checklist
 
