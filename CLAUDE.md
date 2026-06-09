@@ -225,12 +225,12 @@ src/lib/data/rooms.ts
 
 ### Phạm vi công việc
 
-- [ ] Xác định kênh ưu tiên: Facebook · Instagram · Zalo OA
-- [ ] Xây dựng content pillars (chủ đề xuyên suốt) cho Ven Hồ Hotel
-- [ ] Soạn lịch đăng hàng tháng (content calendar)
-- [ ] Viết caption mẫu VI/EN cho từng loại bài
-- [ ] Quy cách ảnh/video theo từng nền tảng (kích thước, tỷ lệ)
-- [ ] Hướng dẫn tạo tài khoản Instagram & Zalo OA (nếu chưa có)
+- [x] Xác định kênh ưu tiên: Facebook · Instagram · Zalo OA
+- [x] Xây dựng content pillars — `content-pillars.md`
+- [x] Soạn lịch đăng tháng 7/2026 — `lich-dang-thang-7-2026.md`
+- [x] Viết caption mẫu + quy cách ảnh — `caption-mau.md`
+- [ ] Hướng dẫn tạo tài khoản Instagram & Zalo OA
+- [ ] Setup Meta Business Suite để lên lịch tự động
 
 ### Nền tảng & ưu tiên
 
