@@ -231,7 +231,7 @@ src/lib/data/rooms.ts
 - [x] Soạn lịch đăng tháng 7/2026 — `lich-dang-thang-7-2026.md`
 - [x] Viết caption mẫu + quy cách ảnh — `caption-mau.md`
 - [x] Instagram (@venhohotel) và Facebook (facebook.com/venhohotel) đã có
-- [ ] Hướng dẫn tạo Zalo OA
+- [x] Hướng dẫn tạo Zalo OA — xem `zalo-oa-huong-dan.md`
 - [x] Setup Meta Business Suite — xem `meta-business-suite.md`
 
 ### Nền tảng & ưu tiên
