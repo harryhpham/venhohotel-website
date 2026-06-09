@@ -237,3 +237,67 @@ src/lib/data/rooms.ts
 | Instagram | Chưa có | Trung bình |
 | Zalo OA | Chưa có | Trung bình |
 
+---
+
+## Phần 5: Phân Tích Đối Thủ Cạnh Tranh
+
+> Nghiên cứu thị trường khách sạn khu vực Tây Hồ, Hà Nội.
+
+### Thư mục làm việc
+`Ven Ho Hotel/Phan tich doi thu/`
+
+### Phạm vi công việc
+
+- [ ] Xác định danh sách đối thủ trực tiếp (cùng phân khúc, khu Tây Hồ)
+- [ ] Phân tích: giá phòng, tiện ích, đánh giá khách hàng
+- [ ] So sánh điểm mạnh/yếu của Ven Hồ so với đối thủ
+- [ ] Đề xuất hướng định vị và cải thiện
+
+---
+
+## Phần 6: Google Analytics (GA4)
+
+> Theo dõi lưu lượng và hành vi người dùng trên venhohotel.com.
+
+### Thư mục làm việc
+`Ven Ho Hotel/Google Analytics/`
+
+### Phạm vi công việc
+
+- [ ] Tạo tài khoản GA4 + property cho venhohotel.com
+- [ ] Thêm GA4 Measurement ID vào Next.js (`src/app/layout.tsx`)
+- [ ] Thiết lập conversion events (form submit, click điện thoại)
+- [ ] Kiểm tra data đổ về dashboard
+
+---
+
+## Phần 7: Tích Hợp Agoda / Booking.com
+
+> Thêm deep link đặt phòng trực tiếp qua OTA.
+
+### Thư mục làm việc
+`Ven Ho Hotel/Agoda/`
+
+### Phạm vi công việc
+
+- [ ] Lấy affiliate/deep link từ Agoda (trang khách sạn Ven Hồ)
+- [ ] Lấy link từ Booking.com
+- [ ] Thêm nút CTA "Đặt qua Agoda" / "Đặt qua Booking.com" vào trang phòng và trang liên hệ
+- [ ] Đảm bảo link mở tab mới, có UTM tracking
+
+---
+
+## Phần 8: AI Agent Quản Lý Doanh Thu
+
+> Xây dựng agent tự động hóa theo dõi và tối ưu doanh thu hàng ngày.
+
+### Thư mục làm việc
+`Ven Ho Hotel/AI Agent/`
+
+### Phạm vi công việc
+
+- [ ] Xác định nguồn dữ liệu (đặt phòng, OTA, email)
+- [ ] Thiết kế luồng agent: thu thập → phân tích → báo cáo
+- [ ] Xây dựng dashboard doanh thu tự động
+- [ ] Tích hợp cảnh báo (Zalo/email) khi có biến động
+
