@@ -232,7 +232,7 @@ src/lib/data/rooms.ts
 - [x] Viết caption mẫu + quy cách ảnh — `caption-mau.md`
 - [x] Instagram (@venhohotel) và Facebook (facebook.com/venhohotel) đã có
 - [ ] Hướng dẫn tạo Zalo OA
-- [ ] Setup Meta Business Suite để lên lịch tự động
+- [x] Setup Meta Business Suite — xem `meta-business-suite.md`
 
 ### Nền tảng & ưu tiên
 
