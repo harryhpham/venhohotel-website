@@ -218,7 +218,7 @@ src/lib/data/rooms.ts
 > Xây dựng hiện diện thương hiệu trên Facebook, Instagram, Zalo OA.
 
 ### Thư mục làm việc
-`Ven Ho Hotel/Phan 4/`
+`Ven Ho Hotel/Social Media content/`
 
 ### Phạm vi công việc
 
