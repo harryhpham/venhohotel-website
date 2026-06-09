@@ -105,7 +105,7 @@ public/images/
 | Địa chỉ      | 181 Nguyễn Đình Thi, Tây Hồ, Hà Nội            |
 | Điện thoại   | 024 3847 4646                                   |
 | Facebook     | https://www.facebook.com/venhohotel             |
-| Website      | https://venhohotel.com (dự kiến)               |
+| Website      | https://venhohotel.com                          |
 | Số phòng     | 12 phòng                                        |
 | Agoda        | 8.5/10 tổng thể · 9.2/10 vị trí (45 reviews)   |
 
@@ -186,6 +186,7 @@ src/lib/data/rooms.ts
 |            | API route POST /api/booking với HTML email template    |
 |            | Loading state, error handling tiếng Việt               |
 |            | Push lên GitHub (harryhpham/venhohotel-website)        |
+|            | Deploy thành công lên Vercel — venhohotel.com          |
 
 ---
 
@@ -193,19 +194,19 @@ src/lib/data/rooms.ts
 
 > Bước tiếp theo sau khi email integration đã hoạt động.
 
-### Checklist trước khi deploy
+### Checklist
 
-- [ ] Đăng ký / đăng nhập tài khoản [vercel.com](https://vercel.com)
-- [ ] Import repo `harryhpham/venhohotel-website` từ GitHub
-- [ ] Thêm Environment Variable trong Vercel dashboard:
-  - `RESEND_API_KEY` = (lấy từ `.env.local`)
-- [ ] Deploy lần đầu — kiểm tra build log
-- [ ] Test form đặt phòng trên production URL
-- [ ] Cấu hình domain `venhohotel.vn` (nếu đã có domain)
+- [x] Đăng ký / đăng nhập tài khoản Vercel
+- [x] Import repo `harryhpham/venhohotel-website` từ GitHub
+- [x] Thêm Environment Variable `RESEND_API_KEY` trong Vercel dashboard
+- [x] Deploy thành công — **venhohotel.com**
+- [ ] Test form đặt phòng trên production (gửi thử và kiểm tra email)
 
-### Sau deploy
+### Việc còn lại sau deploy
 
-- [ ] Verify domain `venhohotel.vn` trong Resend → thay `from` email trong `src/app/api/booking/route.ts` từ `onboarding@resend.dev` thành `no-reply@venhohotel.vn`
+- [ ] Verify domain `venhohotel.com` trong Resend → thay `from` trong `src/app/api/booking/route.ts`:
+  - Hiện tại: `onboarding@resend.dev`
+  - Mục tiêu: `no-reply@venhohotel.com`
 - [ ] Thêm Google Analytics (GA4)
 - [ ] Tích hợp Booking.com / Agoda deep link
 
