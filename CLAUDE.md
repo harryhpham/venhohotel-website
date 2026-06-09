@@ -207,6 +207,33 @@ src/lib/data/rooms.ts
 - [ ] Verify domain `venhohotel.com` trong Resend → thay `from` trong `src/app/api/booking/route.ts`:
   - Hiện tại: `onboarding@resend.dev`
   - Mục tiêu: `no-reply@venhohotel.com`
+- [ ] Cập nhật `from` email → `no-reply@venhohotel.com` sau khi Resend verify xong
 - [ ] Thêm Google Analytics (GA4)
 - [ ] Tích hợp Booking.com / Agoda deep link
+
+---
+
+## Phần 4: Social Media Content & Lịch Đăng
+
+> Xây dựng hiện diện thương hiệu trên Facebook, Instagram, Zalo OA.
+
+### Thư mục làm việc
+`Ven Ho Hotel/Phan 4/`
+
+### Phạm vi công việc
+
+- [ ] Xác định kênh ưu tiên: Facebook · Instagram · Zalo OA
+- [ ] Xây dựng content pillars (chủ đề xuyên suốt) cho Ven Hồ Hotel
+- [ ] Soạn lịch đăng hàng tháng (content calendar)
+- [ ] Viết caption mẫu VI/EN cho từng loại bài
+- [ ] Quy cách ảnh/video theo từng nền tảng (kích thước, tỷ lệ)
+- [ ] Hướng dẫn tạo tài khoản Instagram & Zalo OA (nếu chưa có)
+
+### Nền tảng & ưu tiên
+
+| Kênh | Trạng thái | Ưu tiên |
+|------|-----------|---------|
+| Facebook | Đã có — facebook.com/venhohotel | Cao |
+| Instagram | Chưa có | Trung bình |
+| Zalo OA | Chưa có | Trung bình |
 
