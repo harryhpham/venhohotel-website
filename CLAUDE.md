@@ -182,4 +182,30 @@ src/lib/data/rooms.ts
 |            | VI/EN language switcher                                |
 |            | Gallery + lightbox + auto-slideshow 10s                |
 |            | Mobile responsive, SEO metadata, JSON-LD schema        |
+| 09/06/2026 | Kết nối form đặt phòng với email (Resend)              |
+|            | API route POST /api/booking với HTML email template    |
+|            | Loading state, error handling tiếng Việt               |
+|            | Push lên GitHub (harryhpham/venhohotel-website)        |
+
+---
+
+## Phần 3: Deploy lên Vercel
+
+> Bước tiếp theo sau khi email integration đã hoạt động.
+
+### Checklist trước khi deploy
+
+- [ ] Đăng ký / đăng nhập tài khoản [vercel.com](https://vercel.com)
+- [ ] Import repo `harryhpham/venhohotel-website` từ GitHub
+- [ ] Thêm Environment Variable trong Vercel dashboard:
+  - `RESEND_API_KEY` = (lấy từ `.env.local`)
+- [ ] Deploy lần đầu — kiểm tra build log
+- [ ] Test form đặt phòng trên production URL
+- [ ] Cấu hình domain `venhohotel.vn` (nếu đã có domain)
+
+### Sau deploy
+
+- [ ] Verify domain `venhohotel.vn` trong Resend → thay `from` email trong `src/app/api/booking/route.ts` từ `onboarding@resend.dev` thành `no-reply@venhohotel.vn`
+- [ ] Thêm Google Analytics (GA4)
+- [ ] Tích hợp Booking.com / Agoda deep link
 
