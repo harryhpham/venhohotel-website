@@ -169,7 +169,7 @@ src/lib/data/rooms.ts
 - [ ] Phân tích đối thủ cạnh tranh khu vực Tây Hồ
 - [ ] Xây dựng content & lịch đăng Social Media (Facebook, Instagram, Zalo OA)
 - [ ] Phát triển AI Agent quản lý doanh thu hàng ngày
-- [ ] Thêm Google Analytics
+- [x] Thêm Google Analytics — hoàn thành 10/06/2026
 - [ ] Tích hợp Booking.com / Agoda deep link
 - [ ] Tạo tài khoản Instagram, Zalo OA
 
@@ -188,7 +188,12 @@ src/lib/data/rooms.ts
 |            | Loading state, error handling tiếng Việt               |
 |            | Push lên GitHub (harryhpham/venhohotel-website)        |
 |            | Deploy thành công lên Vercel — venhohotel.com          |
-| 10/06/2026 | Verify domain venhohotel.com trong Resend              |
+| 10/06/2026 | **Phần 6 — Google Analytics GA4** hoàn thành ✅         |
+|            | Measurement ID: G-4242ESCGY7                           |
+|            | GoogleAnalytics component (`next/script afterInteractive`) |
+|            | Conversion events: `generate_lead`, `phone_click`      |
+|            | Deploy lên Vercel — DebugView xác nhận data đổ về     |
+|            | Verify domain venhohotel.com trong Resend              |
 |            | Đổi sender sang no-reply@venhohotel.com               |
 |            | Test form production — email gửi thành công            |
 |            | **Debug build failure:** resend@6 yêu cầu Node ≥20,  |
@@ -283,10 +288,17 @@ src/lib/data/rooms.ts
 
 ### Phạm vi công việc
 
-- [ ] Tạo tài khoản GA4 + property cho venhohotel.com
-- [ ] Thêm GA4 Measurement ID vào Next.js (`src/app/layout.tsx`)
-- [ ] Thiết lập conversion events (form submit, click điện thoại)
-- [ ] Kiểm tra data đổ về dashboard
+- [x] Tạo tài khoản GA4 + property cho venhohotel.com — Measurement ID: `G-4242ESCGY7`
+- [x] Thêm GA4 Measurement ID vào Next.js (`src/app/layout.tsx`) — qua `GoogleAnalytics.tsx`
+- [x] Thiết lập conversion events — `generate_lead` (form submit), `phone_click` (click SĐT)
+- [x] Kiểm tra data đổ về dashboard — DebugView nhận events 10/06/2026 ✅
+
+### Ghi chú kỹ thuật
+
+- `src/components/ui/GoogleAnalytics.tsx` — load script GA4 bằng `next/script` strategy `afterInteractive`
+- Conversion events fire trong `src/app/lien-he/page.tsx`:
+  - `generate_lead` — sau khi form submit thành công (kèm `room_type`)
+  - `phone_click` — khi click số điện thoại trong trang liên hệ
 
 ---
 
