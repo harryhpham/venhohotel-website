@@ -179,7 +179,7 @@ export async function POST(req: NextRequest) {
     `.trim();
 
     const { error } = await resend.emails.send({
-      from: "Ven Hồ Hotel <onboarding@resend.dev>",
+      from: "Ven Hồ Hotel <no-reply@venhohotel.com>",
       to: ["venhohotel@gmail.com"],
       replyTo: email || undefined,
       subject: `[Đặt Phòng] ${name} — ${formatDate(checkin)} đến ${formatDate(checkout)}`,
