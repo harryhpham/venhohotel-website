@@ -2,8 +2,14 @@ import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const resend = new Resend(process.env.RESEND_API_KEY);
   try {
+    if (!process.env.RESEND_API_KEY) {
+      return NextResponse.json(
+        { error: "Cấu hình email chưa sẵn sàng. Vui lòng liên hệ trực tiếp qua điện thoại." },
+        { status: 503 }
+      );
+    }
+    const resend = new Resend(process.env.RESEND_API_KEY);
     const body = await req.json();
     const { name, phone, email, checkin, checkout, room, guests, note } = body;
 

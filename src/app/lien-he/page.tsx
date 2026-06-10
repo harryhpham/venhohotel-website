@@ -24,7 +24,12 @@ export default function ContactPage() {
         body: JSON.stringify(form),
       });
 
-      const data = await res.json();
+      let data: { error?: string; success?: boolean } = {};
+      try {
+        data = await res.json();
+      } catch {
+        throw new Error(`Server error ${res.status}`);
+      }
 
       if (res.ok) {
         setSubmitted(true);
@@ -32,7 +37,7 @@ export default function ContactPage() {
         setError(data.error || "Không thể gửi yêu cầu. Vui lòng thử lại.");
       }
     } catch {
-      setError("Lỗi kết nối. Vui lòng kiểm tra mạng và thử lại.");
+      setError("Không thể kết nối đến máy chủ. Vui lòng gọi trực tiếp 024 3847 4646.");
     } finally {
       setIsLoading(false);
     }
