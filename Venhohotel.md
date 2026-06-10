@@ -15,7 +15,7 @@
 | Địa chỉ        | 181 Nguyễn Đình Thi, Tây Hồ, Hà Nội, Việt Nam        |
 | Điện thoại     | 024 3847 4646                                          |
 | Facebook       | https://www.facebook.com/venhohotel                   |
-| Website        | https://venhohotel.com (dự kiến)                      |
+| Website        | https://venhohotel.com ✅ Live                        |
 | Loại hình      | Mini Hotel / Boutique                                  |
 | Số phòng       | 12 phòng                                               |
 | Quận           | Tây Hồ (West Lake), Hà Nội                            |
@@ -205,16 +205,17 @@ body: "Nội dung bài viết mới về trải nghiệm Hồ Tây..."
 - [x] Auto-slideshow 10 giây
 - [x] Mobile friendly
 - [x] SEO metadata & JSON-LD schema
+- [x] Deploy lên Vercel — **venhohotel.com** live 09/06/2026
+- [x] Kết nối form đặt phòng với email (Resend) — hoàn thành 10/06/2026
+- [x] Verify domain, sender `no-reply@venhohotel.com`
+- [x] Xây dựng content & lịch đăng Social Media (tháng 7/2026)
 
 ### Cần làm tiếp 📋
-- [ ] Mua domain `venhohotel.vn` (~450,000đ/năm tại VinaHost/NhanHoa)
-- [ ] Deploy lên Vercel (miễn phí)
-- [ ] Kết nối form đặt phòng với email (Resend/Formspree)
-- [ ] Phân tích đối thủ cạnh tranh khu vực Tây Hồ
-- [ ] Xây dựng content & lịch đăng Social Media
-- [ ] Phát triển AI Agent quản lý doanh thu hàng ngày
-- [ ] Thêm Google Analytics
+- [ ] Thêm Google Analytics (GA4)
 - [ ] Tích hợp Booking.com / Agoda deep link
+- [ ] Phân tích đối thủ cạnh tranh khu vực Tây Hồ
+- [ ] Phát triển AI Agent quản lý doanh thu hàng ngày
+- [ ] Tạo Zalo OA
 
 ---
 
@@ -222,13 +223,13 @@ body: "Nội dung bài viết mới về trải nghiệm Hồ Tây..."
 
 | Kênh          | Trạng thái     | Link / Ghi chú                              |
 |---------------|----------------|---------------------------------------------|
+| Website       | ✅ Live        | venhohotel.com — form email hoạt động       |
 | Facebook      | Đang hoạt động | facebook.com/venhohotel                     |
+| Instagram     | Đang hoạt động | @venhohotel                                 |
 | Agoda         | Đang hoạt động | 45 đánh giá, điểm 8.5/10                   |
-| Website       | Đang xây dựng  | venhohotel.com (dự kiến)                    |
-| Instagram     | Chưa có        | Nên tạo để đăng ảnh Hồ Tây                 |
-| Zalo OA       | Chưa có        | Phù hợp khách nội địa                       |
+| Zalo OA       | Chưa có        | Phù hợp khách nội địa — xem zalo-oa-huong-dan.md |
 | Google Maps   | Cần cập nhật   | Thêm ảnh, giờ hoạt động, đặt phòng         |
 
 ---
 
-*Tài liệu cập nhật lần cuối: 04/06/2026*
+*Tài liệu cập nhật lần cuối: 10/06/2026*

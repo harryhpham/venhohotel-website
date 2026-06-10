@@ -28,10 +28,20 @@ git push -u origin main
 
 ✅ Website sẽ có địa chỉ dạng: `venhohotel-website.vercel.app`
 
-### Bước 4: Gán domain riêng (sau khi mua venhohotel.vn)
+### Bước 4: Thêm Environment Variables (BẮT BUỘC)
+Trước khi deploy, vào Vercel → Project → **Settings** → **Environment Variables**:
+
+| Name | Value | Environment |
+|------|-------|-------------|
+| `RESEND_API_KEY` | `re_xxxxxxxxxx` (lấy từ resend.com) | ✅ Production |
+
+> ⚠️ Nếu thiếu `RESEND_API_KEY`, form đặt phòng sẽ trả lỗi "Cấu hình email chưa sẵn sàng".
+> Sau khi thêm env var phải **Redeploy** để Vercel load lại.
+
+### Bước 5: Gán domain riêng
 1. Vercel Dashboard → Project → **Settings** → **Domains**
-2. Nhập `venhohotel.vn` → Add
-3. Làm theo hướng dẫn cập nhật DNS tại nhà đăng ký domain (NhanHoa/VinaHost)
+2. Nhập `venhohotel.com` → Add
+3. Cập nhật DNS tại nhà đăng ký domain (VinaHost) theo hướng dẫn Vercel
 
 ---
 
@@ -111,16 +121,36 @@ Dùng nội dung từ `facebookCaption` + ảnh từ Canva:
 ## PHẦN 5 — CHECKLIST TRƯỚC KHI DEPLOY
 
 - [x] Build thành công: `npm run build` không có lỗi
-- [x] 13/13 trang được generate
+- [x] 14/14 trang được generate (bao gồm `/api/booking`)
 - [x] Tiếng Việt đầy đủ dấu
 - [x] Ảnh phòng hiển thị đúng
 - [x] Mobile responsive
 - [x] Language switcher VI/EN
 - [x] Facebook button hoạt động
 - [x] Form liên hệ hoạt động
-- [ ] Kết nối email (cần setup Resend/Formspree sau deploy)
-- [ ] Google Analytics (thêm sau khi có domain)
+- [x] `RESEND_API_KEY` đã thêm vào Vercel Environment Variables
+- [x] Email gửi thành công từ `no-reply@venhohotel.com`
+- [ ] Google Analytics GA4
+- [ ] Agoda / Booking.com deep link
 
 ---
 
-*Cập nhật lần cuối: 04/06/2026*
+---
+
+## PHẦN 6 — LƯU Ý KỸ THUẬT (RÚT RA TỪ THỰC TẾ)
+
+### Node.js version
+`resend@6+` yêu cầu **Node ≥ 20**. Vercel mặc định Node 18 → build sẽ fail.
+`package.json` đã khai báo `"engines": { "node": ">=20" }` để fix.
+
+### API route & try-catch
+Mọi khởi tạo SDK (Resend, v.v.) phải nằm **trong** `try-catch` của handler.
+Nếu nằm ngoài và throw, Vercel trả HTML 500 thay vì JSON → frontend không parse được.
+
+### Sau khi thêm env var trên Vercel
+Phải nhấn **Redeploy** thủ công để deployment mới load env var.
+Chỉ push code mới không đủ nếu env var vừa được thêm lần đầu.
+
+---
+
+*Cập nhật lần cuối: 10/06/2026*

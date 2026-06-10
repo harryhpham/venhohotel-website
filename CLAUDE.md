@@ -188,6 +188,14 @@ src/lib/data/rooms.ts
 |            | Loading state, error handling tiếng Việt               |
 |            | Push lên GitHub (harryhpham/venhohotel-website)        |
 |            | Deploy thành công lên Vercel — venhohotel.com          |
+| 10/06/2026 | Verify domain venhohotel.com trong Resend              |
+|            | Đổi sender sang no-reply@venhohotel.com               |
+|            | Test form production — email gửi thành công            |
+|            | **Debug build failure:** resend@6 yêu cầu Node ≥20,  |
+|            | Vercel mặc định Node 18 → thêm engines vào package.json |
+|            | Fix Resend init nằm ngoài try-catch → move vào trong  |
+|            | Fix RESEND_API_KEY bị mất trong Vercel env vars        |
+|            | ✅ Phần 3 hoàn thành toàn bộ — form live & ổn định    |
 
 ---
 
@@ -204,16 +212,22 @@ src/lib/data/rooms.ts
 - [x] Import repo `harryhpham/venhohotel-website` từ GitHub
 - [x] Thêm Environment Variable `RESEND_API_KEY` trong Vercel dashboard
 - [x] Deploy thành công — **venhohotel.com**
-- [ ] Test form đặt phòng trên production (gửi thử và kiểm tra email)
+- [x] Test form đặt phòng trên production — form hoạt động, email gửi thành công
 
 ### Việc còn lại sau deploy
 
-- [ ] Verify domain `venhohotel.com` trong Resend → thay `from` trong `src/app/api/booking/route.ts`:
-  - Hiện tại: `onboarding@resend.dev`
-  - Mục tiêu: `no-reply@venhohotel.com`
-- [ ] Cập nhật `from` email → `no-reply@venhohotel.com` sau khi Resend verify xong
-- [ ] Thêm Google Analytics (GA4)
-- [ ] Tích hợp Booking.com / Agoda deep link
+- [x] Verify domain `venhohotel.com` trong Resend — **Verified 10/06/2026**
+- [x] Cập nhật `from` email → `no-reply@venhohotel.com` — đã deploy
+- [x] Fix build: thêm `"engines": {"node": ">=20"}` vào `package.json`
+- [x] Fix runtime: move `new Resend()` vào trong `try-catch`
+- [x] Fix env: thêm lại `RESEND_API_KEY` vào Vercel dashboard
+- [x] Test lần cuối — **form hoạt động hoàn toàn 10/06/2026** ✅
+
+### Ghi chú kỹ thuật quan trọng
+
+- `resend@6+` yêu cầu **Node ≥ 20** — Vercel mặc định Node 18, phải khai báo `engines`
+- `RESEND_API_KEY` phải được thêm thủ công trong **Vercel → Settings → Environment Variables**
+- Sau khi thêm env var, phải **Redeploy** để Vercel load lại
 
 ---
 
