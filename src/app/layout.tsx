@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { LangProvider } from "@/lib/context/LangContext";
+import GoogleAnalytics from "@/components/ui/GoogleAnalytics";
 
 export const metadata: Metadata = {
   title: "Ven Ho Hotel Ha Noi — Nghi Duong Ben Ho Tay",
@@ -22,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <body className="antialiased">
+        <GoogleAnalytics />
         <LangProvider>{children}</LangProvider>
       </body>
     </html>

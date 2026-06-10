@@ -1,6 +1,18 @@
 "use client";
 
 import { useState } from "react";
+
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
+function trackEvent(name: string, params?: Record<string, string>) {
+  if (typeof window !== "undefined" && window.gtag) {
+    window.gtag("event", name, params);
+  }
+}
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 
@@ -33,6 +45,10 @@ export default function ContactPage() {
 
       if (res.ok) {
         setSubmitted(true);
+        trackEvent("generate_lead", {
+          event_category: "booking_form",
+          room_type: form.room || "not_selected",
+        });
       } else {
         setError(data.error || "Không thể gửi yêu cầu. Vui lòng thử lại.");
       }
@@ -68,7 +84,7 @@ export default function ContactPage() {
                 <div className="space-y-6">
                   {[
                     { label: "Địa Chỉ", value: "181 Nguyễn Đình Thi, Tây Hồ, Hà Nội" },
-                    { label: "Điện Thoại", value: "024 3847 4646", href: "tel:02438474646" },
+                    { label: "Điện Thoại", value: "024 3847 4646", href: "tel:02438474646", track: "phone_click" },
                     { label: "Facebook", value: "facebook.com/venhohotel", href: "https://www.facebook.com/venhohotel" },
                     { label: "Check-in", value: "12:00 PM — 20:00 PM" },
                     { label: "Check-out", value: "6:00 AM — 12:00 PM" },
@@ -76,8 +92,13 @@ export default function ContactPage() {
                     <div key={item.label} className="border-b border-[#D9D9D9] pb-5">
                       <p className="label-tag mb-1">{item.label}</p>
                       {item.href ? (
-                        <a href={item.href} target="_blank" rel="noopener noreferrer"
-                          className="font-sans text-[#1A1A1A] hover:text-[#C9A84C] transition-colors">
+                        <a
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={"track" in item ? () => trackEvent((item as { track: string }).track, { event_category: "contact" }) : undefined}
+                          className="font-sans text-[#1A1A1A] hover:text-[#C9A84C] transition-colors"
+                        >
                           {item.value}
                         </a>
                       ) : (
