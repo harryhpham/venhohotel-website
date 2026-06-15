@@ -172,6 +172,7 @@ src/lib/data/rooms.ts
 - [x] Thêm Google Analytics — hoàn thành 10/06/2026
 - [ ] Tích hợp Booking.com / Agoda deep link
 - [ ] Tạo tài khoản Instagram, Zalo OA
+- [x] Phát triển SEO — robots.txt, sitemap.xml, JSON-LD schema, og:image, Twitter Card — hoàn thành 15/06/2026
 
 ---
 
@@ -201,6 +202,17 @@ src/lib/data/rooms.ts
 |            | Fix Resend init nằm ngoài try-catch → move vào trong  |
 |            | Fix RESEND_API_KEY bị mất trong Vercel env vars        |
 |            | ✅ Phần 3 hoàn thành toàn bộ — form live & ổn định    |
+| 15/06/2026 | **Phần 9 — SEO** hoàn thành ✅                          |
+|            | `robots.ts` → `/robots.txt` (allow all + sitemap link) |
+|            | `sitemap.ts` → `/sitemap.xml` (9 URLs, priority đúng)  |
+|            | `JsonLd.tsx` — reusable Server Component               |
+|            | Hotel JSON-LD schema trên homepage (rating 8.5, geo...) |
+|            | HotelRoom JSON-LD + BreadcrumbList trên 3 trang phòng  |
+|            | BreadcrumbList JSON-LD trên 5 trang con còn lại        |
+|            | Root layout: metadataBase, og:image, Twitter Card      |
+|            | Refactor `/lien-he` → Server Component + metadata      |
+|            | Cập nhật title template + og:image tất cả trang con    |
+|            | Build 16/16 trang pass sạch, không warning             |
 
 ---
 
@@ -331,4 +343,32 @@ src/lib/data/rooms.ts
 - [ ] Thiết kế luồng agent: thu thập → phân tích → báo cáo
 - [ ] Xây dựng dashboard doanh thu tự động
 - [ ] Tích hợp cảnh báo (Zalo/email) khi có biến động
+
+---
+
+## Phần 9: SEO
+
+> Cải thiện khả năng xuất hiện trên Google và chất lượng preview khi share link mạng xã hội.
+
+### Thư mục làm việc
+`Ven Ho Hotel/SEO/`
+
+### Phạm vi công việc
+
+- [ ] Tạo `robots.txt` (tự động qua `src/app/robots.ts`)
+- [ ] Tạo `sitemap.xml` với 9 URL (6 tĩnh + 3 trang phòng)
+- [ ] Tạo `src/components/seo/JsonLd.tsx` — component dùng chung cho JSON-LD
+- [ ] Thêm Hotel JSON-LD schema vào homepage (name, address, geo, rating, amenities)
+- [ ] Thêm HotelRoom JSON-LD vào từng trang phòng chi tiết
+- [ ] Thêm BreadcrumbList JSON-LD vào tất cả trang con
+- [ ] Cập nhật root layout: `metadataBase`, `og:image`, Twitter Card, `title.template`
+- [ ] Refactor `lien-he/page.tsx` → Server Component để xuất metadata
+- [ ] Cập nhật metadata (title, og:image) cho 5 trang con
+
+### Ghi chú kỹ thuật
+
+- Xem `SEO/notes.md` để biết chi tiết đầy đủ
+- `metadataBase` bắt buộc phải set để Vercel resolve relative URL trong `og:image`
+- hreflang: chỉ khai báo `x-default` + `vi` (không có URL riêng cho EN)
+- JSON-LD dùng `@id: "https://venhohotel.com/#hotel"` để liên kết Hotel ↔ HotelRoom schema
 

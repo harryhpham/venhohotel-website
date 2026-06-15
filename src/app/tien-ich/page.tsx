@@ -1,9 +1,29 @@
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
+import JsonLd from "@/components/seo/JsonLd";
+import type { Metadata } from "next";
 
-export const metadata = {
-  title: "Tiện Ích & Dịch Vụ | Ven Hồ Hotel",
-  description: "Toàn bộ tiện ích và dịch vụ tại Ven Hồ Hotel — WiFi, bãi đỗ xe, xe đạp, lễ tân 24/7.",
+export const metadata: Metadata = {
+  title: "Tiện Ích & Dịch Vụ",
+  description:
+    "Toàn bộ tiện ích tại Ven Hồ Hotel — WiFi miễn phí, bãi đỗ xe, cho thuê xe đạp, lễ tân & bảo vệ 24/7, dọn phòng hàng ngày.",
+  openGraph: {
+    images: [
+      {
+        url: "/images/Exterior/exterior-3.jpg",
+        alt: "Ven Hồ Hotel — Tiện ích đầy đủ, Tây Hồ Hà Nội",
+      },
+    ],
+  },
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Ven Hồ Hotel", item: "https://venhohotel.com" },
+    { "@type": "ListItem", position: 2, name: "Tiện Ích & Dịch Vụ", item: "https://venhohotel.com/tien-ich" },
+  ],
 };
 
 const amenityGroups = [
@@ -28,6 +48,7 @@ const amenityGroups = [
 export default function AmenitiesPage() {
   return (
     <>
+      <JsonLd data={breadcrumbSchema} />
       <Navbar />
       <main className="pt-20">
         <section className="bg-[#1B2D4F] py-20 md:py-28">
