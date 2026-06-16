@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { LangProvider } from "@/lib/context/LangContext";
 import GoogleAnalytics from "@/components/ui/GoogleAnalytics";
+import MetaPixel from "@/components/ui/MetaPixel";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://venhohotel.com"),
@@ -59,6 +60,7 @@ export default function RootLayout({
     <html lang="vi" dir="ltr">
       <body className="antialiased">
         <GoogleAnalytics />
+        <MetaPixel />
         <LangProvider>{children}</LangProvider>
       </body>
     </html>
