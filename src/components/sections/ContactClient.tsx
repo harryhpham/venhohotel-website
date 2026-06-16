@@ -7,12 +7,19 @@ import Footer from "@/components/ui/Footer";
 declare global {
   interface Window {
     gtag?: (...args: unknown[]) => void;
+    fbq?: (...args: unknown[]) => void;
   }
 }
 
 function trackEvent(name: string, params?: Record<string, string>) {
   if (typeof window !== "undefined" && window.gtag) {
     window.gtag("event", name, params);
+  }
+}
+
+function trackPixel(event: string, params?: Record<string, unknown>) {
+  if (typeof window !== "undefined" && window.fbq) {
+    window.fbq("track", event, params);
   }
 }
 
@@ -49,6 +56,7 @@ export default function ContactClient() {
           event_category: "booking_form",
           room_type: form.room || "not_selected",
         });
+        trackPixel("Lead", { content_name: form.room || "not_selected" });
       } else {
         setError(data.error || "Không thể gửi yêu cầu. Vui lòng thử lại.");
       }
@@ -96,7 +104,10 @@ export default function ContactClient() {
                           href={item.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          onClick={"track" in item ? () => trackEvent((item as { track: string }).track, { event_category: "contact" }) : undefined}
+                          onClick={"track" in item ? () => {
+                            trackEvent((item as { track: string }).track, { event_category: "contact" });
+                            trackPixel("Contact");
+                          } : undefined}
                           className="font-sans text-[#1A1A1A] hover:text-[#C9A84C] transition-colors"
                         >
                           {item.value}
