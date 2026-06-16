@@ -104,8 +104,9 @@ public/images/
 | Tagline (EN) | Where West Lake Meets Elegance                  |
 | Địa chỉ      | 181 Nguyễn Đình Thi, Tây Hồ, Hà Nội            |
 | Điện thoại   | 024 3847 4646                                   |
-| Facebook     | https://www.facebook.com/venhohotel             |
+| Facebook     | https://www.facebook.com/venhohotelhanoi (Ven Hồ Hotel Hanoi) |
 | Instagram    | https://www.instagram.com/venhohotel            |
+| Email        | venhohotel@gmail.com                            |
 | Website      | https://venhohotel.com                          |
 | Số phòng     | 12 phòng                                        |
 | Agoda        | 8.5/10 tổng thể · 9.2/10 vị trí (45 reviews)   |
@@ -166,9 +167,9 @@ src/lib/data/rooms.ts
 
 - [ ] Deploy lên Vercel — domain `venhohotel.vn`
 - [x] Kết nối form đặt phòng với email (Resend) — hoàn thành 09/06/2026
-- [ ] Phân tích đối thủ cạnh tranh khu vực Tây Hồ
+- [x] Phân tích đối thủ cạnh tranh khu vực Tây Hồ — hoàn thành 15/06/2026
 - [ ] Xây dựng content & lịch đăng Social Media (Facebook, Instagram, Zalo OA)
-- [ ] Phát triển AI Agent quản lý doanh thu hàng ngày
+- [x] Phát triển AI Agent quản lý doanh thu hàng ngày
 - [x] Thêm Google Analytics — hoàn thành 10/06/2026
 - [ ] Tích hợp Booking.com / Agoda deep link
 - [ ] Tạo tài khoản Instagram, Zalo OA
@@ -202,6 +203,17 @@ src/lib/data/rooms.ts
 |            | Fix Resend init nằm ngoài try-catch → move vào trong  |
 |            | Fix RESEND_API_KEY bị mất trong Vercel env vars        |
 |            | ✅ Phần 3 hoàn thành toàn bộ — form live & ổn định    |
+| 15/06/2026 | **Phần 5 — Phân Tích Đối Thủ** hoàn thành ✅                   |
+|            | 5 đối thủ trực tiếp khu Tây Hồ được phân tích (Đan Thanh sát vách) |
+|            | Ven Hồ: Agoda 8.5 cao nhất phân khúc, duy nhất có website+booking  |
+|            | Đề xuất định vị + 6 hành động ưu tiên Q3/2026                      |
+|            | Lưu trong `Phan tich doi thu/notes.md`                             |
+|            | Scheduled Agent tự động cập nhật mỗi Thứ Hai — gửi email báo cáo  |
+| 15/06/2026 | **Phần 8 — AI Agent Doanh Thu** hoàn thành ✅           |
+|            | Playwright scrape SkyHotel PMS → parse Excel → gửi email|
+|            | Windows Task Scheduler "VenHo-DailyRevenue" lúc 9:00 AM |
+|            | Gmail SMTP (App Password) từ venhohotel@gmail.com        |
+|            | CCR bị block egress admin1.skyhotel.vn → dùng local     |
 | 15/06/2026 | **Phần 9 — SEO** hoàn thành ✅                          |
 |            | `robots.ts` → `/robots.txt` (allow all + sitemap link) |
 |            | `sitemap.ts` → `/sitemap.xml` (9 URLs, priority đúng)  |
@@ -284,10 +296,28 @@ src/lib/data/rooms.ts
 
 ### Phạm vi công việc
 
-- [ ] Xác định danh sách đối thủ trực tiếp (cùng phân khúc, khu Tây Hồ)
-- [ ] Phân tích: giá phòng, tiện ích, đánh giá khách hàng
-- [ ] So sánh điểm mạnh/yếu của Ven Hồ so với đối thủ
-- [ ] Đề xuất hướng định vị và cải thiện
+- [x] Xác định danh sách đối thủ trực tiếp (cùng phân khúc, khu Tây Hồ)
+- [x] Phân tích: giá phòng, tiện ích, đánh giá khách hàng
+- [x] So sánh điểm mạnh/yếu của Ven Hồ so với đối thủ
+- [x] Đề xuất hướng định vị và cải thiện
+- [x] Tạo Scheduled Agent cập nhật đối thủ hàng tuần — hoàn thành 15/06/2026
+
+### Scheduled Agent — Theo Dõi Đối Thủ Tự Động
+
+| Thông tin | Chi tiết |
+|-----------|----------|
+| Routine ID | `trig_01HhEDr4CRLV1Krf32A1o3AG` |
+| Lịch chạy | Mỗi **Thứ Hai 9:00 sáng** (Bangkok / UTC+7) |
+| Đầu ra | Email → hpham1504@gmail.com |
+| Model | claude-sonnet-4-6 |
+| Connector | Gmail ✅ |
+| Quản lý | https://claude.ai/code/routines/trig_01HhEDr4CRLV1Krf32A1o3AG |
+
+**Nội dung email hàng tuần:**
+- Tóm tắt 3–5 điểm nổi bật thay đổi trong tuần
+- Bảng giá & rating của 8 đối thủ so với Ven Hồ
+- Vị trí Ven Hồ trên thị trường
+- 1–2 hành động cụ thể để giữ lợi thế
 
 ---
 
@@ -330,7 +360,7 @@ src/lib/data/rooms.ts
 
 ---
 
-## Phần 8: AI Agent Quản Lý Doanh Thu
+## Phần 8: AI Agent Quản Lý Doanh Thu ✅
 
 > Xây dựng agent tự động hóa theo dõi và tối ưu doanh thu hàng ngày.
 
@@ -339,10 +369,60 @@ src/lib/data/rooms.ts
 
 ### Phạm vi công việc
 
-- [ ] Xác định nguồn dữ liệu (đặt phòng, OTA, email)
-- [ ] Thiết kế luồng agent: thu thập → phân tích → báo cáo
-- [ ] Xây dựng dashboard doanh thu tự động
-- [ ] Tích hợp cảnh báo (Zalo/email) khi có biến động
+- [x] Xác định nguồn dữ liệu: SkyHotel PMS (admin1.skyhotel.vn) — chính xác nhất
+- [x] Discovery selectors SkyHotel bằng Playwright headless (login, menu, date picker, export)
+- [x] Viết `skyhotel-scraper.py` — login → export Excel → parse → format + gửi email
+- [x] Xây dựng hướng dẫn Google Sheets Dashboard + Looker Studio
+- [x] Chuyển sang Windows Task Scheduler (CCR bị block egress đến admin1.skyhotel.vn)
+- [x] Viết `run-daily-report.ps1` — runner script với credentials
+- [x] Đăng ký Task Scheduler "VenHo-DailyRevenue" — chạy 9:00 AM hàng ngày
+
+### Windows Task Scheduler — Báo Cáo Doanh Thu Hàng Ngày
+
+> **Lý do không dùng Claude CCR:** `admin1.skyhotel.vn` bị block bởi network egress policy của cloud environment Anthropic.
+
+| Thông tin | Chi tiết |
+|-----------|----------|
+| Task name | `VenHo-DailyRevenue` |
+| Script | `AI Agent/run-daily-report.ps1` |
+| Lịch chạy | Mỗi ngày **9:00 sáng** (giờ máy Harry) |
+| Đầu ra | Email → venhohotel@gmail.com |
+| Gửi qua | Gmail SMTP (smtplib, App Password) |
+
+**Luồng kỹ thuật:**
+1. Playwright headless login `admin1.skyhotel.vn` (user: koibito)
+2. Navigate menu Doanh thu → Doanh thu hóa đơn
+3. Fill date picker ngày hôm qua → click OK → đợi AJAX
+4. Click "Xuất File" (`#export_revenue_v1`) → download Excel
+5. Parse Excel (openpyxl): tổng doanh thu, tiền phòng, DV, hình thức TT, top phòng
+6. Gửi email qua Gmail SMTP (smtplib SSL port 465, App Password)
+
+**Quản lý Task Scheduler:**
+```powershell
+# Xem trạng thái
+Get-ScheduledTask -TaskName "VenHo-DailyRevenue"
+
+# Chạy thủ công ngay
+Start-ScheduledTask -TaskName "VenHo-DailyRevenue"
+
+# Đổi giờ chạy
+$trigger = New-ScheduledTaskTrigger -Daily -At "09:00AM"
+Set-ScheduledTask -TaskName "VenHo-DailyRevenue" -Trigger $trigger
+```
+
+**Selectors SkyHotel (đã xác nhận):**
+- Login: `#txt_username`, `#txt_password`, `#cmd_login`
+- Date picker: `#date_begin`, `#date_end`, `#fancyConfirmdate_edit`
+- Export: `#export_revenue_v1` (hoặc `#export_revenue_v2`)
+- Menu: accordion jQuery UI, hash `#revenue_invoices`
+
+**Excel format:** Row 0–6 = header info, Row 7 = column labels, Row 8+ = data
+- Col 0: STT (string), Col 2: Phòng, Col 7: Tiền phòng, Col 8: DV, Col 11: Tổng cộng, Col 16: HTTT
+
+### Google Sheets Dashboard
+
+- Xem hướng dẫn đầy đủ: `AI Agent/sheets-guide.md`
+- Kết nối Looker Studio để xem dashboard trực quan
 
 ---
 
@@ -355,15 +435,15 @@ src/lib/data/rooms.ts
 
 ### Phạm vi công việc
 
-- [ ] Tạo `robots.txt` (tự động qua `src/app/robots.ts`)
-- [ ] Tạo `sitemap.xml` với 9 URL (6 tĩnh + 3 trang phòng)
-- [ ] Tạo `src/components/seo/JsonLd.tsx` — component dùng chung cho JSON-LD
-- [ ] Thêm Hotel JSON-LD schema vào homepage (name, address, geo, rating, amenities)
-- [ ] Thêm HotelRoom JSON-LD vào từng trang phòng chi tiết
-- [ ] Thêm BreadcrumbList JSON-LD vào tất cả trang con
-- [ ] Cập nhật root layout: `metadataBase`, `og:image`, Twitter Card, `title.template`
-- [ ] Refactor `lien-he/page.tsx` → Server Component để xuất metadata
-- [ ] Cập nhật metadata (title, og:image) cho 5 trang con
+- [x] Tạo `robots.txt` (tự động qua `src/app/robots.ts`)
+- [x] Tạo `sitemap.xml` với 9 URL (6 tĩnh + 3 trang phòng)
+- [x] Tạo `src/components/seo/JsonLd.tsx` — component dùng chung cho JSON-LD
+- [x] Thêm Hotel JSON-LD schema vào homepage (name, address, geo, rating, amenities)
+- [x] Thêm HotelRoom JSON-LD vào từng trang phòng chi tiết
+- [x] Thêm BreadcrumbList JSON-LD vào tất cả trang con
+- [x] Cập nhật root layout: `metadataBase`, `og:image`, Twitter Card, `title.template`
+- [x] Refactor `lien-he/page.tsx` → Server Component để xuất metadata
+- [x] Cập nhật metadata (title, og:image) cho 5 trang con
 
 ### Ghi chú kỹ thuật
 

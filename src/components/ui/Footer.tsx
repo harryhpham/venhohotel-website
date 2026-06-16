@@ -71,7 +71,7 @@ export default function Footer() {
                 {c.phone}
               </a>
               <a
-                href="https://www.facebook.com/venhohotel"
+                href="https://www.facebook.com/venhohotelhanoi"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 font-sans text-sm text-white/60 hover:text-[#C9A84C] transition-colors"

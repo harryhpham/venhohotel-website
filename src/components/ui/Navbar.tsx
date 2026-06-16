@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useLang } from "@/lib/context/LangContext";
 import { siteContent } from "@/lib/data/content";
 
-const FB_URL = "https://www.facebook.com/venhohotel";
+const FB_URL = "https://www.facebook.com/venhohotelhanoi";
 
 export default function Navbar() {
   const { lang, setLang } = useLang();

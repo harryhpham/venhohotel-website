@@ -53,7 +53,7 @@ const hotelSchema = {
     "https://venhohotel.com/images/Lake-view/lake-view-1.jpg",
   ],
   sameAs: [
-    "https://www.facebook.com/venhohotel",
+    "https://www.facebook.com/venhohotelhanoi",
     "https://www.instagram.com/venhohotel",
   ],
   amenityFeature: [

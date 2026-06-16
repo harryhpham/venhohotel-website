@@ -93,7 +93,7 @@ export default function ContactClient() {
                   {[
                     { label: "Địa Chỉ", value: "181 Nguyễn Đình Thi, Tây Hồ, Hà Nội" },
                     { label: "Điện Thoại", value: "024 3847 4646", href: "tel:02438474646", track: "phone_click" },
-                    { label: "Facebook", value: "facebook.com/venhohotel", href: "https://www.facebook.com/venhohotel" },
+                    { label: "Facebook", value: "facebook.com/venhohotelhanoi", href: "https://www.facebook.com/venhohotelhanoi" },
                     { label: "Check-in", value: "12:00 PM — 20:00 PM" },
                     { label: "Check-out", value: "6:00 AM — 12:00 PM" },
                   ].map((item) => (
