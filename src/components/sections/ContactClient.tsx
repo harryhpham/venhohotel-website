@@ -56,7 +56,12 @@ export default function ContactClient() {
           event_category: "booking_form",
           room_type: form.room || "not_selected",
         });
-        trackPixel("Lead", { content_name: form.room || "not_selected" });
+        trackPixel("Lead", {
+          content_name: form.room || "not_selected",
+          num_guests: form.guests || "0",
+          checkin: form.checkin || "",
+          checkout: form.checkout || "",
+        });
       } else {
         setError(data.error || "Không thể gửi yêu cầu. Vui lòng thử lại.");
       }
@@ -92,8 +97,8 @@ export default function ContactClient() {
                 <div className="space-y-6">
                   {[
                     { label: "Địa Chỉ", value: "181 Nguyễn Đình Thi, Tây Hồ, Hà Nội" },
-                    { label: "Điện Thoại", value: "024 3847 4646", href: "tel:02438474646", track: "phone_click" },
-                    { label: "Facebook", value: "facebook.com/venhohotelhanoi", href: "https://www.facebook.com/venhohotelhanoi" },
+                    { label: "Điện Thoại", value: "024 3847 4646", href: "tel:02438474646", track: "phone_click", pixelEvent: "Contact" },
+                    { label: "Facebook", value: "facebook.com/venhohotelhanoi", href: "https://www.facebook.com/venhohotelhanoi", track: "facebook_click", pixelEvent: "facebook_click" },
                     { label: "Check-in", value: "12:00 PM — 20:00 PM" },
                     { label: "Check-out", value: "6:00 AM — 12:00 PM" },
                   ].map((item) => (
@@ -106,7 +111,7 @@ export default function ContactClient() {
                           rel="noopener noreferrer"
                           onClick={"track" in item ? () => {
                             trackEvent((item as { track: string }).track, { event_category: "contact" });
-                            trackPixel("Contact");
+                            trackPixel((item as { pixelEvent: string }).pixelEvent);
                           } : undefined}
                           className="font-sans text-[#1A1A1A] hover:text-[#C9A84C] transition-colors"
                         >

@@ -4,6 +4,12 @@ import Image from "next/image";
 import { useLang } from "@/lib/context/LangContext";
 import { siteContent } from "@/lib/data/content";
 
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
+  }
+}
+
 export default function Hero() {
   const { lang } = useLang();
   const c = siteContent[lang].hero;
@@ -30,7 +36,11 @@ export default function Hero() {
         </h1>
         <p className="font-sans text-white/70 text-sm md:text-base mb-8 md:mb-10 tracking-wide">{c.subline}</p>
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-          <Link href="/lien-he" className="inline-flex items-center justify-center px-7 py-3.5 bg-[#C9A84C] text-white font-sans font-medium text-sm tracking-wide hover:bg-[#b8963d] transition-colors min-h-[44px]">
+          <Link
+            href="/lien-he"
+            onClick={() => window.fbq?.("track", "Contact", { source: "hero_booking_button" })}
+            className="inline-flex items-center justify-center px-7 py-3.5 bg-[#C9A84C] text-white font-sans font-medium text-sm tracking-wide hover:bg-[#b8963d] transition-colors min-h-[44px]"
+          >
             {c.cta_primary}
           </Link>
           <Link href="/phong" className="inline-flex items-center justify-center px-7 py-3.5 border border-white/50 text-white font-sans text-sm tracking-wide hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors min-h-[44px]">

@@ -4,6 +4,18 @@ import Image from "next/image";
 import { useLang } from "@/lib/context/LangContext";
 import { siteContent } from "@/lib/data/content";
 
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+    fbq?: (...args: unknown[]) => void;
+  }
+}
+
+function trackFacebookClick() {
+  window.gtag?.("event", "facebook_click", { event_category: "social" });
+  window.fbq?.("track", "facebook_click");
+}
+
 export default function Footer() {
   const { lang } = useLang();
   const c = siteContent[lang].contact;
@@ -74,6 +86,7 @@ export default function Footer() {
                 href="https://www.facebook.com/venhohotelhanoi"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={trackFacebookClick}
                 className="flex items-center gap-2 font-sans text-sm text-white/60 hover:text-[#C9A84C] transition-colors"
               >
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
