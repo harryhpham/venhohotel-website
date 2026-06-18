@@ -16,6 +16,11 @@ function trackFacebookClick() {
   window.fbq?.("track", "facebook_click");
 }
 
+function trackPhoneClick() {
+  window.gtag?.("event", "phone_click", { event_category: "contact" });
+  window.fbq?.("track", "Contact");
+}
+
 export default function Footer() {
   const { lang } = useLang();
   const c = siteContent[lang].contact;
@@ -78,6 +83,7 @@ export default function Footer() {
             <div className="space-y-2">
               <a
                 href={`tel:${c.phone.replace(/\s/g, "")}`}
+                onClick={trackPhoneClick}
                 className="block font-mono text-sm text-white/60 hover:text-[#C9A84C] transition-colors"
               >
                 {c.phone}

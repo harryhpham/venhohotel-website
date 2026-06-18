@@ -43,7 +43,11 @@ export default function Hero() {
           >
             {c.cta_primary}
           </Link>
-          <Link href="/phong" className="inline-flex items-center justify-center px-7 py-3.5 border border-white/50 text-white font-sans text-sm tracking-wide hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors min-h-[44px]">
+          <Link
+            href="/phong"
+            onClick={() => window.fbq?.("track", "ViewContent", { source: "hero_rooms_button" })}
+            className="inline-flex items-center justify-center px-7 py-3.5 border border-white/50 text-white font-sans text-sm tracking-wide hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors min-h-[44px]"
+          >
             {c.cta_secondary}
           </Link>
         </div>
