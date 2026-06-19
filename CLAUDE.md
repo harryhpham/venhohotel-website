@@ -143,6 +143,19 @@ npx serve out
 npm run lint
 ```
 
+### Deploy lên Vercel
+
+```bash
+# Push lên GitHub → Vercel tự động deploy
+git add <files>
+git commit -m "feat: ..."
+git push origin main
+# → venhohotel.com cập nhật sau ~1-2 phút
+```
+
+> **GitHub credentials:** Token `ghp_...` đã lưu vào macOS Keychain (osxkeychain).  
+> Mỗi lần `git push` sẽ tự động dùng token, không cần nhập lại.
+
 ---
 
 ## Cách chỉnh sửa nội dung
@@ -224,6 +237,12 @@ src/lib/data/rooms.ts
 |            | Terminal Full Disk Access đã cấp                       |
 |            | Website localhost:3000 chạy OK trên macOS              |
 |            | CLAUDE.md + DEPLOY-GUIDE.md cập nhật đường dẫn macOS  |
+|            | **Fix song ngữ EN/VI toàn bộ trang web** ✅             |
+|            | 4 trang con tách thành Client Components (useLang)     |
+|            | 6 section EN mới trong content.ts                      |
+|            | rooms.ts: thêm descriptionEn, amenitiesEn, bedsEn      |
+|            | GitHub token lưu macOS Keychain — push tự động         |
+|            | Cập nhật giá phòng: Deluxe 400k, Lake View 600k, Triple 500k |
 | 15/06/2026 | **Phần 9 — SEO** hoàn thành ✅                          |
 |            | `robots.ts` → `/robots.txt` (allow all + sitemap link) |
 |            | `sitemap.ts` → `/sitemap.xml` (9 URLs, priority đúng)  |
