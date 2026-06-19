@@ -132,6 +132,32 @@ export const siteContent = {
       bookButton: "Đặt Phòng Này", callButton: "Gọi: 024 3847 4646",
       viewAll: "Xem tất cả", viewLakeTag: "View Hồ Tây",
     },
+    services: {
+      label: "Tiện Ích & Dịch Vụ", heading: "Đầy Đủ Tiện Nghi",
+      items: [
+        { title: "WiFi Miễn Phí",   desc: "Kết nối tốc độ cao toàn bộ khách sạn" },
+        { title: "Bãi Đỗ Xe Máy",   desc: "Miễn phí cho tất cả khách lưu trú" },
+        { title: "Cho Thuê Xe Đạp", desc: "Khám phá Hồ Tây theo cách chậm lại" },
+        { title: "Dịch Vụ Phòng",   desc: "Phục vụ tận nơi theo yêu cầu" },
+        { title: "Lễ Tân 24/7",     desc: "Sẵn sàng hỗ trợ bất kỳ lúc nào" },
+        { title: "Dọn Phòng",       desc: "Vệ sinh phòng hàng ngày" },
+      ],
+    },
+    nearby: {
+      label: "Điểm Tham Quan", heading: "Khám Phá Xung Quanh",
+    },
+    locationBlock: {
+      label: "Vị Trí & Đặt Phòng", heading: "Tìm Chúng Tôi",
+      addressLabel: "Địa Chỉ", phoneLabel: "Điện Thoại",
+      checkinLabel: "Check-in / Check-out", checkinValue: "12:00 — 20:00 / trước 12:00",
+      formHeading: "Liên Hệ Nhanh",
+      thanks: "Cảm ơn bạn!", confirmation: "Chúng tôi sẽ liên hệ lại trong vòng 24 giờ.",
+      nameLabel: "Họ & Tên", namePlaceholder: "Nguyễn Văn A",
+      phoneFieldLabel: "Số Điện Thoại", phonePlaceholder: "0912 345 678",
+      dateLabel: "Ngày Dự Kiến",
+      noteLabel: "Ghi Chú", notePlaceholder: "Loại phòng, số người, yêu cầu đặc biệt...",
+      submit: "Gửi Yêu Cầu",
+    },
   },
 
   en: {
@@ -266,6 +292,32 @@ export const siteContent = {
       contactPrice: "Contact for best price",
       bookButton: "Book This Room", callButton: "Call: 024 3847 4646",
       viewAll: "View all", viewLakeTag: "Lake View",
+    },
+    services: {
+      label: "Amenities & Services", heading: "Fully Equipped",
+      items: [
+        { title: "Free WiFi",         desc: "High-speed connection throughout the hotel" },
+        { title: "Motorbike Parking", desc: "Complimentary for all guests" },
+        { title: "Bicycle Rental",    desc: "Explore West Lake at your own pace" },
+        { title: "Room Service",      desc: "In-room service on request" },
+        { title: "24/7 Reception",    desc: "Always here to help" },
+        { title: "Daily Housekeeping",desc: "Room cleaned every day" },
+      ],
+    },
+    nearby: {
+      label: "Attractions", heading: "Explore the Area",
+    },
+    locationBlock: {
+      label: "Location & Booking", heading: "Find Us",
+      addressLabel: "Address", phoneLabel: "Phone",
+      checkinLabel: "Check-in / Check-out", checkinValue: "12:00 PM — 8:00 PM / before 12:00 PM",
+      formHeading: "Quick Contact",
+      thanks: "Thank you!", confirmation: "We will get back to you within 24 hours.",
+      nameLabel: "Full Name", namePlaceholder: "John Doe",
+      phoneFieldLabel: "Phone Number", phonePlaceholder: "+84 912 345 678",
+      dateLabel: "Expected Date",
+      noteLabel: "Notes", notePlaceholder: "Room type, number of guests, special requests...",
+      submit: "Send Request",
     },
   },
 };
