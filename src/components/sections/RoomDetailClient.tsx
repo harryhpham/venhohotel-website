@@ -6,6 +6,8 @@ import Footer from "@/components/ui/Footer";
 import Link from "next/link";
 import Image from "next/image";
 import { rooms } from "@/lib/data/rooms";
+import { useLang } from "@/lib/context/LangContext";
+import { siteContent } from "@/lib/data/content";
 
 // Lightbox overlay
 function Lightbox({ images, index, onClose, onPrev, onNext }: {
@@ -90,7 +92,7 @@ function Lightbox({ images, index, onClose, onPrev, onNext }: {
   );
 }
 
-function RoomGallery({ room }: { room: typeof rooms[number] }) {
+function RoomGallery({ room, viewLakeTag, viewAll }: { room: typeof rooms[number]; viewLakeTag: string; viewAll: string }) {
   const [selected, setSelected] = useState(0);
   const [lightbox, setLightbox] = useState<number | null>(null);
   const images = [...room.images];
@@ -125,7 +127,7 @@ function RoomGallery({ room }: { room: typeof rooms[number] }) {
         <div className="absolute inset-0 bg-[#1B2D4F]/20" />
         {room.view && (
           <div className="absolute top-6 left-6 z-10">
-            <span className="label-tag bg-[#C9A84C] text-white px-3 py-1">View Ho Tay</span>
+            <span className="label-tag bg-[#C9A84C] text-white px-3 py-1">{viewLakeTag}</span>
           </div>
         )}
         {/* Zoom hint */}
@@ -174,7 +176,7 @@ function RoomGallery({ room }: { room: typeof rooms[number] }) {
               className="h-16 md:h-20 w-20 md:w-24 shrink-0 bg-[#1A1A1A] text-white flex flex-col items-center justify-center gap-1 text-xs font-sans hover:bg-[#C9A84C] transition-colors"
             >
               <span className="text-lg">&#9638;</span>
-              <span>Xem tat ca</span>
+              <span>{viewAll}</span>
             </button>
           </div>
         </div>
@@ -187,23 +189,31 @@ export default function RoomDetailClient({ slug }: { slug: string }) {
   const room = rooms.find((r) => r.slug === slug);
   if (!room) notFound();
 
+  const { lang } = useLang();
+  const t = siteContent[lang].roomDetail;
+
+  const name = lang === "en" ? room.name : room.nameVi;
+  const description = lang === "en" ? (room as Record<string, unknown>).descriptionEn as string : room.description;
+  const amenities = lang === "en" ? (room as Record<string, unknown>).amenitiesEn as string[] : [...room.amenities];
+  const beds = lang === "en" ? ((room as Record<string, unknown>).bedsEn as string | undefined) ?? room.beds : room.beds;
+
   return (
     <>
       <Navbar />
       <main className="pt-16">
-        <RoomGallery room={room} />
+        <RoomGallery room={room} viewLakeTag={t.viewLakeTag} viewAll={t.viewAll} />
 
         <section className="py-16 md:py-24 bg-[#F7F4EF]">
           <div className="max-w-[1440px] mx-auto px-4 md:px-6 xl:px-20">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
               <div className="lg:col-span-2">
-                <p className="label-tag mb-3">{room.beds} &middot; {room.size}m&sup2;</p>
-                <h1 className="font-display text-3xl md:text-5xl text-[#1A1A1A] mb-6">{room.nameVi}</h1>
+                <p className="label-tag mb-3">{beds} &middot; {room.size}m&sup2;</p>
+                <h1 className="font-display text-3xl md:text-5xl text-[#1A1A1A] mb-6">{name}</h1>
                 <div className="w-8 h-px bg-[#C9A84C] mb-6" />
-                <p className="font-sans text-[#6B6B6B] text-base leading-relaxed mb-8">{room.description}</p>
-                <h3 className="font-display text-xl text-[#1A1A1A] mb-4">Tien Nghi Phong</h3>
+                <p className="font-sans text-[#6B6B6B] text-base leading-relaxed mb-8">{description}</p>
+                <h3 className="font-display text-xl text-[#1A1A1A] mb-4">{t.amenitiesHeading}</h3>
                 <div className="grid grid-cols-2 gap-2">
-                  {room.amenities.map((a) => (
+                  {amenities.map((a) => (
                     <div key={a} className="flex items-center gap-2">
                       <span className="text-[#C9A84C] text-sm">&#9678;</span>
                       <span className="font-sans text-sm text-[#1A1A1A]">{a}</span>
@@ -215,18 +225,20 @@ export default function RoomDetailClient({ slug }: { slug: string }) {
                 <div className="bg-white border border-[#D9D9D9] p-6">
                   {room.priceVnd ? (
                     <div className="mb-4">
-                      <p className="label-tag mb-1">Gia tu</p>
-                      <p className="font-mono text-3xl text-[#C9A84C] font-medium">{room.priceVnd.toLocaleString("vi-VN")}d</p>
-                      <p className="font-sans text-[#6B6B6B] text-xs mt-0.5">/dem</p>
+                      <p className="label-tag mb-1">{t.priceLabel}</p>
+                      <p className="font-mono text-3xl text-[#C9A84C] font-medium">
+                        {lang === "en" ? `$${room.priceUsd}` : `${room.priceVnd.toLocaleString("vi-VN")}đ`}
+                      </p>
+                      <p className="font-sans text-[#6B6B6B] text-xs mt-0.5">{t.perNight}</p>
                     </div>
                   ) : (
-                    <p className="font-sans text-[#6B6B6B] text-sm italic mb-4">Lien he de biet gia tot nhat</p>
+                    <p className="font-sans text-[#6B6B6B] text-sm italic mb-4">{t.contactPrice}</p>
                   )}
                   <Link href="/lien-he" className="block text-center w-full bg-[#C9A84C] text-white font-sans font-medium text-sm tracking-wide py-4 hover:bg-[#b8963d] transition-colors min-h-[44px]">
-                    Dat Phong Nay
+                    {t.bookButton}
                   </Link>
                   <a href="tel:02438474646" className="block text-center w-full mt-3 border border-[#D9D9D9] text-[#1A1A1A] font-sans text-sm py-4 hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors min-h-[44px]">
-                    Goi: 024 3847 4646
+                    {t.callButton}
                   </a>
                 </div>
               </div>
@@ -236,7 +248,7 @@ export default function RoomDetailClient({ slug }: { slug: string }) {
 
         <div className="fixed bottom-0 left-0 right-0 lg:hidden bg-white border-t border-[#D9D9D9] p-4 z-40">
           <Link href="/lien-he" className="block text-center w-full bg-[#C9A84C] text-white font-sans font-medium text-sm tracking-wide py-4 hover:bg-[#b8963d] transition-colors">
-            Dat Phong Nay
+            {t.bookButton}
           </Link>
         </div>
       </main>

@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
+import { useLang } from "@/lib/context/LangContext";
+import { siteContent } from "@/lib/data/content";
 
 declare global {
   interface Window {
@@ -24,6 +26,9 @@ function trackPixel(event: string, params?: Record<string, unknown>) {
 }
 
 export default function ContactClient() {
+  const { lang } = useLang();
+  const t = siteContent[lang].contactPage;
+
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -63,10 +68,10 @@ export default function ContactClient() {
           checkout: form.checkout || "",
         });
       } else {
-        setError(data.error || "Không thể gửi yêu cầu. Vui lòng thử lại.");
+        setError(data.error || t.errorDefault);
       }
     } catch {
-      setError("Không thể kết nối đến máy chủ. Vui lòng gọi trực tiếp 024 3847 4646.");
+      setError(t.errorNetwork);
     } finally {
       setIsLoading(false);
     }
@@ -76,32 +81,20 @@ export default function ContactClient() {
     <>
       <Navbar />
       <main className="pt-20">
-        {/* Hero */}
         <section className="bg-[#1B2D4F] py-20 md:py-28">
           <div className="max-w-[1440px] mx-auto px-4 md:px-6 xl:px-20">
-            <p className="label-tag text-[#C9A84C] mb-4">Liên Hệ & Đặt Phòng</p>
-            <h1 className="font-display text-4xl md:text-6xl xl:text-7xl text-white">
-              Đặt Phòng Ngay
-            </h1>
+            <p className="label-tag text-[#C9A84C] mb-4">{t.label}</p>
+            <h1 className="font-display text-4xl md:text-6xl xl:text-7xl text-white">{t.heading}</h1>
           </div>
         </section>
 
         <section className="py-20 md:py-32 bg-[#F7F4EF]">
           <div className="max-w-[1440px] mx-auto px-4 md:px-6 xl:px-20">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-              {/* Info */}
               <div>
-                <h2 className="font-display text-2xl md:text-3xl text-[#1A1A1A] mb-8">
-                  Thông Tin Liên Hệ
-                </h2>
+                <h2 className="font-display text-2xl md:text-3xl text-[#1A1A1A] mb-8">{t.infoHeading}</h2>
                 <div className="space-y-6">
-                  {[
-                    { label: "Địa Chỉ", value: "181 Nguyễn Đình Thi, Tây Hồ, Hà Nội" },
-                    { label: "Điện Thoại", value: "024 3847 4646", href: "tel:02438474646", track: "phone_click", pixelEvent: "Contact" },
-                    { label: "Facebook", value: "facebook.com/venhohotelhanoi", href: "https://www.facebook.com/venhohotelhanoi", track: "facebook_click", pixelEvent: "facebook_click" },
-                    { label: "Check-in", value: "12:00 PM — 20:00 PM" },
-                    { label: "Check-out", value: "6:00 AM — 12:00 PM" },
-                  ].map((item) => (
+                  {t.infoItems.map((item) => (
                     <div key={item.label} className="border-b border-[#D9D9D9] pb-5">
                       <p className="label-tag mb-1">{item.label}</p>
                       {item.href ? (
@@ -109,9 +102,9 @@ export default function ContactClient() {
                           href={item.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          onClick={"track" in item ? () => {
-                            trackEvent((item as { track: string }).track, { event_category: "contact" });
-                            trackPixel((item as { pixelEvent: string }).pixelEvent);
+                          onClick={item.track ? () => {
+                            trackEvent(item.track, { event_category: "contact" });
+                            trackPixel(item.pixelEvent);
                           } : undefined}
                           className="font-sans text-[#1A1A1A] hover:text-[#C9A84C] transition-colors"
                         >
@@ -125,28 +118,16 @@ export default function ContactClient() {
                 </div>
               </div>
 
-              {/* Form */}
               <div>
-                <h2 className="font-display text-2xl md:text-3xl text-[#1A1A1A] mb-8">
-                  Gửi Yêu Cầu Đặt Phòng
-                </h2>
+                <h2 className="font-display text-2xl md:text-3xl text-[#1A1A1A] mb-8">{t.formHeading}</h2>
                 {submitted ? (
                   <div className="bg-[#EDE8E0] p-10 text-center">
-                    <p className="font-display text-3xl text-[#C9A84C] mb-3">Cảm ơn!</p>
-                    <p className="font-sans text-[#6B6B6B]">
-                      Chúng tôi sẽ liên hệ lại trong vòng 24 giờ để xác nhận đặt phòng.
-                    </p>
+                    <p className="font-display text-3xl text-[#C9A84C] mb-3">{t.thanks}</p>
+                    <p className="font-sans text-[#6B6B6B]">{t.confirmation}</p>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-4">
-                    {[
-                      { id: "name",    label: "Họ & Tên *", type: "text",  placeholder: "Nguyễn Văn A", required: true },
-                      { id: "phone",   label: "Điện Thoại *", type: "tel", placeholder: "0912 345 678", required: true },
-                      { id: "email",   label: "Email", type: "email",       placeholder: "email@example.com" },
-                      { id: "checkin", label: "Ngày Nhận Phòng", type: "date" },
-                      { id: "checkout",label: "Ngày Trả Phòng", type: "date" },
-                      { id: "guests",  label: "Số Khách", type: "number",  placeholder: "2" },
-                    ].map((f) => (
+                    {t.fields.map((f) => (
                       <div key={f.id}>
                         <label htmlFor={f.id} className="label-tag block mb-1.5">{f.label}</label>
                         <input
@@ -162,41 +143,39 @@ export default function ContactClient() {
                     ))}
 
                     <div>
-                      <label htmlFor="room" className="label-tag block mb-1.5">Loại Phòng</label>
+                      <label htmlFor="room" className="label-tag block mb-1.5">{t.roomLabel}</label>
                       <select
                         id="room"
                         value={form.room}
                         onChange={(e) => setForm({ ...form, room: e.target.value })}
                         className="w-full border border-[#D9D9D9] bg-white px-4 py-3 font-sans text-sm text-[#1A1A1A] focus:outline-none focus:border-[#C9A84C] min-h-[44px]"
                       >
-                        <option value="">-- Chọn loại phòng --</option>
-                        <option value="deluxe-double">Phòng Deluxe Đôi</option>
-                        <option value="double-lake-view">Phòng Đôi View Hồ Tây</option>
-                        <option value="standard-triple">Phòng Tiêu Chuẩn Ba Người</option>
+                        <option value="">{t.roomPlaceholder}</option>
+                        {t.roomOptions.map((opt) => (
+                          <option key={opt.value} value={opt.value}>{opt.label}</option>
+                        ))}
                       </select>
                     </div>
 
                     <div>
-                      <label htmlFor="note" className="label-tag block mb-1.5">Ghi Chú</label>
+                      <label htmlFor="note" className="label-tag block mb-1.5">{t.noteLabel}</label>
                       <textarea
                         id="note"
                         rows={4}
                         value={form.note}
                         onChange={(e) => setForm({ ...form, note: e.target.value })}
                         className="w-full border border-[#D9D9D9] bg-white px-4 py-3 font-sans text-sm text-[#1A1A1A] focus:outline-none focus:border-[#C9A84C] resize-none"
-                        placeholder="Yêu cầu đặc biệt, dịp kỷ niệm, v.v..."
+                        placeholder={t.notePlaceholder}
                       />
                     </div>
 
-                    {error && (
-                      <p className="font-sans text-sm text-red-600 text-center">{error}</p>
-                    )}
+                    {error && <p className="font-sans text-sm text-red-600 text-center">{error}</p>}
                     <button
                       type="submit"
                       disabled={isLoading}
                       className="w-full bg-[#C9A84C] text-white font-sans font-medium text-sm tracking-wide py-4 hover:bg-[#b8963d] transition-colors min-h-[44px] disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                      {isLoading ? "Đang gửi..." : "Gửi Yêu Cầu Đặt Phòng"}
+                      {isLoading ? t.submitting : t.submit}
                     </button>
                   </form>
                 )}

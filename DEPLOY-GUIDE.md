@@ -9,9 +9,9 @@
 2. Tạo repository mới: **New repository** → tên: `venhohotel-website` → Public → Create
 
 ### Bước 2: Push code lên GitHub
-Mở **Windows Terminal** trong thư mục dự án:
+Mở **Terminal** trong thư mục dự án:
 ```bash
-cd "E:\Claude-Workspace\projects\Ven Ho Hotel"
+cd "/Users/hanhpham/Developer/Claude-Workspace/projects/Ven Ho Hotel"
 git init
 git add .
 git commit -m "Initial commit: Ven Ho Hotel website"
@@ -50,7 +50,7 @@ Trước khi deploy, vào Vercel → Project → **Settings** → **Environment 
 ### Mỗi thứ Hai — 3 bước đơn giản:
 
 #### Bước 1: Mở file content (2 phút)
-Mở file: `E:\Claude-Workspace\projects\Ven Ho Hotel\src\lib\data\content.ts`
+Mở file: `/Users/hanhpham/Developer/Claude-Workspace/projects/Ven Ho Hotel/src/lib/data/content.ts`
 
 Tìm phần `weeklyContent` ở cuối file, cập nhật:
 
@@ -77,7 +77,7 @@ export const weeklyContent = {
 
 #### Bước 2: Build & Deploy (3 phút)
 ```bash
-cd "E:\Claude-Workspace\projects\Ven Ho Hotel"
+cd "/Users/hanhpham/Developer/Claude-Workspace/projects/Ven Ho Hotel"
 git add src/lib/data/content.ts
 git commit -m "Content tuần: [Chủ đề tuần này]"
 git push

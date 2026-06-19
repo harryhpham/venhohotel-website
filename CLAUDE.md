@@ -8,7 +8,7 @@ Tài liệu hướng dẫn cho Claude Code khi làm việc với project này.
 
 **Chủ dự án:** Harry Pham (hpham1504@gmail.com)  
 **Project:** Website khách sạn Ven Hồ Hotel — Next.js 14  
-**Thư mục:** `E:\Claude-Workspace\projects\Ven Ho Hotel`
+**Thư mục:** `/Users/hanhpham/Developer/Claude-Workspace/projects/Ven Ho Hotel`
 
 ---
 
@@ -28,8 +28,9 @@ Tài liệu hướng dẫn cho Claude Code khi làm việc với project này.
 | Framework    | Next.js 14 (App Router)       |
 | Language     | TypeScript                    |
 | Styling      | Tailwind CSS v3               |
-| Node         | >= 18                         |
-| Package mgr  | npm                           |
+| Node         | v20.20.2 (cài qua Homebrew)   |
+| Package mgr  | npm 10.8.2                    |
+| OS           | macOS (Apple Silicon)         |
 
 ### Màu sắc thương hiệu
 ```
@@ -165,11 +166,12 @@ src/lib/data/rooms.ts
 
 ## Kế hoạch tiếp theo
 
-- [ ] Deploy lên Vercel — domain `venhohotel.vn`
+- [x] Deploy lên Vercel — domain `venhohotel.com` — hoàn thành 09/06/2026
 - [x] Kết nối form đặt phòng với email (Resend) — hoàn thành 09/06/2026
 - [x] Phân tích đối thủ cạnh tranh khu vực Tây Hồ — hoàn thành 15/06/2026
 - [ ] Xây dựng content & lịch đăng Social Media (Facebook, Instagram, Zalo OA)
 - [x] Phát triển AI Agent quản lý doanh thu hàng ngày
+- [x] Migration Windows → macOS — hoàn thành 19/06/2026
 - [x] Thêm Google Analytics — hoàn thành 10/06/2026
 - [ ] Tích hợp Booking.com / Agoda deep link
 - [ ] Tạo tài khoản Instagram, Zalo OA
@@ -211,9 +213,17 @@ src/lib/data/rooms.ts
 |            | Scheduled Agent tự động cập nhật mỗi Thứ Hai — gửi email báo cáo  |
 | 15/06/2026 | **Phần 8 — AI Agent Doanh Thu** hoàn thành ✅           |
 |            | Playwright scrape SkyHotel PMS → parse Excel → gửi email|
-|            | Windows Task Scheduler "VenHo-DailyRevenue" lúc 9:00 AM |
+|            | cron job "VenHo-DailyRevenue" lúc 9:00 AM |
 |            | Gmail SMTP (App Password) từ venhohotel@gmail.com        |
 |            | CCR bị block egress admin1.skyhotel.vn → dùng local     |
+| 19/06/2026 | **Migration Windows → macOS** hoàn thành ✅             |
+|            | Homebrew + Node v20.20.2 + npm 10.8.2 đã cài           |
+|            | Playwright + Chromium cài lại trên macOS               |
+|            | 6 file Windows (.ps1, .bat) → 5 bash scripts (.sh)     |
+|            | Cron job "VenHo-DailyRevenue" 9:00 AM chạy OK          |
+|            | Terminal Full Disk Access đã cấp                       |
+|            | Website localhost:3000 chạy OK trên macOS              |
+|            | CLAUDE.md + DEPLOY-GUIDE.md cập nhật đường dẫn macOS  |
 | 15/06/2026 | **Phần 9 — SEO** hoàn thành ✅                          |
 |            | `robots.ts` → `/robots.txt` (allow all + sitemap link) |
 |            | `sitemap.ts` → `/sitemap.xml` (9 URLs, priority đúng)  |
@@ -373,18 +383,18 @@ src/lib/data/rooms.ts
 - [x] Discovery selectors SkyHotel bằng Playwright headless (login, menu, date picker, export)
 - [x] Viết `skyhotel-scraper.py` — login → export Excel → parse → format + gửi email
 - [x] Xây dựng hướng dẫn Google Sheets Dashboard + Looker Studio
-- [x] Chuyển sang Windows Task Scheduler (CCR bị block egress đến admin1.skyhotel.vn)
-- [x] Viết `run-daily-report.ps1` — runner script với credentials
-- [x] Đăng ký Task Scheduler "VenHo-DailyRevenue" — chạy 9:00 AM hàng ngày
+- [x] Chuyển sang cron job local (CCR bị block egress đến admin1.skyhotel.vn)
+- [x] Viết `run-daily-report.sh` — runner script với credentials
+- [x] Đăng ký cron job "VenHo-DailyRevenue" — chạy 9:00 AM hàng ngày
 
-### Windows Task Scheduler — Báo Cáo Doanh Thu Hàng Ngày
+### macOS Cron Job — Báo Cáo Doanh Thu Hàng Ngày
 
 > **Lý do không dùng Claude CCR:** `admin1.skyhotel.vn` bị block bởi network egress policy của cloud environment Anthropic.
 
 | Thông tin | Chi tiết |
 |-----------|----------|
-| Task name | `VenHo-DailyRevenue` |
-| Script | `AI Agent/run-daily-report.ps1` |
+| Job name | `VenHo-DailyRevenue` |
+| Script | `AI Agent/run-daily-report.sh` |
 | Lịch chạy | Mỗi ngày **9:00 sáng** (giờ máy Harry) |
 | Đầu ra | Email → venhohotel@gmail.com |
 | Gửi qua | Gmail SMTP (smtplib, App Password) |
@@ -397,17 +407,19 @@ src/lib/data/rooms.ts
 5. Parse Excel (openpyxl): tổng doanh thu, tiền phòng, DV, hình thức TT, top phòng
 6. Gửi email qua Gmail SMTP (smtplib SSL port 465, App Password)
 
-**Quản lý Task Scheduler:**
-```powershell
-# Xem trạng thái
-Get-ScheduledTask -TaskName "VenHo-DailyRevenue"
+**Quản lý cron job:**
+```bash
+# Xem danh sách cron jobs
+crontab -l
+
+# Chỉnh sửa cron (thêm/đổi giờ)
+crontab -e
+
+# Entry cron cho báo cáo doanh thu (9:00 AM hàng ngày):
+# 0 9 * * * cd "/Users/hanhpham/Developer/Claude-Workspace/projects/Ven Ho Hotel/AI Agent" && bash run-daily-report.sh
 
 # Chạy thủ công ngay
-Start-ScheduledTask -TaskName "VenHo-DailyRevenue"
-
-# Đổi giờ chạy
-$trigger = New-ScheduledTaskTrigger -Daily -At "09:00AM"
-Set-ScheduledTask -TaskName "VenHo-DailyRevenue" -Trigger $trigger
+bash "/Users/hanhpham/Developer/Claude-Workspace/projects/Ven Ho Hotel/AI Agent/run-daily-report.sh"
 ```
 
 **Selectors SkyHotel (đã xác nhận):**
