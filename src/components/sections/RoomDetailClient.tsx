@@ -8,6 +8,7 @@ import Image from "next/image";
 import { rooms } from "@/lib/data/rooms";
 import { useLang } from "@/lib/context/LangContext";
 import { siteContent } from "@/lib/data/content";
+import { agodaUrl, bookingUrl } from "@/lib/data/ota";
 
 // Lightbox overlay
 function Lightbox({ images, index, onClose, onPrev, onNext }: {
@@ -240,6 +241,25 @@ export default function RoomDetailClient({ slug }: { slug: string }) {
                   <a href="tel:02438474646" className="block text-center w-full mt-3 border border-[#D9D9D9] text-[#1A1A1A] font-sans text-sm py-4 hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors min-h-[44px]">
                     {t.callButton}
                   </a>
+                  <div className="mt-4 pt-4 border-t border-[#D9D9D9]">
+                    <p className="label-tag text-center mb-3">{t.otaLabel}</p>
+                    <a
+                      href={agodaUrl("room_detail")}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-center w-full border border-[#D9D9D9] text-[#1A1A1A] font-sans text-sm py-3.5 hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors min-h-[44px] mb-2"
+                    >
+                      {t.agodaButton}
+                    </a>
+                    <a
+                      href={bookingUrl("room_detail")}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-center w-full border border-[#D9D9D9] text-[#1A1A1A] font-sans text-sm py-3.5 hover:border-[#003580] hover:text-[#003580] transition-colors min-h-[44px]"
+                    >
+                      {t.bookingButton}
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

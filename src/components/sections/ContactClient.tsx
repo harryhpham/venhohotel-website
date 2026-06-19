@@ -5,6 +5,7 @@ import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import { useLang } from "@/lib/context/LangContext";
 import { siteContent } from "@/lib/data/content";
+import { agodaUrl, bookingUrl } from "@/lib/data/ota";
 
 declare global {
   interface Window {
@@ -115,6 +116,44 @@ export default function ContactClient() {
                       )}
                     </div>
                   ))}
+                </div>
+
+                <div className="mt-8 pt-8 border-t border-[#D9D9D9]">
+                  <p className="label-tag mb-4">
+                    {lang === "vi" ? "Đặt Phòng Trực Tuyến" : "Book Online"}
+                  </p>
+                  <div className="flex flex-col gap-3">
+                    <a
+                      href={agodaUrl("contact_page")}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => {
+                        trackEvent("agoda_click", { event_category: "ota" });
+                        trackPixel("InitiateCheckout", { content_name: "agoda" });
+                      }}
+                      className="flex items-center justify-between border border-[#D9D9D9] px-5 py-4 hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors group"
+                    >
+                      <span className="font-sans text-sm text-[#1A1A1A] group-hover:text-[#C9A84C] transition-colors">
+                        {lang === "vi" ? "Đặt qua Agoda" : "Book on Agoda"}
+                      </span>
+                      <span className="font-sans text-xs text-[#6B6B6B] group-hover:text-[#C9A84C] transition-colors">8.5 ★</span>
+                    </a>
+                    <a
+                      href={bookingUrl("contact_page")}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => {
+                        trackEvent("booking_click", { event_category: "ota" });
+                        trackPixel("InitiateCheckout", { content_name: "booking_com" });
+                      }}
+                      className="flex items-center justify-between border border-[#D9D9D9] px-5 py-4 hover:border-[#003580] hover:text-[#003580] transition-colors group"
+                    >
+                      <span className="font-sans text-sm text-[#1A1A1A] group-hover:text-[#003580] transition-colors">
+                        {lang === "vi" ? "Đặt qua Booking.com" : "Book on Booking.com"}
+                      </span>
+                      <span className="font-sans text-xs text-[#6B6B6B] group-hover:text-[#003580] transition-colors">↗</span>
+                    </a>
+                  </div>
                 </div>
               </div>
 

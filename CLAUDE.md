@@ -186,7 +186,7 @@ src/lib/data/rooms.ts
 - [x] Phát triển AI Agent quản lý doanh thu hàng ngày
 - [x] Migration Windows → macOS — hoàn thành 19/06/2026
 - [x] Thêm Google Analytics — hoàn thành 10/06/2026
-- [ ] Tích hợp Booking.com / Agoda deep link
+- [x] Tích hợp Booking.com / Agoda deep link — hoàn thành 19/06/2026
 - [ ] Tạo tài khoản Instagram, Zalo OA
 - [x] Phát triển SEO — robots.txt, sitemap.xml, JSON-LD schema, og:image, Twitter Card — hoàn thành 15/06/2026
 
@@ -385,10 +385,19 @@ src/lib/data/rooms.ts
 
 ### Phạm vi công việc
 
-- [ ] Lấy affiliate/deep link từ Agoda (trang khách sạn Ven Hồ)
-- [ ] Lấy link từ Booking.com
-- [ ] Thêm nút CTA "Đặt qua Agoda" / "Đặt qua Booking.com" vào trang phòng và trang liên hệ
-- [ ] Đảm bảo link mở tab mới, có UTM tracking
+- [x] Lấy affiliate/deep link từ Agoda (trang khách sạn Ven Hồ)
+- [x] Lấy link từ Booking.com
+- [x] Thêm nút CTA "Đặt qua Agoda" / "Đặt qua Booking.com" vào trang phòng và trang liên hệ
+- [x] Đảm bảo link mở tab mới, có UTM tracking
+
+### Ghi chú kỹ thuật
+
+- `src/lib/data/ota.ts` — URL helpers `agodaUrl(campaign)` và `bookingUrl(campaign)`
+- UTM params: `utm_source=venhohotel.com&utm_medium=website&utm_campaign=<room_detail|contact_page>`
+- Booking.com giữ `aid=304142` (affiliate ID)
+- GA4 events: `agoda_click`, `booking_click` (category: ota) — fire trong ContactClient
+- Trang phòng: nút OTA nằm trong sidebar booking card, dưới nút gọi điện
+- Trang liên hệ: section "Đặt Phòng Trực Tuyến" bên dưới contact info
 
 ---
 

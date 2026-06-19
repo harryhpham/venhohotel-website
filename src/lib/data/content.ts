@@ -131,6 +131,9 @@ export const siteContent = {
       contactPrice: "Liên hệ để biết giá tốt nhất",
       bookButton: "Đặt Phòng Này", callButton: "Gọi: 024 3847 4646",
       viewAll: "Xem tất cả", viewLakeTag: "View Hồ Tây",
+      otaLabel: "Hoặc đặt trực tuyến",
+      agodaButton: "Đặt qua Agoda",
+      bookingButton: "Đặt qua Booking.com",
     },
     services: {
       label: "Tiện Ích & Dịch Vụ", heading: "Đầy Đủ Tiện Nghi",
@@ -292,6 +295,9 @@ export const siteContent = {
       contactPrice: "Contact for best price",
       bookButton: "Book This Room", callButton: "Call: 024 3847 4646",
       viewAll: "View all", viewLakeTag: "Lake View",
+      otaLabel: "Or book online",
+      agodaButton: "Book on Agoda",
+      bookingButton: "Book on Booking.com",
     },
     services: {
       label: "Amenities & Services", heading: "Fully Equipped",
