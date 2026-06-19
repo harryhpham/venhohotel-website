@@ -243,6 +243,9 @@ src/lib/data/rooms.ts
 |            | rooms.ts: thêm descriptionEn, amenitiesEn, bedsEn      |
 |            | GitHub token lưu macOS Keychain — push tự động         |
 |            | Cập nhật giá phòng: Deluxe 400k, Lake View 600k, Triple 500k |
+|            | FeaturedRooms: RoomCard nhận lang làm prop — tên/mô tả/giá EN |
+|            | ServicesGrid, NearbySection, LocationBlock: thêm useLang |
+|            | content.ts: thêm services, nearby, locationBlock (VI+EN) |
 | 15/06/2026 | **Phần 9 — SEO** hoàn thành ✅                          |
 |            | `robots.ts` → `/robots.txt` (allow all + sitemap link) |
 |            | `sitemap.ts` → `/sitemap.xml` (9 URLs, priority đúng)  |
