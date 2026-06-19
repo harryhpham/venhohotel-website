@@ -115,9 +115,9 @@ public/images/
 ### Loại phòng
 | Phòng                         | Slug               | Diện tích | Giường      | Giá từ       |
 |-------------------------------|--------------------|-----------|-------------|--------------|
-| Phòng Deluxe Đôi              | deluxe-double      | 18 m²     | 1 Queen     | 412,500đ/đêm |
-| Phòng Đôi View Hồ Tây         | double-lake-view   | 16 m²     | 1 Queen     | Liên hệ      |
-| Phòng Tiêu Chuẩn Ba Người     | standard-triple    | 18 m²     | 1Đơn + 1Đôi | Liên hệ      |
+| Phòng Deluxe Đôi              | deluxe-double      | 18 m²     | 1 Queen     | 400,000đ/đêm |
+| Phòng Đôi View Hồ Tây         | double-lake-view   | 16 m²     | 1 Queen     | 600,000đ/đêm |
+| Phòng Tiêu Chuẩn Ba Người     | standard-triple    | 18 m²     | 1Đơn + 1Đôi | 500,000đ/đêm |
 
 ### Check-in / Check-out
 - Check-in: 12:00 PM — 20:00 PM

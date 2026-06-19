@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Phòng Nghỉ",
   description:
-    "3 loại phòng tại Ven Hồ Hotel — Deluxe Đôi, Đôi View Hồ Tây, Tiêu Chuẩn Ba Người. View Hồ Tây, đầy đủ tiện nghi. Từ 412,500đ/đêm.",
+    "3 loại phòng tại Ven Hồ Hotel — Deluxe Đôi, Đôi View Hồ Tây, Tiêu Chuẩn Ba Người. View Hồ Tây, đầy đủ tiện nghi. Từ 400,000đ/đêm.",
   openGraph: {
     images: [{ url: "/images/Lake-view/lake-view-1.jpg", alt: "Phòng view Hồ Tây tại Ven Hồ Hotel" }],
   },
