@@ -246,6 +246,10 @@ src/lib/data/rooms.ts
 |            | FeaturedRooms: RoomCard nhận lang làm prop — tên/mô tả/giá EN |
 |            | ServicesGrid, NearbySection, LocationBlock: thêm useLang |
 |            | content.ts: thêm services, nearby, locationBlock (VI+EN) |
+| 20/06/2026 | **Fix AI Agent — chuyển cron → launchd** ✅             |
+|            | cron bỏ qua job khi Mac ngủ → launchd chạy khi thức   |
+|            | Plist: ~/Library/LaunchAgents/com.venhohotel.daily-revenue.plist |
+|            | Test thủ công OK — email gửi thành công                |
 | 15/06/2026 | **Phần 9 — SEO** hoàn thành ✅                          |
 |            | `robots.ts` → `/robots.txt` (allow all + sitemap link) |
 |            | `sitemap.ts` → `/sitemap.xml` (9 URLs, priority đúng)  |
@@ -257,6 +261,14 @@ src/lib/data/rooms.ts
 |            | Refactor `/lien-he` → Server Component + metadata      |
 |            | Cập nhật title template + og:image tất cả trang con    |
 |            | Build 16/16 trang pass sạch, không warning             |
+| 19/06/2026 | **Phần 7 — Tích Hợp Agoda / Booking.com** hoàn thành ✅ |
+|            | `src/lib/data/ota.ts` — `agodaUrl()` / `bookingUrl()` với UTM |
+|            | Nút OTA trong sidebar trang phòng (dưới nút gọi điện) |
+|            | Section "Đặt Phòng Trực Tuyến" trong trang liên hệ    |
+|            | GA4 events: `agoda_click`, `booking_click` (category: ota) |
+|            | UTM campaigns: `room_detail` / `contact_page`          |
+|            | Booking.com giữ `aid=304142`, link mở tab mới          |
+|            | Build 16/16 trang pass — deploy lên Vercel             |
 
 ---
 
@@ -438,20 +450,30 @@ src/lib/data/rooms.ts
 5. Parse Excel (openpyxl): tổng doanh thu, tiền phòng, DV, hình thức TT, top phòng
 6. Gửi email qua Gmail SMTP (smtplib SSL port 465, App Password)
 
-**Quản lý cron job:**
+**Quản lý launchd job (thay thế cron — chạy đúng kể cả khi Mac ngủ):**
 ```bash
-# Xem danh sách cron jobs
-crontab -l
-
-# Chỉnh sửa cron (thêm/đổi giờ)
-crontab -e
-
-# Entry cron cho báo cáo doanh thu (9:00 AM hàng ngày):
-# 0 9 * * * cd "/Users/hanhpham/Developer/Claude-Workspace/projects/Ven Ho Hotel/AI Agent" && bash run-daily-report.sh
+# Xem trạng thái
+launchctl list | grep venhohotel
 
 # Chạy thủ công ngay
+launchctl start com.venhohotel.daily-revenue
+
+# Xem log
+cat /tmp/venho-revenue.log
+
+# Tắt tạm thời
+launchctl unload ~/Library/LaunchAgents/com.venhohotel.daily-revenue.plist
+
+# Bật lại
+launchctl load ~/Library/LaunchAgents/com.venhohotel.daily-revenue.plist
+
+# Chạy script trực tiếp
 bash "/Users/hanhpham/Developer/Claude-Workspace/projects/Ven Ho Hotel/AI Agent/run-daily-report.sh"
 ```
+
+> **Lý do dùng launchd thay cron:** cron bỏ qua job nếu Mac đang ngủ.  
+> launchd tự chạy ngay khi Mac thức dậy nếu đã qua giờ 9AM.  
+> Plist: `~/Library/LaunchAgents/com.venhohotel.daily-revenue.plist`
 
 **Selectors SkyHotel (đã xác nhận):**
 - Login: `#txt_username`, `#txt_password`, `#cmd_login`
