@@ -39,8 +39,7 @@
       "title": "Ven Hồ Hotel: Agoda 8.5 điểm",
       "status": "pending_review",
       "folder": "2026/06/2026-06-20_agoda_85"
-    }
-    ,
+    },
     {
       "date": "2026-06-21",
       "pillar_name": "Hồ Tây & Địa Điểm",
@@ -74,6 +73,16 @@
       "folder": "2026/06/2026-06-24_linh-an-cafe-rooftop",
       "drive_url": "https://drive.google.com/drive/folders/1fThBo_8f0PxWB7bJjvntINmBiIbJJ5N3",
       "source": "manual-skill"
+    },
+    {
+      "date": "2026-06-28",
+      "pillar_id": "ho_tay",
+      "pillar_name": "Khám Phá Hồ Tây",
+      "topic_id": "con_duong_thanh_nien",
+      "topic_title": "Con đường Thanh Niên",
+      "title": "Con Đường Thanh Niên Giữa Hai Hồ",
+      "status": "pending_review",
+      "folder": "2026/06/2026-06-28_con_duong_thanh_nien"
     }
   ]
 }
