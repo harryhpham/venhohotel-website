@@ -330,7 +330,7 @@ def main():
     log("Đang gửi email preview...")
     try:
         import send_email
-        send_email.send(pillar, topic, content, drive_url)
+        send_email.send(pillar, topic, content, drive_url, file_info["image_path"])
     except Exception as e:
         log(f"LỖI gửi email: {e}")
         log(f"Content đã lưu tại: database/{file_info['folder']}/")

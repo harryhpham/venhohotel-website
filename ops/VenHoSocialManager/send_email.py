@@ -11,6 +11,7 @@ import os
 import smtplib
 import sys
 from datetime import datetime
+from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
@@ -24,9 +25,18 @@ CONFIG     = json.loads((BASE_DIR / "config.json").read_text(encoding="utf-8"))
 PILLAR_MAP = json.loads((BASE_DIR / "pillars.json").read_text(encoding="utf-8"))["pillars"]
 
 
-def build_html(pillar: dict, topic: dict, content: dict, drive_url: str = None) -> str:
+def build_html(pillar: dict, topic: dict, content: dict, drive_url: str = None, has_inline_image: bool = False) -> str:
     today_str        = datetime.now().strftime("%A, %d/%m/%Y")
     hashtags_display = " ".join(content["hashtags_all"])
+
+    image_section = ""
+    if has_inline_image:
+        image_section = """
+  <!-- ẢNH PREVIEW -->
+  <tr><td style="padding:20px 32px 0;">
+    <p style="margin:0 0 8px;font-size:11px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:1px;">Ảnh AI đã tạo</p>
+    <img src="cid:preview_image" style="width:100%;border-radius:8px;display:block;" alt="Preview">
+  </td></tr>"""
 
     drive_section = ""
     if drive_url:
@@ -63,6 +73,8 @@ def build_html(pillar: dict, topic: dict, content: dict, drive_url: str = None) 
     </h1>
     <p style="margin:6px 0 0;color:#aab8cc;font-size:13px;">{today_str}</p>
   </td></tr>
+
+  {image_section}
 
   {drive_section}
 
@@ -146,7 +158,7 @@ def build_html(pillar: dict, topic: dict, content: dict, drive_url: str = None) 
 </html>"""
 
 
-def send(pillar: dict, topic: dict, content: dict, drive_url: str = None):
+def send(pillar: dict, topic: dict, content: dict, drive_url: str = None, image_path: Path = None):
     cfg    = CONFIG["email"]
     sender = os.environ.get("GMAIL_SENDER", cfg["sender"])
     app_pw = os.environ.get("GMAIL_APP_PASSWORD", "")
@@ -154,14 +166,25 @@ def send(pillar: dict, topic: dict, content: dict, drive_url: str = None):
     if not app_pw:
         raise ValueError("GMAIL_APP_PASSWORD chưa được cấu hình trong .env")
 
-    subject = f"{cfg['subject_prefix']} — {pillar['emoji']} {pillar['name']}: {content['title']}"
-    html    = build_html(pillar, topic, content, drive_url)
+    subject        = f"{cfg['subject_prefix']} — {pillar['emoji']} {pillar['name']}: {content['title']}"
+    has_image      = image_path and Path(image_path).exists()
+    html           = build_html(pillar, topic, content, drive_url, has_inline_image=bool(has_image))
 
-    msg = MIMEMultipart("alternative")
+    if has_image:
+        msg = MIMEMultipart("related")
+        msg.attach(MIMEText(html, "html", "utf-8"))
+        with open(image_path, "rb") as f:
+            img = MIMEImage(f.read(), _subtype="png")
+            img.add_header("Content-ID", "<preview_image>")
+            img.add_header("Content-Disposition", "inline", filename="preview.png")
+            msg.attach(img)
+    else:
+        msg = MIMEMultipart("alternative")
+        msg.attach(MIMEText(html, "html", "utf-8"))
+
     msg["Subject"] = subject
     msg["From"]    = sender
     msg["To"]      = cfg["recipient"]
-    msg.attach(MIMEText(html, "html", "utf-8"))
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         server.login(sender, app_pw)
