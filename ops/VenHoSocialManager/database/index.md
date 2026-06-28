@@ -1,0 +1,12 @@
+# Database Index — Ven Hồ Hotel Social Media
+Cập nhật lần cuối: 20/06/2026 17:14
+
+| Ngày | Pillar | Chủ đề | Tiêu đề | Trạng thái |
+|------|--------|--------|---------|------------|
+| 2026-06-20 | 🌅 Khám Phá Hồ Tây | Bình minh Hồ Tây | Bình minh dịu êm trên Hồ Tây | pending_review |
+| 2026-06-20 | 🍜 Ẩm Thực Hồ Tây | Bánh tôm Hồ Tây | Bánh tôm Hồ Tây và Ven Hồ Hotel | pending_review |
+| 2026-06-20 | 🌅 Khám Phá Hồ Tây | Hoàng hôn tím Hồ Tây | Hoàng hôn tím trên Hồ Tây Hà Nội | pending_review |
+| 2026-06-20 | ⭐ Trải Nghiệm Khách Hàng | Agoda 8.5 — Khách nói gì? | Ven Hồ Hotel: Agoda 8.5 điểm | pending_review |
+| 2026-06-21 | 📍 Hồ Tây & Địa Điểm | Thể dục buổi sáng Hồ Tây | Các hoạt động thể dục buổi sáng ở Hồ Tây | pending_review |
+| 2026-06-23 | 🌅 P1 Khám Phá Hồ Tây | Chạy bộ buổi sáng ven hồ | Chạy bộ thể dục buổi sáng | 87/100 | pending_review |
+| 2026-06-24 | 🌅 P1 Khám Phá Hồ Tây | Linh An cafe rooftop | Linh An ngồi uống cafe trên rooftop nhìn Hồ Tây | 91/100 | pending_review |

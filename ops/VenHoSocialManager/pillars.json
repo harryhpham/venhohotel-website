@@ -1,0 +1,110 @@
+{
+  "rotation": [
+    "ho_tay", "am_thuc", "ho_tay", "social_proof", "ho_tay",
+    "cong_tac", "ho_tay", "am_thuc", "social_proof", "ho_tay",
+    "thuong_hieu", "am_thuc", "ho_tay", "cong_tac", "ho_tay",
+    "social_proof", "am_thuc", "ho_tay", "thuong_hieu", "cong_tac"
+  ],
+
+  "pillars": {
+    "ho_tay": {
+      "id": "ho_tay",
+      "name": "Khám Phá Hồ Tây",
+      "emoji": "🌅",
+      "ratio": "40%",
+      "description": "Giới thiệu vẻ đẹp, điểm đến, trải nghiệm xung quanh Hồ Tây và khu Tây Hồ. Mục tiêu: kéo người yêu Hồ Tây quan tâm đến vùng Tây Hồ — từ đó quan tâm đến Ven Hồ Hotel.",
+      "tone": "Thơ mộng, gợi cảm hứng khám phá, nhẹ nhàng và ấm áp",
+      "cta": "Ghé Ven Hồ Hotel để thức dậy mỗi sáng với khung cảnh này",
+      "topics": [
+        {"id": "binh_minh_ho_tay", "title": "Bình minh Hồ Tây", "desc": "Khoảnh khắc bình minh tuyệt đẹp trên Hồ Tây — ánh sáng vàng, mặt hồ phẳng lặng, không khí trong lành"},
+        {"id": "hoang_hon_tim", "title": "Hoàng hôn tím Hồ Tây", "desc": "Hồ Tây khi hoàng hôn — màu tím hồng phản chiếu xuống mặt hồ, khung cảnh lãng mạn nhất Hà Nội"},
+        {"id": "con_duong_thanh_nien", "title": "Con đường Thanh Niên", "desc": "Con đường lãng mạn chạy giữa hai hồ Tây và Trúc Bạch — địa điểm đi bộ, chạy bộ buổi sáng tuyệt vời"},
+        {"id": "chua_tran_quoc", "title": "Chùa Trấn Quốc", "desc": "Ngôi chùa cổ hơn 1500 năm trên đảo nhỏ trong Hồ Tây — biểu tượng văn hóa tâm linh của Hà Nội"},
+        {"id": "lang_hoa_nhat_tan", "title": "Làng hoa Nhật Tân", "desc": "Vườn đào, vườn quất rực rỡ, đặc biệt dịp Tết — nét đẹp truyền thống ngay cạnh Tây Hồ"},
+        {"id": "phu_tay_ho", "title": "Phủ Tây Hồ", "desc": "Ngôi đền thờ bà Chúa Liễu Hạnh linh thiêng bên Hồ Tây — điểm cầu may nổi tiếng của người Hà Nội"},
+        {"id": "dap_xe_quanh_ho", "title": "Đạp xe quanh Hồ Tây", "desc": "Trải nghiệm đạp xe 17km quanh Hồ Tây — khám phá từng ngóc ngách của hồ lớn nhất Hà Nội"},
+        {"id": "ngay_he_ho_tay", "title": "Hồ Tây ngày hè", "desc": "Mùa hè Hồ Tây với sen nở rộ, bãi tắm xưa, không khí trong lành xa lánh ồn ào thành phố"}
+      ]
+    },
+
+    "am_thuc": {
+      "id": "am_thuc",
+      "name": "Ẩm Thực Hồ Tây",
+      "emoji": "🍜",
+      "ratio": "20%",
+      "description": "Giới thiệu văn hóa ẩm thực đặc sắc của khu Tây Hồ — những món ăn địa phương không thể bỏ qua khi đến Hà Nội.",
+      "tone": "Hấp dẫn, gợi vị giác, tự hào về ẩm thực địa phương",
+      "cta": "Đặt phòng Ven Hồ Hotel — sáng dậy bước ra là có ngay những thiên đường ẩm thực này",
+      "topics": [
+        {"id": "banh_tom_ho_tay", "title": "Bánh tôm Hồ Tây", "desc": "Đặc sản bánh tôm chiên giòn nổi tiếng — ăn với rau sống và nước chấm chua ngọt, chỉ có ở Tây Hồ mới ngon nhất"},
+        {"id": "bun_oc_nguoi", "title": "Bún ốc nguội", "desc": "Tô bún ốc mát lạnh, chua chua ngọt ngọt — món ăn sáng đặc trưng của người Tây Hồ từ bao thế hệ"},
+        {"id": "ca_phe_trung", "title": "Cà phê trứng Hà Nội", "desc": "Ly cà phê trứng béo ngậy, thơm nức — phát minh của Hà Nội, thưởng thức với view Hồ Tây càng thêm tuyệt vời"},
+        {"id": "xoi_yen", "title": "Xôi Yến buổi sáng", "desc": "Hàng xôi nổi tiếng đất Tây Hồ — tô xôi nóng hổi thơm lừng đậu xanh, lạc rang, sáng ra ăn no bụng"},
+        {"id": "che_bun_tay_ho", "title": "Chè và bún Tây Hồ", "desc": "Những hàng chè, quán bún lề đường quen thuộc — hương vị bình dân nhưng chứa đựng cả hồn ẩm thực Hà Nội"},
+        {"id": "ca_phe_view_ho", "title": "Cà phê view Hồ Tây", "desc": "Ngồi nhâm nhi cà phê nhìn ra Hồ Tây rộng mênh mông — trải nghiệm sáng Hà Nội không thể quên"},
+        {"id": "hai_san_ven_ho", "title": "Hải sản ven hồ", "desc": "Những quán hải sản nhỏ xíu ven hồ — tôm, cua, mực nướng vừa ngon vừa rẻ theo kiểu Hà Nội"},
+        {"id": "pho_ha_noi", "title": "Phở Hà Nội chính gốc", "desc": "Tô phở bò Hà Nội nước trong, ngọt xương, thịt tái mềm — chuẩn hương vị Hà Nội mà không đâu làm được"}
+      ]
+    },
+
+    "cong_tac": {
+      "id": "cong_tac",
+      "name": "Kinh Nghiệm Công Tác",
+      "emoji": "💼",
+      "ratio": "15%",
+      "description": "Tips và gợi ý dành cho khách công tác từ tỉnh khác đến Hà Nội, và cả dân Hà Nội dùng Tây Hồ làm điểm làm việc. Mục tiêu: kéo nhóm khách công tác chọn Ven Hồ là điểm dừng chân.",
+      "tone": "Thực tế, hữu ích, đồng cảm với người bận rộn — không hoa mỹ",
+      "cta": "Ven Hồ Hotel — điểm dừng chân lý tưởng cho chuyến công tác Hà Nội của bạn",
+      "topics": [
+        {"id": "cafe_lam_viec", "title": "Cà phê làm việc Tây Hồ", "desc": "Top quán cà phê có wifi tốt, không gian yên tĩnh khu Tây Hồ cho người cần làm việc hoặc họp online"},
+        {"id": "tu_noi_bai", "title": "Từ Nội Bài về Tây Hồ", "desc": "Tuyến đường di chuyển từ sân bay Nội Bài về khu Tây Hồ nhanh nhất, tiết kiệm nhất — taxi, xe buýt, grab"},
+        {"id": "an_trua_nhanh", "title": "Ăn trưa nhanh khu Tây Hồ", "desc": "Các quán ăn ngon, nhanh, giá hợp lý gần 181 Nguyễn Đình Thi — dành cho người ít thời gian"},
+        {"id": "ket_hop_nghi_duong", "title": "Công tác kết hợp thư giãn", "desc": "Cách cân bằng chuyến công tác Hà Nội: làm việc hiệu quả ban ngày, thư giãn ven hồ buổi tối"},
+        {"id": "checkout_roi_van_co", "title": "Check-out rồi vẫn còn nửa ngày", "desc": "Gợi ý tận dụng buổi sáng cuối trước khi ra sân bay: đi bộ ven hồ, ăn sáng đặc sản, mua quà"},
+        {"id": "diem_dung_chan_ly_tuong", "title": "Tây Hồ — giữa trung tâm và sân bay", "desc": "Vị trí Tây Hồ lý tưởng cho khách công tác: 20 phút ra sân bay, 15 phút vào trung tâm, giá phòng hợp lý"},
+        {"id": "cuoi_tuan_mo_rong", "title": "Ở thêm ngày cuối tuần", "desc": "Nếu công tác kết thúc Thứ Sáu, tại sao không ở thêm cuối tuần? Khám phá Hà Nội kiểu mới cùng Hồ Tây"},
+        {"id": "khong_gian_yen_tinh", "title": "Làm việc buổi tối tại Ven Hồ", "desc": "12 phòng nhỏ xinh, yên tĩnh — không bị làm phiền, wifi ổn định, bàn làm việc đủ rộng cho laptop"}
+      ]
+    },
+
+    "social_proof": {
+      "id": "social_proof",
+      "name": "Trải Nghiệm Khách Hàng",
+      "emoji": "⭐",
+      "ratio": "15%",
+      "description": "Chia sẻ review thật từ khách, khoảnh khắc đáng nhớ, câu chuyện khách hàng. Mục tiêu: xây dựng uy tín và trust — kéo người chưa quyết định sang đặt phòng.",
+      "tone": "Chân thật, ấm áp, tự hào — không quảng cáo lộ liễu",
+      "cta": "Đặt phòng tại venhohotel.com hoặc gọi 024 3847 4646",
+      "topics": [
+        {"id": "agoda_85", "title": "Agoda 8.5 — Khách nói gì?", "desc": "Điểm Agoda 8.5/10 tổng thể, 9.2/10 vị trí — chia sẻ những lời khen thật từ 45 đánh giá"},
+        {"id": "vi_tri_9_2", "title": "Điểm vị trí 9.2 — Không ngẫu nhiên", "desc": "Agoda chấm vị trí 9.2/10: gần hồ, yên tĩnh, tiện đi lại — khách thực sự đánh giá cao điều này"},
+        {"id": "check_in_moment", "title": "Khoảnh khắc check-in đáng nhớ", "desc": "Khoảnh khắc bước vào phòng, mở cửa sổ lần đầu nhìn ra Hồ Tây — cảm giác mà mỗi khách đều trân trọng"},
+        {"id": "cap_doi_nghi_cuoi_tuan", "title": "Cuối tuần 2 người", "desc": "Câu chuyện một cặp đôi chọn Ven Hồ cho kỳ nghỉ cuối tuần — view hồ, sáng ăn bánh tôm, chiều dạo bộ Thanh Niên"},
+        {"id": "gia_dinh_co_tre_em", "title": "Gia đình nhỏ, kỳ nghỉ lớn", "desc": "Trẻ em dưới 9 tuổi miễn phí — gia đình 3-4 người tìm chỗ nghỉ Hà Nội giá phải chăng, vị trí đẹp"},
+        {"id": "khach_cong_tac_quay_lai", "title": "Lần này là lần thứ 3 quay lại", "desc": "Khách công tác quen thuộc chọn Ven Hồ mỗi khi ra Hà Nội — vì yên tĩnh, quen mặt, cảm giác như nhà"},
+        {"id": "review_tieng_nuoc_ngoai", "title": "Khách nước ngoài nói gì về Ven Hồ", "desc": "Review bằng tiếng Anh từ khách quốc tế — họ yêu điều gì ở Ven Hồ Hotel và Hồ Tây Hà Nội"},
+        {"id": "truoc_va_sau", "title": "Trước khi đến và sau khi rời đi", "desc": "Cảm xúc khách hàng: lo lắng trước khi đặt phòng boutique lần đầu, và cảm giác muốn quay lại sau khi rời"}
+      ]
+    },
+
+    "thuong_hieu": {
+      "id": "thuong_hieu",
+      "name": "Thương Hiệu Ven Hồ Hotel",
+      "emoji": "🏨",
+      "ratio": "10%",
+      "description": "Câu chuyện thương hiệu, triết lý phục vụ, những điều làm nên sự khác biệt của Ven Hồ Hotel. Mục tiêu: kết nối cảm xúc khách hàng với thương hiệu.",
+      "tone": "Tự hào, chân thành, có chiều sâu — kể chuyện, không quảng cáo",
+      "cta": "Đặt phòng tại venhohotel.com — Nơi Hồ Tây Gặp Gỡ Sự Tinh Tế",
+      "topics": [
+        {"id": "cau_chuyen_ven_ho", "title": "Câu chuyện Ven Hồ Hotel", "desc": "Nguồn gốc cái tên Ven Hồ, triết lý phục vụ, lý do chọn 181 Nguyễn Đình Thi — câu chuyện thương hiệu"},
+        {"id": "boutique_12_phong", "title": "12 phòng — Sự khác biệt cố ý", "desc": "Tại sao Ven Hồ chỉ có 12 phòng? Vì mỗi khách đều xứng đáng được chú ý — không bị lạc trong đám đông"},
+        {"id": "tagline_tinh_te", "title": "Nơi Hồ Tây Gặp Gỡ Sự Tinh Tế", "desc": "Ý nghĩa tagline — Hồ Tây là thiên nhiên, tinh tế là sự chăm chút từng chi tiết nhỏ trong dịch vụ"},
+        {"id": "nguyen_dinh_thi_181", "title": "181 Nguyễn Đình Thi — Địa chỉ vàng", "desc": "Vị trí đắc địa cách Hồ Tây vài bước chân, yên tĩnh nhưng không hẻo lánh — tại sao địa chỉ này hoàn hảo"},
+        {"id": "gia_tri_tung_dong", "title": "Giá trị xứng đáng từng đồng", "desc": "Phòng từ 400,000đ/đêm tại vị trí Tây Hồ đắc địa — không phải 'có đáng không' mà là 'còn phòng không'"},
+        {"id": "chi_tiet_nho", "title": "Những chi tiết nhỏ tạo nên sự khác biệt", "desc": "Từ chiếc gối, ánh đèn phòng, đến cốc cà phê chào buổi sáng — sự tinh tế nằm ở những điều tưởng nhỏ"},
+        {"id": "ha_noi_theo_cach_cua_ho_tay", "title": "Hà Nội theo cách của Hồ Tây", "desc": "Không phải Hà Nội ồn ào phố cổ, đây là Hà Nội nhẹ nhàng bên hồ — một phiên bản khác của thủ đô"},
+        {"id": "moi_khach_la_mot_cau_chuyen", "title": "Mỗi khách là một câu chuyện", "desc": "Đôi vợ chồng kỷ niệm, nhóm bạn bè tụ hội, người công tác một mình — Ven Hồ là nơi mỗi câu chuyện được trân trọng"}
+      ]
+    }
+  }
+}

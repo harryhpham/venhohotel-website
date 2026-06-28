@@ -1,0 +1,79 @@
+{
+  "entries": [
+    {
+      "date": "2026-06-20",
+      "pillar_id": "ho_tay",
+      "pillar_name": "Khám Phá Hồ Tây",
+      "topic_id": "binh_minh_ho_tay",
+      "topic_title": "Bình minh Hồ Tây",
+      "title": "Bình minh dịu êm trên Hồ Tây",
+      "status": "pending_review",
+      "folder": "2026-06-20_ho_tay"
+    },
+    {
+      "date": "2026-06-20",
+      "pillar_id": "am_thuc",
+      "pillar_name": "Ẩm Thực Hồ Tây",
+      "topic_id": "banh_tom_ho_tay",
+      "topic_title": "Bánh tôm Hồ Tây",
+      "title": "Bánh tôm Hồ Tây và Ven Hồ Hotel",
+      "status": "pending_review",
+      "folder": "2026-06-20_am_thuc"
+    },
+    {
+      "date": "2026-06-20",
+      "pillar_id": "ho_tay",
+      "pillar_name": "Khám Phá Hồ Tây",
+      "topic_id": "hoang_hon_tim",
+      "topic_title": "Hoàng hôn tím Hồ Tây",
+      "title": "Hoàng hôn tím trên Hồ Tây Hà Nội",
+      "status": "pending_review",
+      "folder": "2026-06-20_ho_tay"
+    },
+    {
+      "date": "2026-06-20",
+      "pillar_id": "social_proof",
+      "pillar_name": "Trải Nghiệm Khách Hàng",
+      "topic_id": "agoda_85",
+      "topic_title": "Agoda 8.5 — Khách nói gì?",
+      "title": "Ven Hồ Hotel: Agoda 8.5 điểm",
+      "status": "pending_review",
+      "folder": "2026/06/2026-06-20_agoda_85"
+    }
+    ,
+    {
+      "date": "2026-06-21",
+      "pillar_name": "Hồ Tây & Địa Điểm",
+      "topic_title": "Thể dục buổi sáng Hồ Tây",
+      "title": "Các hoạt động thể dục buổi sáng ở Hồ Tây",
+      "status": "pending_review",
+      "folder": "2026/06/2026-06-21_the-duc-buoi-sang",
+      "drive_url": "https://drive.google.com/drive/folders/1f4BluvZVR8awoXdku5vwPfI6-ldoCSNU",
+      "source": "manual-skill"
+    },
+    {
+      "date": "2026-06-23",
+      "pillar_name": "P1 Khám Phá Hồ Tây",
+      "funnel_stage": "TOFU",
+      "topic_title": "Chạy bộ buổi sáng ven hồ",
+      "title": "Chạy bộ thể dục buổi sáng",
+      "score": 87,
+      "status": "pending_review",
+      "folder": "2026/06/2026-06-23_chay-bo-buoi-sang",
+      "drive_url": "https://drive.google.com/drive/folders/1P6AwJ97VQ6riXladeOdQOaNsXHUfULYO",
+      "source": "manual-skill"
+    },
+    {
+      "date": "2026-06-24",
+      "pillar_name": "P1 — Khám Phá Hồ Tây",
+      "funnel_stage": "TOFU",
+      "topic_title": "Linh An cafe rooftop",
+      "title": "Linh An ngồi uống cafe trên rooftop Ven Hồ Hotel nhìn ra Hồ Tây",
+      "score": 91,
+      "status": "pending_review",
+      "folder": "2026/06/2026-06-24_linh-an-cafe-rooftop",
+      "drive_url": "https://drive.google.com/drive/folders/1fThBo_8f0PxWB7bJjvntINmBiIbJJ5N3",
+      "source": "manual-skill"
+    }
+  ]
+}
