@@ -2,6 +2,10 @@
 
 Tài liệu hướng dẫn cho Claude Code khi làm việc với project này.
 
+> **Universe context:** Ven Hồ Hotel là base camp của **The West Lake Living** universe.  
+> Master CLAUDE.md: `projects/CLAUDE.md` · DNA: `projects/VenHoBrandSystem/`  
+> Nhân vật: Hồ Tây (`projects/Ho Tay/`) · Linh An (`projects/Linh An/`)
+
 ---
 
 ## Thông tin dự án
@@ -18,19 +22,20 @@ Tài liệu hướng dẫn cho Claude Code khi làm việc với project này.
 - **Không xóa file** nếu không được Harry cho phép rõ ràng
 - **Output mặc định:** `.docx` cho tài liệu
 - **Ngôn ngữ:** Trả lời bằng tiếng Việt trừ khi được yêu cầu khác
+- **"Kết thúc Task"** — khi Harry nhắn cụm này, tự động cập nhật `CLAUDE.md` + `CHANGELOG.md` ngay, không hỏi
 
 ---
 
 ## Tech Stack
 
-| Thành phần   | Chi tiết                      |
-|--------------|-------------------------------|
-| Framework    | Next.js 14 (App Router)       |
-| Language     | TypeScript                    |
-| Styling      | Tailwind CSS v3               |
-| Node         | v20.20.2 (cài qua Homebrew)   |
-| Package mgr  | npm 10.8.2                    |
-| OS           | macOS (Apple Silicon)         |
+| Thành phần | Chi tiết |
+|------------|----------|
+| Framework  | Next.js 14 (App Router) |
+| Language   | TypeScript |
+| Styling    | Tailwind CSS v3 |
+| Node       | v20.20.2 (cài qua Homebrew) |
+| Package mgr | npm 10.8.2 |
+| OS         | macOS (Apple Silicon) |
 
 ### Màu sắc thương hiệu
 ```
@@ -55,88 +60,61 @@ src/
 │   ├── page.tsx                    ← Trang chủ
 │   ├── layout.tsx                  ← Root layout (font, metadata)
 │   ├── globals.css
-│   ├── phong/
-│   │   ├── page.tsx                ← Danh sách phòng
-│   │   └── [slug]/page.tsx         ← Chi tiết phòng
-│   ├── ve-chung-toi/page.tsx       ← Giới thiệu
-│   ├── tien-ich/page.tsx           ← Tiện ích & Dịch vụ
-│   ├── vi-tri/page.tsx             ← Vị trí & Đường đi
-│   └── lien-he/page.tsx            ← Liên hệ & Đặt phòng
+│   ├── phong/[slug]/page.tsx       ← Chi tiết phòng
+│   ├── ve-chung-toi/page.tsx
+│   ├── tien-ich/page.tsx
+│   ├── vi-tri/page.tsx
+│   └── lien-he/page.tsx
 ├── components/
-│   ├── sections/                   ← Section components của homepage
-│   │   ├── Hero.tsx
-│   │   ├── StatsStrip.tsx
-│   │   ├── FeaturedRooms.tsx
-│   │   ├── WestLakeSection.tsx
-│   │   ├── ServicesGrid.tsx
-│   │   ├── NearbySection.tsx
-│   │   ├── ReviewsSection.tsx
-│   │   ├── LocationBlock.tsx
-│   │   └── RoomDetailClient.tsx    ← Gallery + slideshow logic
-│   └── ui/
-│       ├── Navbar.tsx
-│       └── Footer.tsx
+│   ├── sections/                   ← Hero, FeaturedRooms, ServicesGrid...
+│   └── ui/                        ← Navbar, Footer, GoogleAnalytics
 └── lib/
-    ├── context/
-    │   └── LangContext.tsx          ← Language switcher VI/EN
+    ├── context/LangContext.tsx     ← Language switcher VI/EN
     └── data/
-        ├── content.ts               ← ⭐ Chỉnh text website (VI/EN)
-        └── rooms.ts                 ← ⭐ Thông tin phòng & đường dẫn ảnh
+        ├── content.ts              ← ⭐ Text website (VI/EN)
+        ├── rooms.ts                ← ⭐ Thông tin phòng & ảnh
+        └── ota.ts                  ← Deep link Agoda / Booking.com
 ```
 
-### Ảnh
-```
-public/images/
-├── Deluxe-double/     deluxe-double-1.JPG, -2.JPG, -3.JPG
-├── Lake-view/         lake-view-1.jpg … lake-view-9.JPG
-├── Standard-triple/   standard-triple-1.jpg … -4.JPG
-├── Bathroom/          bathroom-1.JPG, -2.JPG
-└── Exterior/          exterior-2.jpg, -3.jpg, -4.jpg, -5.jpg
-```
+**Chỉnh text website:** `src/lib/data/content.ts`  
+**Chỉnh thông tin phòng & ảnh:** `src/lib/data/rooms.ts`
 
 ---
 
 ## Thông tin khách sạn
 
-| Trường       | Thông tin                                       |
-|--------------|-------------------------------------------------|
-| Tên          | Ven Hồ Hotel                                    |
-| Tagline (VI) | Nơi Hồ Tây Gặp Gỡ Sự Tinh Tế                  |
-| Tagline (EN) | Where West Lake Meets Elegance                  |
-| Địa chỉ      | 181 Nguyễn Đình Thi, Tây Hồ, Hà Nội            |
-| Điện thoại   | 024 3847 4646                                   |
-| Facebook     | https://www.facebook.com/venhohotelhanoi (Ven Hồ Hotel Hanoi) |
-| Instagram    | https://www.instagram.com/venhohotel            |
-| Email        | venhohotel@gmail.com                            |
-| Website      | https://venhohotel.com                          |
-| Số phòng     | 12 phòng                                        |
-| Agoda        | 8.5/10 tổng thể · 9.2/10 vị trí (45 reviews)   |
+| Trường | Thông tin |
+|--------|-----------|
+| Tên | Ven Hồ Hotel |
+| Địa chỉ | 181 Nguyễn Đình Thi, Tây Hồ, Hà Nội |
+| Điện thoại | 024 3847 4646 |
+| Email | venhohotel@gmail.com |
+| Website | https://venhohotel.com |
+| Facebook | facebook.com/venhohotelhanoi |
+| Instagram | @venhohotelhanoi |
+| Agoda | 8.5/10 tổng thể · 9.2/10 vị trí (45 reviews) |
+| Số phòng | 12 phòng boutique |
 
 ### Loại phòng
-| Phòng                         | Slug               | Diện tích | Giường      | Giá từ       |
-|-------------------------------|--------------------|-----------|-------------|--------------|
-| Phòng Deluxe Đôi              | deluxe-double      | 18 m²     | 1 Queen     | 400,000đ/đêm |
-| Phòng Đôi View Hồ Tây         | double-lake-view   | 16 m²     | 1 Queen     | 600,000đ/đêm |
-| Phòng Tiêu Chuẩn Ba Người     | standard-triple    | 18 m²     | 1Đơn + 1Đôi | 500,000đ/đêm |
 
-### Check-in / Check-out
-- Check-in: 12:00 PM — 20:00 PM
-- Check-out: 06:00 AM — 12:00 PM
-- Trẻ em dưới 9 tuổi: miễn phí (giường hiện có)
+| Phòng | Slug | Diện tích | Giá từ |
+|-------|------|-----------|--------|
+| Phòng Deluxe Đôi | `deluxe-double` | 18 m² | 400,000đ/đêm |
+| Phòng Đôi View Hồ Tây | `double-lake-view` | 16 m² | 600,000đ/đêm |
+| Phòng Tiêu Chuẩn Ba Người | `standard-triple` | 18 m² | 500,000đ/đêm |
+
+Check-in: 12:00–20:00 · Check-out: 06:00–12:00 · Trẻ em dưới 9 tuổi: miễn phí
 
 ---
 
 ## Commands
 
 ```bash
-# Chạy development server
-npm run dev
-# → http://localhost:3000
+# Dev server
+npm run dev              # → http://localhost:3000
 
-# Build production (static export)
+# Build & preview
 npm run build
-
-# Xem static build
 npx serve out
 
 # Lint
@@ -146,374 +124,273 @@ npm run lint
 ### Deploy lên Vercel
 
 ```bash
-# Push lên GitHub → Vercel tự động deploy
 git add <files>
 git commit -m "feat: ..."
 git push origin main
 # → venhohotel.com cập nhật sau ~1-2 phút
 ```
 
-> **GitHub credentials:** Token `ghp_...` đã lưu vào macOS Keychain (osxkeychain).  
-> Mỗi lần `git push` sẽ tự động dùng token, không cần nhập lại.
+> GitHub token đã lưu vào macOS Keychain — `git push` tự động, không cần nhập lại.
 
 ---
 
-## Cách chỉnh sửa nội dung
+## Các module & tài liệu chi tiết
 
-**Text website (VI/EN):**
+| Module | Thư mục | Tài liệu |
+|--------|---------|----------|
+| Form đặt phòng (Resend) | `ops/email-form/` | `notes.md` |
+| Social Media AI (skill `/tao-social-post`) | `ops/VenHoSocialManager/` | `README.md` |
+| **Social Video Content** | `ops/social-video/` | `README.md` |
+| Phân tích đối thủ | `ops/competitor-analysis/` | `notes.md` |
+| Google Analytics GA4 | `ops/analytics/` | `notes.md` |
+| OTA (Agoda/Booking.com) | `ops/agoda/` | — |
+| AI Agent doanh thu | `ops/ai-agent/` | `notes.md` |
+| SEO | `ops/seo/` | `notes.md` |
+| **Hồ Tây Image DNA** | `ops/` | `ho-tay-image-dna.md` |
+| **Universe Brand DNA** | `projects/VenHoBrandSystem/DNA/` | 5 DNA files + `Linh An Universe/07_LINH_AN_KOL_SYSTEM/` (07A–07F) |
+| **Linh An Production** | `Linh An Universe/07_LINH_AN_KOL_SYSTEM/` | 07E Production Prompt System · 07F QC Scoring Rubric |
+| **Ho Tay Content Library** | `projects/Ho Tay/` | SceneLibrary, Prompts, References |
+| **Linh An Character Library** | `projects/Linh An/` | CharacterBible, Prompts, Wardrobe |
+| **ContentProduction** | `projects/ContentProduction/` | Output content đã tạo |
+
+> Tài liệu chung (Venhohotel.md, DEPLOY-GUIDE.md): `docs/`
+
+**Lịch sử phát triển:** xem `CHANGELOG.md`  
+**Universe history:** xem `projects/CHANGELOG.md`
+
+---
+
+## Social Video Content
+
+Hệ thống tạo video ngắn 15 giây cho TikTok / Instagram Reels / YouTube Shorts.
+
+### AI KOL — Linh An
+
+| Trường | Thông tin |
+|--------|-----------|
+| Tên | Linh An |
+| Tuổi | 24 |
+| Nghề | Fashion & Lifestyle Creator |
+| Khu vực | Tây Hồ, Hà Nội |
+| Vai trò | Xuất hiện tự nhiên trong video — KHÔNG phải người quảng cáo |
+
+**Character DNA đầy đủ (v3.1):** `projects/VenHoBrandSystem/DNA/Linh An Universe/07_LINH_AN_KOL_SYSTEM/`
+- `07A` — Visual DNA v3.1 (character identity)
+- `07B` — Master Reference Pack v3.0 (reference scores: B3=9.4–9.5 PRIMARY, A2=9.2, C=9.2, D=9.4)
+- `07C` — Face Lock System v1.1 (tại sao người nhận ra Linh An)
+- `07E` — Production Prompt System v1.1 (3-block universal core, Google Flow + ChatGPT appendix)
+- `07F` — QC Scoring Rubric
+
+**Identity stack (khi xung đột):** Master Face #001 > 07C Face Lock > 07B Reference Pack > 07A Visual DNA > 07E Prompt
+
+**Character Library:** `projects/Linh An/` (CharacterBible, Prompts, Wardrobe)  
+**Legacy prompts:** `ops/social-video/linh-an-storyboard-prompts.md` (vẫn dùng cho `/tao-video-script`)
+
+**Face Lock v3.1 (dùng trong mọi Seedance prompt — production validated):**
 ```
-src/lib/data/content.ts
+Linh An, Vietnamese female influencer, 24 years old,
+soft elongated oval face, balanced facial geometry,
+slim natural nose bridge, long almond eyes, horizontal eye emphasis,
+slightly narrow eye opening, thin upper eyelid, warm brown irises,
+very subtle outer corner lift, natural eye asymmetry,
+low-position eyebrows, minimal arch, close eye-brow distance,
+natural full lips with slightly thinner upper lip and slightly fuller lower lip,
+very subtle upward lip corners, slightly shorter philtrum,
+soft feminine jawline, delicate chin,
+fair warm ivory skin, healthy natural glow, realistic skin texture, natural pores,
+long dark chocolate brown layered wavy hair, natural center part,
+small pearl drop earrings,
+gentle feminine beauty, elegant Vietnamese appearance,
+luxury lifestyle creator, consistent facial identity,
+photorealistic, natural beauty,
+no plastic skin, no doll face, no exaggerated makeup.
+168cm height, slim elegant body, defined waistline,
+long legs, natural feminine curves, healthy feminine silhouette,
+graceful posture, confident but relaxed body language.
+10-20 degree soft hero left angle, natural eye contact,
+Living Expression — subtle anticipation smile, genuine engagement.
 ```
 
-**Thông tin phòng & ảnh:**
+**Outfit Pack:**
+- **A – Cafe Girl:** cream knit top, beige A-line skirt, small luxury handbag
+- **B – West Lake Sunset:** flowing white dress, minimal gold jewelry
+- **C – Street Style:** white button-up shirt, high-waist trousers, denim jacket
+- **D – Business Travel:** light beige blazer, white blouse, elegant trousers
+
+**Outfit mapping theo Pillar:** View & Vibe→B · Room Tour→D · Local Life→A · Deal→B/D · Guest Story→A/B
+
+### Cấu trúc video
+
+- **Format:** 15 giây · 3 cảnh × 5 giây · 9:16 vertical
+- **AI Video tool:** LitMedia Seedance 2.0 — litmedia.ai
+- **Edit:** CapCut (ghép clip, nhạc, AI caption)
+
+### 5 Content Pillars
+
+1. **View & Vibe** — cảnh đẹp, hoàng hôn, không khí hồ
+2. **Room Tour** — phòng, reveal view, không gian
+3. **Local Life** — cuộc sống Tây Hồ (hotel là neo, local là context)
+4. **Deal & Ưu đãi** — giá phòng, khuyến mãi
+5. **Guest Story** — trải nghiệm khách
+
+### Files
+
 ```
-src/lib/data/rooms.ts
+ops/social-video/
+├── README.md                        ← Chiến lược tổng thể
+├── content-calendar.md              ← Lịch 14 video (Tuần 1–4, tháng 6–7/2026)
+├── linh-an-storyboard-prompts.md   ← ⭐ Character DNA đầy đủ của Linh An
+├── scripts/
+│   ├── 001-golden-hour-ho-tay.md   ← View & Vibe · 23/6
+│   ├── 002-room-tour-double-lake-view.md ← Room Tour · 25/6
+│   ├── 003-buoi-sang-ven-ho.md     ← Local Life · 27/6
+│   ├── 004-checkin-dep-nhat.md     ← Room Tour · 1/7
+│   └── 005-cuoi-tuan-o-tay-ho.md  ← Local Life · 4/7
+└── script-generator/               ← Web app tạo script tự động (Node.js + Claude API)
+    ├── server.js
+    ├── index.html
+    └── .env                        ← ANTHROPIC_API_KEY
 ```
 
-**Thêm ảnh mới:**
-1. Copy ảnh vào `public/images/[Tên-folder]/`
-2. Cập nhật đường dẫn trong `src/lib/data/rooms.ts`
-3. Chạy lại `npm run build`
+### Tạo script mới
 
----
+**Cách 1 — Trong VSCode (khuyến nghị, không tốn thêm phí):**
+```
+/tao-video-script [concept ngắn]
+```
+Skill file: `.claude/commands/tao-video-script.md`
 
-## Kế hoạch tiếp theo
-
-- [x] Deploy lên Vercel — domain `venhohotel.com` — hoàn thành 09/06/2026
-- [x] Kết nối form đặt phòng với email (Resend) — hoàn thành 09/06/2026
-- [x] Phân tích đối thủ cạnh tranh khu vực Tây Hồ — hoàn thành 15/06/2026
-- [ ] Xây dựng content & lịch đăng Social Media (Facebook, Instagram, Zalo OA)
-- [x] Phát triển AI Agent quản lý doanh thu hàng ngày
-- [x] Migration Windows → macOS — hoàn thành 19/06/2026
-- [x] Thêm Google Analytics — hoàn thành 10/06/2026
-- [x] Tích hợp Booking.com / Agoda deep link — hoàn thành 19/06/2026
-- [ ] Tạo tài khoản Instagram, Zalo OA
-- [x] Phát triển SEO — robots.txt, sitemap.xml, JSON-LD schema, og:image, Twitter Card — hoàn thành 15/06/2026
-
----
-
-## Lịch sử phát triển
-
-| Ngày       | Milestone                                              |
-|------------|--------------------------------------------------------|
-| 04/06/2026 | Website 7 trang hoàn chỉnh, build clean               |
-|            | VI/EN language switcher                                |
-|            | Gallery + lightbox + auto-slideshow 10s                |
-|            | Mobile responsive, SEO metadata, JSON-LD schema        |
-| 09/06/2026 | Kết nối form đặt phòng với email (Resend)              |
-|            | API route POST /api/booking với HTML email template    |
-|            | Loading state, error handling tiếng Việt               |
-|            | Push lên GitHub (harryhpham/venhohotel-website)        |
-|            | Deploy thành công lên Vercel — venhohotel.com          |
-| 10/06/2026 | **Phần 6 — Google Analytics GA4** hoàn thành ✅         |
-|            | Measurement ID: G-4242ESCGY7                           |
-|            | GoogleAnalytics component (`next/script afterInteractive`) |
-|            | Conversion events: `generate_lead`, `phone_click`      |
-|            | Deploy lên Vercel — DebugView xác nhận data đổ về     |
-|            | Verify domain venhohotel.com trong Resend              |
-|            | Đổi sender sang no-reply@venhohotel.com               |
-|            | Test form production — email gửi thành công            |
-|            | **Debug build failure:** resend@6 yêu cầu Node ≥20,  |
-|            | Vercel mặc định Node 18 → thêm engines vào package.json |
-|            | Fix Resend init nằm ngoài try-catch → move vào trong  |
-|            | Fix RESEND_API_KEY bị mất trong Vercel env vars        |
-|            | ✅ Phần 3 hoàn thành toàn bộ — form live & ổn định    |
-| 15/06/2026 | **Phần 5 — Phân Tích Đối Thủ** hoàn thành ✅                   |
-|            | 5 đối thủ trực tiếp khu Tây Hồ được phân tích (Đan Thanh sát vách) |
-|            | Ven Hồ: Agoda 8.5 cao nhất phân khúc, duy nhất có website+booking  |
-|            | Đề xuất định vị + 6 hành động ưu tiên Q3/2026                      |
-|            | Lưu trong `Phan tich doi thu/notes.md`                             |
-|            | Scheduled Agent tự động cập nhật mỗi Thứ Hai — gửi email báo cáo  |
-| 15/06/2026 | **Phần 8 — AI Agent Doanh Thu** hoàn thành ✅           |
-|            | Playwright scrape SkyHotel PMS → parse Excel → gửi email|
-|            | cron job "VenHo-DailyRevenue" lúc 9:00 AM |
-|            | Gmail SMTP (App Password) từ venhohotel@gmail.com        |
-|            | CCR bị block egress admin1.skyhotel.vn → dùng local     |
-| 19/06/2026 | **Migration Windows → macOS** hoàn thành ✅             |
-|            | Homebrew + Node v20.20.2 + npm 10.8.2 đã cài           |
-|            | Playwright + Chromium cài lại trên macOS               |
-|            | 6 file Windows (.ps1, .bat) → 5 bash scripts (.sh)     |
-|            | Cron job "VenHo-DailyRevenue" 9:00 AM chạy OK          |
-|            | Terminal Full Disk Access đã cấp                       |
-|            | Website localhost:3000 chạy OK trên macOS              |
-|            | CLAUDE.md + DEPLOY-GUIDE.md cập nhật đường dẫn macOS  |
-|            | **Fix song ngữ EN/VI toàn bộ trang web** ✅             |
-|            | 4 trang con tách thành Client Components (useLang)     |
-|            | 6 section EN mới trong content.ts                      |
-|            | rooms.ts: thêm descriptionEn, amenitiesEn, bedsEn      |
-|            | GitHub token lưu macOS Keychain — push tự động         |
-|            | Cập nhật giá phòng: Deluxe 400k, Lake View 600k, Triple 500k |
-|            | FeaturedRooms: RoomCard nhận lang làm prop — tên/mô tả/giá EN |
-|            | ServicesGrid, NearbySection, LocationBlock: thêm useLang |
-|            | content.ts: thêm services, nearby, locationBlock (VI+EN) |
-| 20/06/2026 | **Fix AI Agent — chuyển cron → launchd** ✅             |
-|            | cron bỏ qua job khi Mac ngủ → launchd chạy khi thức   |
-|            | Plist: ~/Library/LaunchAgents/com.venhohotel.daily-revenue.plist |
-|            | Test thủ công OK — email gửi thành công                |
-| 15/06/2026 | **Phần 9 — SEO** hoàn thành ✅                          |
-|            | `robots.ts` → `/robots.txt` (allow all + sitemap link) |
-|            | `sitemap.ts` → `/sitemap.xml` (9 URLs, priority đúng)  |
-|            | `JsonLd.tsx` — reusable Server Component               |
-|            | Hotel JSON-LD schema trên homepage (rating 8.5, geo...) |
-|            | HotelRoom JSON-LD + BreadcrumbList trên 3 trang phòng  |
-|            | BreadcrumbList JSON-LD trên 5 trang con còn lại        |
-|            | Root layout: metadataBase, og:image, Twitter Card      |
-|            | Refactor `/lien-he` → Server Component + metadata      |
-|            | Cập nhật title template + og:image tất cả trang con    |
-|            | Build 16/16 trang pass sạch, không warning             |
-| 19/06/2026 | **Phần 7 — Tích Hợp Agoda / Booking.com** hoàn thành ✅ |
-|            | `src/lib/data/ota.ts` — `agodaUrl()` / `bookingUrl()` với UTM |
-|            | Nút OTA trong sidebar trang phòng (dưới nút gọi điện) |
-|            | Section "Đặt Phòng Trực Tuyến" trong trang liên hệ    |
-|            | GA4 events: `agoda_click`, `booking_click` (category: ota) |
-|            | UTM campaigns: `room_detail` / `contact_page`          |
-|            | Booking.com giữ `aid=304142`, link mở tab mới          |
-|            | Build 16/16 trang pass — deploy lên Vercel             |
-
----
-
-## Phần 3: Form Đặt Phòng & Email (Resend)
-
-> Kết nối form với email + deploy lên Vercel.
-
-### Thư mục làm việc
-`Ven Ho Hotel/Form email/` — xem `notes.md` để biết chi tiết đầy đủ.
-
-### Checklist
-
-- [x] Đăng ký / đăng nhập tài khoản Vercel
-- [x] Import repo `harryhpham/venhohotel-website` từ GitHub
-- [x] Thêm Environment Variable `RESEND_API_KEY` trong Vercel dashboard
-- [x] Deploy thành công — **venhohotel.com**
-- [x] Test form đặt phòng trên production — form hoạt động, email gửi thành công
-
-### Việc còn lại sau deploy
-
-- [x] Verify domain `venhohotel.com` trong Resend — **Verified 10/06/2026**
-- [x] Cập nhật `from` email → `no-reply@venhohotel.com` — đã deploy
-- [x] Fix build: thêm `"engines": {"node": ">=20"}` vào `package.json`
-- [x] Fix runtime: move `new Resend()` vào trong `try-catch`
-- [x] Fix env: thêm lại `RESEND_API_KEY` vào Vercel dashboard
-- [x] Test lần cuối — **form hoạt động hoàn toàn 10/06/2026** ✅
-
-### Ghi chú kỹ thuật quan trọng
-
-- `resend@6+` yêu cầu **Node ≥ 20** — Vercel mặc định Node 18, phải khai báo `engines`
-- `RESEND_API_KEY` phải được thêm thủ công trong **Vercel → Settings → Environment Variables**
-- Sau khi thêm env var, phải **Redeploy** để Vercel load lại
-
----
-
-## Phần 4: Social Media Content & Lịch Đăng
-
-> Xây dựng hiện diện thương hiệu trên Facebook, Instagram, Zalo OA.
-
-### Thư mục làm việc
-`Ven Ho Hotel/Social Media content/`
-
-### Phạm vi công việc
-
-- [x] Xác định kênh ưu tiên: Facebook · Instagram · Zalo OA
-- [x] Xây dựng content pillars — `content-pillars.md`
-- [x] Soạn lịch đăng tháng 7/2026 — `lich-dang-thang-7-2026.md`
-- [x] Viết caption mẫu + quy cách ảnh — `caption-mau.md`
-- [x] Instagram (@venhohotel) và Facebook (facebook.com/venhohotel) đã có
-- [x] Hướng dẫn tạo Zalo OA — xem `zalo-oa-huong-dan.md`
-- [x] Setup Meta Business Suite — xem `meta-business-suite.md`
-
-### Nền tảng & ưu tiên
-
-| Kênh | Trạng thái | Ưu tiên |
-|------|-----------|---------|
-| Facebook | Đã có — facebook.com/venhohotel | Cao |
-| Instagram | Đã có — @venhohotel | Cao |
-| Zalo OA | Chưa có | Trung bình |
-
----
-
-## Phần 5: Phân Tích Đối Thủ Cạnh Tranh
-
-> Nghiên cứu thị trường khách sạn khu vực Tây Hồ, Hà Nội.
-
-### Thư mục làm việc
-`Ven Ho Hotel/Phan tich doi thu/`
-
-### Phạm vi công việc
-
-- [x] Xác định danh sách đối thủ trực tiếp (cùng phân khúc, khu Tây Hồ)
-- [x] Phân tích: giá phòng, tiện ích, đánh giá khách hàng
-- [x] So sánh điểm mạnh/yếu của Ven Hồ so với đối thủ
-- [x] Đề xuất hướng định vị và cải thiện
-- [x] Tạo Scheduled Agent cập nhật đối thủ hàng tuần — hoàn thành 15/06/2026
-
-### Scheduled Agent — Theo Dõi Đối Thủ Tự Động
-
-| Thông tin | Chi tiết |
-|-----------|----------|
-| Routine ID | `trig_01HhEDr4CRLV1Krf32A1o3AG` |
-| Lịch chạy | Mỗi **Thứ Hai 9:00 sáng** (Bangkok / UTC+7) |
-| Đầu ra | Email → hpham1504@gmail.com |
-| Model | claude-sonnet-4-6 |
-| Connector | Gmail ✅ |
-| Quản lý | https://claude.ai/code/routines/trig_01HhEDr4CRLV1Krf32A1o3AG |
-
-**Nội dung email hàng tuần:**
-- Tóm tắt 3–5 điểm nổi bật thay đổi trong tuần
-- Bảng giá & rating của 8 đối thủ so với Ven Hồ
-- Vị trí Ven Hồ trên thị trường
-- 1–2 hành động cụ thể để giữ lợi thế
-
----
-
-## Phần 6: Google Analytics (GA4)
-
-> Theo dõi lưu lượng và hành vi người dùng trên venhohotel.com.
-
-### Thư mục làm việc
-`Ven Ho Hotel/Google Analytics/`
-
-### Phạm vi công việc
-
-- [x] Tạo tài khoản GA4 + property cho venhohotel.com — Measurement ID: `G-4242ESCGY7`
-- [x] Thêm GA4 Measurement ID vào Next.js (`src/app/layout.tsx`) — qua `GoogleAnalytics.tsx`
-- [x] Thiết lập conversion events — `generate_lead` (form submit), `phone_click` (click SĐT)
-- [x] Kiểm tra data đổ về dashboard — DebugView nhận events 10/06/2026 ✅
-
-### Ghi chú kỹ thuật
-
-- `src/components/ui/GoogleAnalytics.tsx` — load script GA4 bằng `next/script` strategy `afterInteractive`
-- Conversion events fire trong `src/app/lien-he/page.tsx`:
-  - `generate_lead` — sau khi form submit thành công (kèm `room_type`)
-  - `phone_click` — khi click số điện thoại trong trang liên hệ
-
----
-
-## Phần 7: Tích Hợp Agoda / Booking.com
-
-> Thêm deep link đặt phòng trực tiếp qua OTA.
-
-### Thư mục làm việc
-`Ven Ho Hotel/Agoda/`
-
-### Phạm vi công việc
-
-- [x] Lấy affiliate/deep link từ Agoda (trang khách sạn Ven Hồ)
-- [x] Lấy link từ Booking.com
-- [x] Thêm nút CTA "Đặt qua Agoda" / "Đặt qua Booking.com" vào trang phòng và trang liên hệ
-- [x] Đảm bảo link mở tab mới, có UTM tracking
-
-### Ghi chú kỹ thuật
-
-- `src/lib/data/ota.ts` — URL helpers `agodaUrl(campaign)` và `bookingUrl(campaign)`
-- UTM params: `utm_source=venhohotel.com&utm_medium=website&utm_campaign=<room_detail|contact_page>`
-- Booking.com giữ `aid=304142` (affiliate ID)
-- GA4 events: `agoda_click`, `booking_click` (category: ota) — fire trong ContactClient
-- Trang phòng: nút OTA nằm trong sidebar booking card, dưới nút gọi điện
-- Trang liên hệ: section "Đặt Phòng Trực Tuyến" bên dưới contact info
-
----
-
-## Phần 8: AI Agent Quản Lý Doanh Thu ✅
-
-> Xây dựng agent tự động hóa theo dõi và tối ưu doanh thu hàng ngày.
-
-### Thư mục làm việc
-`Ven Ho Hotel/AI Agent/`
-
-### Phạm vi công việc
-
-- [x] Xác định nguồn dữ liệu: SkyHotel PMS (admin1.skyhotel.vn) — chính xác nhất
-- [x] Discovery selectors SkyHotel bằng Playwright headless (login, menu, date picker, export)
-- [x] Viết `skyhotel-scraper.py` — login → export Excel → parse → format + gửi email
-- [x] Xây dựng hướng dẫn Google Sheets Dashboard + Looker Studio
-- [x] Chuyển sang cron job local (CCR bị block egress đến admin1.skyhotel.vn)
-- [x] Viết `run-daily-report.sh` — runner script với credentials
-- [x] Đăng ký cron job "VenHo-DailyRevenue" — chạy 9:00 AM hàng ngày
-
-### macOS Cron Job — Báo Cáo Doanh Thu Hàng Ngày
-
-> **Lý do không dùng Claude CCR:** `admin1.skyhotel.vn` bị block bởi network egress policy của cloud environment Anthropic.
-
-| Thông tin | Chi tiết |
-|-----------|----------|
-| Job name | `VenHo-DailyRevenue` |
-| Script | `AI Agent/run-daily-report.sh` |
-| Lịch chạy | Mỗi ngày **9:00 sáng** (giờ máy Harry) |
-| Đầu ra | Email → venhohotel@gmail.com |
-| Gửi qua | Gmail SMTP (smtplib, App Password) |
-
-**Luồng kỹ thuật:**
-1. Playwright headless login `admin1.skyhotel.vn` (user: koibito)
-2. Navigate menu Doanh thu → Doanh thu hóa đơn
-3. Fill date picker ngày hôm qua → click OK → đợi AJAX
-4. Click "Xuất File" (`#export_revenue_v1`) → download Excel
-5. Parse Excel (openpyxl): tổng doanh thu, tiền phòng, DV, hình thức TT, top phòng
-6. Gửi email qua Gmail SMTP (smtplib SSL port 465, App Password)
-
-**Quản lý launchd job (thay thế cron — chạy đúng kể cả khi Mac ngủ):**
+**Cách 2 — Web app (dùng khi cộng tác viên cần dùng):**
 ```bash
-# Xem trạng thái
-launchctl list | grep venhohotel
-
-# Chạy thủ công ngay
-launchctl start com.venhohotel.daily-revenue
-
-# Xem log
-cat /tmp/venho-revenue.log
-
-# Tắt tạm thời
-launchctl unload ~/Library/LaunchAgents/com.venhohotel.daily-revenue.plist
-
-# Bật lại
-launchctl load ~/Library/LaunchAgents/com.venhohotel.daily-revenue.plist
-
-# Chạy script trực tiếp
-bash "/Users/hanhpham/Developer/Claude-Workspace/projects/Ven Ho Hotel/AI Agent/run-daily-report.sh"
+cd "ops/social-video/script-generator"
+npm start   # → http://localhost:3000
 ```
-
-> **Lý do dùng launchd thay cron:** cron bỏ qua job nếu Mac đang ngủ.  
-> launchd tự chạy ngay khi Mac thức dậy nếu đã qua giờ 9AM.  
-> Plist: `~/Library/LaunchAgents/com.venhohotel.daily-revenue.plist`
-
-**Selectors SkyHotel (đã xác nhận):**
-- Login: `#txt_username`, `#txt_password`, `#cmd_login`
-- Date picker: `#date_begin`, `#date_end`, `#fancyConfirmdate_edit`
-- Export: `#export_revenue_v1` (hoặc `#export_revenue_v2`)
-- Menu: accordion jQuery UI, hash `#revenue_invoices`
-
-**Excel format:** Row 0–6 = header info, Row 7 = column labels, Row 8+ = data
-- Col 0: STT (string), Col 2: Phòng, Col 7: Tiền phòng, Col 8: DV, Col 11: Tổng cộng, Col 16: HTTT
-
-### Google Sheets Dashboard
-
-- Xem hướng dẫn đầy đủ: `AI Agent/sheets-guide.md`
-- Kết nối Looker Studio để xem dashboard trực quan
+Yêu cầu: `ANTHROPIC_API_KEY` trong file `.env` · Chi phí ~700–1,000đ/script
 
 ---
 
-## Phần 9: SEO
+## VenHoSocialManager — Scripts CLI
 
-> Cải thiện khả năng xuất hiện trên Google và chất lượng preview khi share link mạng xã hội.
+| Lệnh | Tác dụng |
+|------|----------|
+| `python3 generate_image.py "[prompt]" "database/YYYY/MM/folder" [portrait\|square\|story]` | Tạo ảnh gpt-image-2 |
+| `python3 google_drive.py upload "database/YYYY/MM/folder"` | Upload folder lên Drive, in ra URL |
+| `python3 send_email.py` | Gửi email bài mới nhất (tự scan database) |
+| `python3 send_email.py "database/YYYY/MM/folder"` | Gửi email bài cụ thể |
 
-### Thư mục làm việc
-`Ven Ho Hotel/SEO/`
+**Sau Bước 5 (tạo ảnh) của skill `/tao-social-post`**, phải chạy Bước 5b:
+1. Upload Drive → lấy URL
+2. Cập nhật `meta.json` thêm `drive_url`
+3. Cập nhật `database/index.json` + `database/index.md`
 
-### Phạm vi công việc
+### AI Image Engines
 
-- [x] Tạo `robots.txt` (tự động qua `src/app/robots.ts`)
-- [x] Tạo `sitemap.xml` với 9 URL (6 tĩnh + 3 trang phòng)
-- [x] Tạo `src/components/seo/JsonLd.tsx` — component dùng chung cho JSON-LD
-- [x] Thêm Hotel JSON-LD schema vào homepage (name, address, geo, rating, amenities)
-- [x] Thêm HotelRoom JSON-LD vào từng trang phòng chi tiết
-- [x] Thêm BreadcrumbList JSON-LD vào tất cả trang con
-- [x] Cập nhật root layout: `metadataBase`, `og:image`, Twitter Card, `title.template`
-- [x] Refactor `lien-he/page.tsx` → Server Component để xuất metadata
-- [x] Cập nhật metadata (title, og:image) cho 5 trang con
+| Engine | Tool | Dùng khi |
+|--------|------|---------|
+| **GPT Image 2** (ChatGPT) | `generate_image.py --ref` | Volume, social posts, on-demand |
+| **Google Flow** (Nano Banana 2) | litmedia.ai → Ingredients system | Hero portrait, branding, series nhất quán |
 
-### Ghi chú kỹ thuật
+> **QC scoring:** Mọi ảnh Linh An chấm điểm theo rubric `07F_QC_CHECKLIST_SCORING_RUBRIC_v1_0.md` — ≥9.0 dùng hero, 8.0–8.9 dùng phụ, <8.0 regenerate.
 
-- Xem `SEO/notes.md` để biết chi tiết đầy đủ
-- `metadataBase` bắt buộc phải set để Vercel resolve relative URL trong `og:image`
-- hreflang: chỉ khai báo `x-default` + `vi` (không có URL riêng cho EN)
-- JSON-LD dùng `@id: "https://venhohotel.com/#hotel"` để liên kết Hotel ↔ HotelRoom schema
+### Linh An — Image Generation (validated 2026-06-24)
 
+**BẮT BUỘC dùng `--ref` khi ảnh có Linh An** — text-only chỉ đạt 6–8.4/10, edit+reference đạt 9/10:
+
+```bash
+# Single ref (face only)
+python3 generate_image.py "[scene prompt]" "photos-ai/YYYY/DD-MM-slug" [size] --ref "assets/linh-an-master-face.png"
+
+# Dual ref (face + environment) — dùng khi có reference ảnh địa điểm thực
+python3 generate_image.py "[scene prompt]" "photos-ai/YYYY/DD-MM-slug" [size] --ref "assets/linh-an-master-face.png" --ref-env "assets/Rooftop-railing.png"
+```
+
+**Lưu ý `--ref-env`:** Phải là file PNG (không phải JPEG) — convert bằng `sips -s format png input.jpeg --out output.png` nếu cần.
+
+**Nguyên tắc prompt khi dùng `--ref`:** KHÔNG mô tả lại khuôn mặt — chỉ mô tả outfit, background, action, ánh sáng.
+
+**Proven formula (validated 2026-06-24):**
+- ✅ Standing / leaning at railing + portrait/medium framing (85mm) → khuôn mặt 9/10
+- ✅ Dual ref (face + env) → lan can, màu hồ, skyline accurate hơn rõ rệt
+- ✅ Hotel room: dùng `--ref-env "assets/View-Ho-room-from-inside.png"` → phòng đúng với thực tế
+- ✅ Hotel room: plain English editorial prompt (không dùng character block chi tiết) → tránh safety filter
+- ❌ Tránh: candid walking + wide shot (50mm) → AI feel
+- ❌ Tránh: nhiều props cùng lúc (ghế mây + nến + ly rượu) → drift sang resort generic
+- ❌ Tránh: "cream and beige palette / floor-to-ceiling window" cho hotel room → sai với thực tế
+
+**Reference images:** `ops/VenHoSocialManager/assets/`
+| File | Loại | Dùng khi |
+|------|------|---------|
+| `linh-an-master-face.png` | Face (~15° trái) | `--ref` cho mọi ảnh có Linh An |
+| `B3_Hero.png` | Face (3/4 trái) | Production chính thức |
+| `A2_Front.png` | Face (thẳng mặt) | Cần góc đối xứng |
+| `C_LeftProfile.png` | Face (profile trái) | Silhouette |
+| `D_RightProfile.png` | Face (profile phải) | Silhouette |
+| `Rooftop-railing.png` | Env — lan can + mặt hồ | `--ref-env` cho scene rooftop portrait |
+| `Rooftop-Panorama-view.jpeg` | Env — toàn cảnh rooftop | Tham khảo góc rộng |
+| `Rooftop-corner-view.jpeg` | Env — góc rooftop + skyline | Tham khảo skyline Hà Nội |
+| `View-Ho-room.png` | Env — phòng wide shot | `--ref-env` cho scene phòng (góc tổng) |
+| `View-Ho-room-from-inside.png` | Env — cửa sổ + hồ | `--ref-env` cho scene phòng (focus cửa sổ/railing) |
+| `Logo.png` | Logo Ven Hồ Hotel | Tham khảo khi mô tả logo trên vật phẩm (ly, thẻ phòng...) |
+
+**`google_drive.py`:** Đã nâng cấp — tự động `[UPDATE]` file đã tồn tại thay vì `[SKIP]`.
+
+---
+
+## Brand DNA Principles
+
+> Nguồn: `projects/VenHoBrandSystem/DNA/` · Approved June 2026
+
+**Core Brand Values:** Hospitality · Authenticity · Simplicity · Reliability · Warmth
+
+**Khi có xung đột, ưu tiên theo thứ tự:**
+- Authenticity > Beauty
+- Trust > Promotion
+- Brand Value > Short-Term Results
+- West Lake Identity > Generic Travel Content
+- Consistency > Experimentation
+
+**Decision Framework — 5 câu hỏi trước khi approve content:**
+1. Điều này có giúp ích cho khách không?
+2. Điều này có củng cố thương hiệu không?
+3. Điều này có phù hợp với Hồ Tây không?
+4. Điều này có phù hợp với Ven Hồ Hotel không?
+5. Harry có approve điều này không?
+> Nếu bất kỳ câu nào = Không → chỉnh lại trước khi tiếp tục.
+
+**DNA files:**
+- `02_VENHO_BRAND_DNA_v1.1.md` — Hotel brand identity
+- `03_WESTLAKE_LIFESTYLE_DNA_v1.1.md` — Lifestyle content system
+- `04_WESTLAKE_LIVING_UNIVERSE_v1.0.md` — Universe philosophy
+- `VENHO_HOTEL_MASTER_REFERENCE_PACK_v1_FINAL.md` — Hotel visual DNA: building, lobby, room, rooftop, Linh An compatibility (LOCKED v1.0)
+- `Linh An Universe/` — 10-module AI production system (Brand System, Visual Identity, Content Strategy, Social Media System, West Lake Environment, Location Library, Linh An KOL, Production Mode, Prompt Library, Reference Library)
+
+---
+
+## Ghi chú triển khai quan trọng
+
+- `resend@6+` yêu cầu Node ≥ 20 — đã khai báo `engines` trong `package.json`
+- `RESEND_API_KEY` phải có trong Vercel → Settings → Environment Variables
+- GA4 Measurement ID: `G-4242ESCGY7`
+- AI Agent doanh thu dùng **GitHub Actions** (cloud) — không cần Mac bật
+  - Workflow hàng ngày: `.github/workflows/daily-revenue.yml` — 9:00 AM (UTC+7) mỗi ngày
+    - Email gồm: Doanh thu + **Phiếu Chi** (chi phí ngày) + Lợi nhuận ước tính
+  - Workflow tháng: `.github/workflows/monthly-summary.yml` — 10:00 AM ngày 1 mỗi tháng
+    - Email tổng kết tháng trước: doanh thu + chi phí theo loại + top phòng
+  - Secrets: SKYHOTEL_USER, SKYHOTEL_PASS, GMAIL_USER, GMAIL_APP_PASS (GitHub repo settings)
+  - Test thủ công: Actions → chọn workflow → Run workflow
+  - Backup launchd local: `~/Library/LaunchAgents/com.venhohotel.daily-revenue.plist` (9:00 + 10:30 AM)
+- **VenHoSocialManager dùng GitHub Actions** (cloud) — không cần Mac bật
+  - Workflow: `.github/workflows/social-content.yml` — T2/T4/T6 lúc 10:00 AM (UTC+7)
+  - Pipeline: GPT → caption FB/IG/Threads + gpt-image-2 → email kèm ảnh inline → commit rotation state
+  - Secrets: OPENAI_API_KEY, SOCIAL_GMAIL_SENDER, SOCIAL_GMAIL_APP_PASS
+  - Google Drive bị skip (không có OAuth trong cloud) — email thay thế hoàn toàn với ảnh nhúng inline
+  - Rotation state tự commit vào repo sau mỗi run (`database/rotation_state.json`)
+  - Test thủ công: Actions → "Social Content Generator" → Run workflow
+  - Cron Mac cũ (`0 10 * * 1,3,5`) vẫn còn trong crontab nhưng redundant
+- Scheduled Agent theo dõi đối thủ: chạy mỗi Thứ Hai 9AM, gửi email báo cáo
+
+---
+
+## Việc còn lại
+
+- [ ] Tạo tài khoản Zalo OA
