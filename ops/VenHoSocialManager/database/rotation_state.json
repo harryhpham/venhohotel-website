@@ -1,8 +1,9 @@
 {
-  "rotation_index": 5,
+  "rotation_index": 6,
   "topic_counters": {
     "ho_tay": 3,
     "am_thuc": 1,
-    "social_proof": 1
+    "social_proof": 1,
+    "cong_tac": 1
   }
 }

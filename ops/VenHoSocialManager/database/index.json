@@ -83,6 +83,16 @@
       "title": "Con Đường Thanh Niên Giữa Hai Hồ",
       "status": "pending_review",
       "folder": "2026/06/2026-06-28_con_duong_thanh_nien"
+    },
+    {
+      "date": "2026-06-28",
+      "pillar_id": "cong_tac",
+      "pillar_name": "Kinh Nghiệm Công Tác",
+      "topic_id": "cafe_lam_viec",
+      "topic_title": "Cà phê làm việc Tây Hồ",
+      "title": "Cà phê làm việc Tây Hồ",
+      "status": "pending_review",
+      "folder": "2026/06/2026-06-28_cafe_lam_viec"
     }
   ]
 }

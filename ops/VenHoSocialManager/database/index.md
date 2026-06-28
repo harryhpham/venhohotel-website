@@ -1,9 +1,10 @@
 # Database Index — Ven Hồ Hotel Social Media
-Cập nhật lần cuối: 28/06/2026 13:27
+Cập nhật lần cuối: 28/06/2026 14:08
 
 | Ngày | Pillar | Chủ đề | Tiêu đề | Trạng thái |
 |------|--------|--------|---------|------------|
 | 2026-06-28 | 🌅 Khám Phá Hồ Tây | Con đường Thanh Niên | Con Đường Thanh Niên Giữa Hai Hồ | pending_review |
+| 2026-06-28 | 💼 Kinh Nghiệm Công Tác | Cà phê làm việc Tây Hồ | Cà phê làm việc Tây Hồ | pending_review |
 | 2026-06-24 | 📝 P1 — Khám Phá Hồ Tây | Linh An cafe rooftop | Linh An ngồi uống cafe trên rooftop Ven Hồ Hotel nhìn ra Hồ Tây | pending_review |
 | 2026-06-23 | 📝 P1 Khám Phá Hồ Tây | Chạy bộ buổi sáng ven hồ | Chạy bộ thể dục buổi sáng | pending_review |
 | 2026-06-21 | 📝 Hồ Tây & Địa Điểm | Thể dục buổi sáng Hồ Tây | Các hoạt động thể dục buổi sáng ở Hồ Tây | pending_review |
