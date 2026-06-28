@@ -276,9 +276,10 @@ def update_index(pillar: dict, topic: dict, content: dict, file_info: dict):
         "|------|--------|--------|---------|------------|\n",
     ]
     for e in sorted(index["entries"], key=lambda x: x["date"], reverse=True):
-        emoji = PILLAR_MAP[e["pillar_id"]]["emoji"]
+        pid   = e.get("pillar_id")
+        emoji = PILLAR_MAP[pid]["emoji"] if pid and pid in PILLAR_MAP else "📝"
         lines.append(
-            f"| {e['date']} | {emoji} {e['pillar_name']} | {e['topic_title']} "
+            f"| {e['date']} | {emoji} {e.get('pillar_name', '')} | {e.get('topic_title', '')} "
             f"| {e['title']} | {e['status']} |\n"
         )
     INDEX_MD.write_text("".join(lines), encoding="utf-8")
