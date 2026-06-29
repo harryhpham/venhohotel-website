@@ -93,6 +93,16 @@
       "title": "Cà phê làm việc Tây Hồ",
       "status": "pending_review",
       "folder": "2026/06/2026-06-28_cafe_lam_viec"
+    },
+    {
+      "date": "2026-06-29",
+      "pillar_id": "ho_tay",
+      "pillar_name": "Khám Phá Hồ Tây",
+      "topic_id": "chua_tran_quoc",
+      "topic_title": "Chùa Trấn Quốc",
+      "title": "Chùa Trấn Quốc Bên Hồ Tây",
+      "status": "pending_review",
+      "folder": "2026/06/2026-06-29_chua_tran_quoc"
     }
   ]
 }
