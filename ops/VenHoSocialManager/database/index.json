@@ -103,6 +103,16 @@
       "title": "Chùa Trấn Quốc Bên Hồ Tây",
       "status": "pending_review",
       "folder": "2026/06/2026-06-29_chua_tran_quoc"
+    },
+    {
+      "date": "2026-07-01",
+      "pillar_id": "am_thuc",
+      "pillar_name": "Ẩm Thực Hồ Tây",
+      "topic_id": "bun_oc_nguoi",
+      "topic_title": "Bún ốc nguội",
+      "title": "Bún ốc nguội Hồ Tây Hà Nội",
+      "status": "pending_review",
+      "folder": "2026/07/2026-07-01_bun_oc_nguoi"
     }
   ]
 }

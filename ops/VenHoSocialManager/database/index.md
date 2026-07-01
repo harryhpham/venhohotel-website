@@ -1,8 +1,9 @@
 # Database Index — Ven Hồ Hotel Social Media
-Cập nhật lần cuối: 29/06/2026 08:20
+Cập nhật lần cuối: 01/07/2026 07:18
 
 | Ngày | Pillar | Chủ đề | Tiêu đề | Trạng thái |
 |------|--------|--------|---------|------------|
+| 2026-07-01 | 🍜 Ẩm Thực Hồ Tây | Bún ốc nguội | Bún ốc nguội Hồ Tây Hà Nội | pending_review |
 | 2026-06-29 | 🌅 Khám Phá Hồ Tây | Chùa Trấn Quốc | Chùa Trấn Quốc Bên Hồ Tây | pending_review |
 | 2026-06-28 | 🌅 Khám Phá Hồ Tây | Con đường Thanh Niên | Con Đường Thanh Niên Giữa Hai Hồ | pending_review |
 | 2026-06-28 | 💼 Kinh Nghiệm Công Tác | Cà phê làm việc Tây Hồ | Cà phê làm việc Tây Hồ | pending_review |
