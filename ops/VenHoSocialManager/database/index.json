@@ -123,6 +123,16 @@
       "title": "Ven Hồ Hotel: Vị Trí 9.2",
       "status": "pending_review",
       "folder": "2026/07/2026-07-03_vi_tri_9_2"
+    },
+    {
+      "date": "2026-07-06",
+      "pillar_id": "ho_tay",
+      "pillar_name": "Khám Phá Hồ Tây",
+      "topic_id": "lang_hoa_nhat_tan",
+      "topic_title": "Làng hoa Nhật Tân",
+      "title": "Làng Hoa Nhật Tân Bên Hồ Tây",
+      "status": "pending_review",
+      "folder": "2026/07/2026-07-06_lang_hoa_nhat_tan"
     }
   ]
 }
