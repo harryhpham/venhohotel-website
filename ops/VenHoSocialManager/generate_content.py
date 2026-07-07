@@ -340,6 +340,20 @@ def main():
         log(f"Content đã lưu tại: database/{file_info['folder']}/")
         log("Gửi email thủ công: python3 send_email.py")
 
+    log("Đang gửi dữ liệu sang Make.com...")
+    try:
+        import post_to_make
+        make_result = post_to_make.send_to_make(
+            pillar,
+            topic,
+            content,
+            file_info,
+            file_info["image_path"],
+        )
+        log(f"Make.com: {make_result}")
+    except Exception as e:
+        log(f"LỖI Make.com webhook: {e}")
+
     log("=== Hoàn thành ===")
 
 

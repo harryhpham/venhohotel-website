@@ -19,6 +19,9 @@ Lưu local: database/YYYY/MM/YYYY-MM-DD_topic_id/
 Gửi email HTML → hpham1504@gmail.com
   (ảnh AI nhúng inline trong email)
         ↓
+Gửi caption + image.png sang Make.com webhook
+  (nếu GitHub Secret MAKE_WEBHOOK_URL đã được cấu hình)
+        ↓
 Commit rotation state + caption/meta text vào repo
   (không commit image.png để tránh repo phình to)
 ```
@@ -61,9 +64,45 @@ Workflow: `.github/workflows/social-content.yml`
 
 - Lịch: `0 1 * * 1,3,5` UTC = 8:00 sáng Việt Nam, Thứ 2/4/6
 - Secrets cần có: `OPENAI_API_KEY`, `SOCIAL_GMAIL_SENDER`, `SOCIAL_GMAIL_APP_PASS`
+- Secret để tự đăng qua Make.com: `MAKE_WEBHOOK_URL`
+- Secret tùy chọn để xác thực webhook: `MAKE_WEBHOOK_SECRET`
 - Google Drive được skip bằng `SKIP_GOOGLE_DRIVE=1`
 - Email có ảnh inline; repo commit lại rotation/index/caption text/meta
 - Chạy thủ công: GitHub → Actions → Social Content Generator → Run workflow
+
+## Make.com Facebook Auto-Post
+
+Scenario đề xuất:
+
+1. Module 1: `Webhooks` → `Custom webhook`
+   - Tạo webhook mới, ví dụ `VenHo Social Publisher`
+   - Copy webhook URL
+   - Thêm URL này vào GitHub repo secrets với tên `MAKE_WEBHOOK_URL`
+
+2. Module 2: `Facebook Pages` → `Create a Post with Photos`
+   - Kết nối Facebook account có quyền quản trị page Ven Hồ Hotel
+   - Chọn đúng Facebook Page
+   - Map field:
+     - Message: `facebook_caption`
+     - Photo: file `image` từ webhook
+
+3. Chạy test:
+   - Make: bấm `Run once`
+   - GitHub: Actions → `Social Content Generator` → `Run workflow`
+   - Nếu Make nhận bundle có `facebook_caption` và file `image`, bật scenario sang `ON`
+
+Webhook payload gửi sang Make gồm các field chính:
+
+| Field | Ý nghĩa |
+|-------|---------|
+| `title` | Tiêu đề bài |
+| `facebook_caption` | Caption để đăng Facebook |
+| `instagram_caption` | Caption Instagram |
+| `threads_caption` | Caption Threads |
+| `pillar_name` | Content pillar |
+| `topic_title` | Chủ đề |
+| `image` | File ảnh PNG để đăng |
+| `payload_json` | Toàn bộ dữ liệu dạng JSON |
 
 ```bash
 # Chạy local thủ công nếu cần:

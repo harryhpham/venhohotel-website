@@ -32,6 +32,8 @@ jobs:
           GMAIL_SENDER: ${{ secrets.SOCIAL_GMAIL_SENDER }}
           GMAIL_APP_PASSWORD: ${{ secrets.SOCIAL_GMAIL_APP_PASS }}
           SKIP_GOOGLE_DRIVE: "1"
+          MAKE_WEBHOOK_URL: ${{ secrets.MAKE_WEBHOOK_URL }}
+          MAKE_WEBHOOK_SECRET: ${{ secrets.MAKE_WEBHOOK_SECRET }}
         run: python3 generate_content.py --force
 
       - name: Commit generated content
