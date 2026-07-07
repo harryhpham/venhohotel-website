@@ -3,6 +3,7 @@ import "./globals.css";
 import { LangProvider } from "@/lib/context/LangContext";
 import GoogleAnalytics from "@/components/ui/GoogleAnalytics";
 import MetaPixel from "@/components/ui/MetaPixel";
+import MobileStickyCTA from "@/components/ui/MobileStickyCTA";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://venhohotel.com"),
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
     template: "%s | Ven Hồ Hotel",
   },
   description:
-    "Khách sạn Ven Hồ tại 181 Nguyễn Đình Thi, Tây Hồ, Hà Nội. View Hồ Tây, dịch vụ 24/7, đánh giá 8.5/10 Agoda. Đặt phòng từ 412,500đ/đêm.",
+    "Khách sạn Ven Hồ tại 181 Nguyễn Đình Thi, Tây Hồ, Hà Nội. View Hồ Tây, dịch vụ 24/7, đánh giá 8.5/10 Agoda. Đặt phòng từ 400,000đ/đêm.",
   keywords: [
     "Ven Ho Hotel",
     "khach san Tay Ho",
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Ven Hồ Hotel — Wake Up To West Lake",
     description:
-      "Khách sạn view Hồ Tây, Tây Hồ, Hà Nội. Đánh giá 8.5/10 trên Agoda. Đặt phòng từ 412,500đ/đêm.",
+      "Khách sạn view Hồ Tây, Tây Hồ, Hà Nội. Đánh giá 8.5/10 trên Agoda. Đặt phòng từ 400,000đ/đêm.",
     url: "https://venhohotel.com",
     siteName: "Ven Hồ Hotel",
     locale: "vi_VN",
@@ -48,7 +49,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Ven Hồ Hotel — Wake Up To West Lake",
     description:
-      "Khách sạn view Hồ Tây, Tây Hồ, Hà Nội. Từ 412,500đ/đêm. Đánh giá 8.5/10 Agoda.",
+      "Khách sạn view Hồ Tây, Tây Hồ, Hà Nội. Từ 400,000đ/đêm. Đánh giá 8.5/10 Agoda.",
     images: ["/images/Hero-lake/hero-lake.jpg"],
   },
 };
@@ -61,7 +62,10 @@ export default function RootLayout({
       <body className="antialiased">
         <GoogleAnalytics />
         <MetaPixel />
-        <LangProvider>{children}</LangProvider>
+        <LangProvider>
+          {children}
+          <MobileStickyCTA />
+        </LangProvider>
       </body>
     </html>
   );

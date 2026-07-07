@@ -1,6 +1,19 @@
 import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
 
+function escapeHtml(value: unknown) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function normalizeText(value: unknown, maxLength = 500) {
+  return String(value ?? "").replace(/[\r\n]+/g, " ").trim().slice(0, maxLength);
+}
+
 export async function POST(req: NextRequest) {
   try {
     if (!process.env.RESEND_API_KEY) {
@@ -11,12 +24,34 @@ export async function POST(req: NextRequest) {
     }
     const resend = new Resend(process.env.RESEND_API_KEY);
     const body = await req.json();
-    const { name, phone, email, checkin, checkout, room, guests, note } = body;
+    const name = normalizeText(body.name, 120);
+    const phone = normalizeText(body.phone, 40);
+    const email = normalizeText(body.email, 160);
+    const checkin = normalizeText(body.checkin, 20);
+    const checkout = normalizeText(body.checkout, 20);
+    const room = normalizeText(body.room, 80);
+    const guests = normalizeText(body.guests, 20);
+    const note = normalizeText(body.note, 1200);
+    const source = normalizeText(body.source, 80) || "booking_page";
 
     // Validate bắt buộc
     if (!name || !phone) {
       return NextResponse.json(
         { error: "Họ tên và số điện thoại là bắt buộc." },
+        { status: 400 }
+      );
+    }
+
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return NextResponse.json(
+        { error: "Email không hợp lệ." },
+        { status: 400 }
+      );
+    }
+
+    if (checkin && checkout && new Date(checkout) <= new Date(checkin)) {
+      return NextResponse.json(
+        { error: "Ngày trả phòng phải sau ngày nhận phòng." },
         { status: 400 }
       );
     }
@@ -28,10 +63,18 @@ export async function POST(req: NextRequest) {
     };
 
     const roomLabel = room ? (roomLabels[room] ?? room) : "Chưa chọn";
+    const safeName = escapeHtml(name);
+    const safePhone = escapeHtml(phone);
+    const safeEmail = escapeHtml(email);
+    const safeRoomLabel = escapeHtml(roomLabel);
+    const safeGuests = escapeHtml(guests);
+    const safeNote = escapeHtml(note);
+    const safeSource = escapeHtml(source);
 
     const formatDate = (d: string) => {
       if (!d) return "—";
       const [y, m, day] = d.split("-");
+      if (!y || !m || !day) return escapeHtml(d);
       return `${day}/${m}/${y}`;
     };
 
@@ -77,7 +120,7 @@ export async function POST(req: NextRequest) {
                     <p style="margin:0;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#999;">Họ &amp; Tên</p>
                   </td>
                   <td style="padding:14px 0;border-bottom:1px solid #EDE8E0;vertical-align:top;">
-                    <p style="margin:0;font-size:15px;color:#1A1A1A;font-weight:600;">${name}</p>
+                    <p style="margin:0;font-size:15px;color:#1A1A1A;font-weight:600;">${safeName}</p>
                   </td>
                 </tr>
                 <tr>
@@ -86,7 +129,7 @@ export async function POST(req: NextRequest) {
                   </td>
                   <td style="padding:14px 0;border-bottom:1px solid #EDE8E0;vertical-align:top;">
                     <p style="margin:0;font-size:15px;color:#1A1A1A;">
-                      <a href="tel:${phone}" style="color:#C9A84C;text-decoration:none;font-weight:600;">${phone}</a>
+                      <a href="tel:${safePhone}" style="color:#C9A84C;text-decoration:none;font-weight:600;">${safePhone}</a>
                     </p>
                   </td>
                 </tr>
@@ -95,7 +138,7 @@ export async function POST(req: NextRequest) {
                     <p style="margin:0;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#999;">Email</p>
                   </td>
                   <td style="padding:14px 0;border-bottom:1px solid #EDE8E0;vertical-align:top;">
-                    <p style="margin:0;font-size:15px;color:#1A1A1A;">${email || "—"}</p>
+                    <p style="margin:0;font-size:15px;color:#1A1A1A;">${safeEmail || "—"}</p>
                   </td>
                 </tr>
 
@@ -110,7 +153,7 @@ export async function POST(req: NextRequest) {
                     <p style="margin:0;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#999;">Loại Phòng</p>
                   </td>
                   <td style="padding:14px 0;border-bottom:1px solid #EDE8E0;vertical-align:top;">
-                    <p style="margin:0;font-size:15px;color:#1A1A1A;">${roomLabel}</p>
+                    <p style="margin:0;font-size:15px;color:#1A1A1A;">${safeRoomLabel}</p>
                   </td>
                 </tr>
                 <tr>
@@ -134,7 +177,15 @@ export async function POST(req: NextRequest) {
                     <p style="margin:0;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#999;">Số Khách</p>
                   </td>
                   <td style="padding:14px 0;border-bottom:1px solid #EDE8E0;vertical-align:top;">
-                    <p style="margin:0;font-size:15px;color:#1A1A1A;">${guests || "—"} người</p>
+                    <p style="margin:0;font-size:15px;color:#1A1A1A;">${safeGuests || "—"} người</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:14px 0;border-bottom:1px solid #EDE8E0;vertical-align:top;">
+                    <p style="margin:0;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#999;">Nguồn</p>
+                  </td>
+                  <td style="padding:14px 0;border-bottom:1px solid #EDE8E0;vertical-align:top;">
+                    <p style="margin:0;font-size:15px;color:#1A1A1A;">${safeSource}</p>
                   </td>
                 </tr>
                 ${
@@ -144,7 +195,7 @@ export async function POST(req: NextRequest) {
                     <p style="margin:0;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#999;">Ghi Chú</p>
                   </td>
                   <td style="padding:14px 0;vertical-align:top;">
-                    <p style="margin:0;font-size:15px;color:#1A1A1A;line-height:1.6;">${note}</p>
+                    <p style="margin:0;font-size:15px;color:#1A1A1A;line-height:1.6;">${safeNote}</p>
                   </td>
                 </tr>`
                     : ""
@@ -155,7 +206,7 @@ export async function POST(req: NextRequest) {
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:36px;">
                 <tr>
                   <td align="center">
-                    <a href="tel:${phone}"
+                    <a href="tel:${safePhone}"
                        style="display:inline-block;background-color:#C9A84C;color:#ffffff;text-decoration:none;font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:16px 40px;border-radius:1px;">
                       Gọi Lại Cho Khách
                     </a>

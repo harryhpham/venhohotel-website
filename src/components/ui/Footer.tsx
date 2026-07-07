@@ -103,6 +103,9 @@ export default function Footer() {
               <p className="font-sans text-white/40 text-xs">
                 {lang === "vi" ? `Check-in: ${c.checkin}` : `Check-in: ${c.checkin}`}
               </p>
+              <p className="font-sans text-white/40 text-xs">
+                {lang === "vi" ? `Check-out: ${c.checkout}` : `Check-out: ${c.checkout}`}
+              </p>
             </div>
           </div>
         </div>

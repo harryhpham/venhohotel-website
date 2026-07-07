@@ -1,0 +1,35 @@
+{
+  "hotel": {
+    "name": "Ven Hồ Hotel",
+    "name_en": "Ven Ho Hotel",
+    "tagline_vi": "Nơi Hồ Tây Gặp Gỡ Sự Tinh Tế",
+    "tagline_en": "Where West Lake Meets Elegance",
+    "address": "181 Nguyễn Đình Thi, Tây Hồ, Hà Nội",
+    "phone": "024 3847 4646",
+    "website": "https://venhohotel.com",
+    "facebook": "https://www.facebook.com/venhohotelhanoi",
+    "instagram": "@venhohotelhanoi",
+    "email": "venhohotel@gmail.com",
+    "rooms": 12,
+    "agoda_rating": "8.5/10",
+    "agoda_location": "9.2/10"
+  },
+  "brand": {
+    "colors": "Gold #C9A84C, Deep Navy #1B2D4F, Warm White #F7F4EF",
+    "fonts": "Cormorant Garamond (display), DM Sans (body)",
+    "personality": "Sang trọng tinh tế nhưng gần gũi, chân thật — không cố tỏ ra xa xỉ"
+  },
+  "schedule": {
+    "monday": "kham_pha",
+    "wednesday": "am_thuc",
+    "friday": "thuong_hieu",
+    "time": "10:00"
+  },
+  "email": {
+    "recipient": "hpham1504@gmail.com",
+    "sender": "venhohotel@gmail.com",
+    "subject_prefix": "[Ven Hồ Social]"
+  },
+  "claude_model": "claude-sonnet-4-6",
+  "content_bank_dir": "content-bank"
+}

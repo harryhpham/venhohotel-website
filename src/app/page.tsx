@@ -20,8 +20,8 @@ const hotelSchema = {
     "Khách sạn view Hồ Tây tại 181 Nguyễn Đình Thi, Tây Hồ, Hà Nội. 12 phòng nghỉ, dịch vụ 24/7, cho thuê xe đạp.",
   url: "https://venhohotel.com",
   telephone: "+842438474646",
-  email: "booking@venhohotel.com",
-  checkinTime: "12:00",
+  email: "venhohotel@gmail.com",
+  checkinTime: "13:00",
   checkoutTime: "12:00",
   numberOfRooms: 12,
   priceRange: "$$",
@@ -54,7 +54,7 @@ const hotelSchema = {
   ],
   sameAs: [
     "https://www.facebook.com/venhohotelhanoi",
-    "https://www.instagram.com/venhohotel",
+    "https://www.instagram.com/venhohotelhanoi",
   ],
   amenityFeature: [
     { "@type": "LocationFeatureSpecification", name: "Free WiFi", value: true },

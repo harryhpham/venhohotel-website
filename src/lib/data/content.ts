@@ -4,6 +4,10 @@ export const siteContent = {
       rooms: "Phòng", amenities: "Tiện Ích", location: "Vị Trí",
       about: "Về Chúng Tôi", book: "Đặt Phòng",
     },
+    mobileCta: {
+      call: "Gọi Ngay",
+      book: "Đặt Trực Tiếp",
+    },
     hero: {
       label: "Tây Hồ, Hà Nội — Việt Nam",
       headline1: "Ngắm Nhìn", headline2: "Hồ Tây", headline3: "Từ Phòng Ngủ",
@@ -34,7 +38,7 @@ export const siteContent = {
     contact: {
       address: "181 Nguyễn Đình Thi, Tây Hồ, Hà Nội",
       phone: "024 3847 4646",
-      checkin: "12:00 — 20:00", checkout: "6:00 — 12:00",
+      checkin: "13:00", checkout: "12:00 trưa",
       tagline: "Nơi Hồ Tây Gặp Gỡ Sự Tinh Tế",
     },
     phongPage: {
@@ -49,7 +53,7 @@ export const siteContent = {
       storyLine1: "Một Góc Bình Yên", storyLine2: "Giữa Lòng Tây Hồ",
       body1: "Ven Hồ Hotel tọa lạc tại 181 Nguyễn Đình Thi — một trong những con phố đẹp nhất ven hồ Tây, nơi cây xanh và mặt hồ tạo nên khung cảnh thơ mộng bốn mùa.",
       body2: "Chúng tôi được xây dựng với triết lý đơn giản: mang đến không gian nghỉ ngơi chân thực, gần gũi với thiên nhiên nhưng đầy đủ tiện nghi hiện đại. Mỗi buổi sáng thức dậy nhìn ra Hồ Tây là một trải nghiệm khó quên.",
-      body3: "Với 10 phòng nghỉ được thiết kế tinh tế, đội ngũ phục vụ tận tâm 24/7 và vị trí đặc biệt — ngay cạnh mặt hồ, Ven Hồ Hotel là lựa chọn lý tưởng cho cả khách du lịch và người muốn tìm một góc bình yên tại Hà Nội.",
+      body3: "Với 12 phòng nghỉ được thiết kế tinh tế, đội ngũ phục vụ tận tâm 24/7 và vị trí đặc biệt — ngay cạnh mặt hồ, Ven Hồ Hotel là lựa chọn lý tưởng cho cả khách du lịch và người muốn tìm một góc bình yên tại Hà Nội.",
       cta: "Đặt Phòng Ngay",
       values: [
         { title: "View Hồ Tây Độc Đáo", desc: "Phòng nhìn trực tiếp ra Hồ Tây — đặc biệt huyền ảo vào buổi tối khi đèn phản chiếu xuống mặt nước." },
@@ -67,8 +71,8 @@ export const siteContent = {
         { group: "Tiện Ích Chung", items: ["WiFi toàn bộ khách sạn (miễn phí)", "Bãi đỗ xe miễn phí", "Cho thuê xe đạp", "Khu vực không hút thuốc"] },
       ],
       policy: [
-        { label: "Check-in", value: "12:00 — 20:00" },
-        { label: "Check-out", value: "6:00 — 12:00" },
+        { label: "Check-in", value: "13:00" },
+        { label: "Check-out", value: "12:00 trưa" },
         { label: "Trẻ em", value: "Dưới 9 tuổi miễn phí" },
         { label: "Yêu cầu", value: "CMND + thẻ tín dụng" },
       ],
@@ -95,9 +99,12 @@ export const siteContent = {
         { name: "Sân bay Nội Bài", distance: "19.4 km" },
       ],
     },
-    contactPage: {
+      contactPage: {
       label: "Liên Hệ & Đặt Phòng", heading: "Đặt Phòng Ngay",
       infoHeading: "Thông Tin Liên Hệ", formHeading: "Gửi Yêu Cầu Đặt Phòng",
+      directTitle: "Đặt trực tiếp với Ven Hồ",
+      directBody: "Gửi form hoặc gọi khách sạn để được xác nhận nhanh, tư vấn đúng loại phòng và giữ yêu cầu đặc biệt.",
+      directBenefits: ["Xác nhận nhanh", "Tư vấn đúng loại phòng", "Giữ yêu cầu đặc biệt"],
       thanks: "Cảm ơn!", confirmation: "Chúng tôi sẽ liên hệ lại trong vòng 24 giờ để xác nhận đặt phòng.",
       errorDefault: "Không thể gửi yêu cầu. Vui lòng thử lại.",
       errorNetwork: "Không thể kết nối đến máy chủ. Vui lòng gọi trực tiếp 024 3847 4646.",
@@ -121,8 +128,8 @@ export const siteContent = {
         { label: "Địa Chỉ", value: "181 Nguyễn Đình Thi, Tây Hồ, Hà Nội", href: "", track: "", pixelEvent: "" },
         { label: "Điện Thoại", value: "024 3847 4646", href: "tel:02438474646", track: "phone_click", pixelEvent: "Contact" },
         { label: "Facebook", value: "facebook.com/venhohotelhanoi", href: "https://www.facebook.com/venhohotelhanoi", track: "facebook_click", pixelEvent: "facebook_click" },
-        { label: "Check-in", value: "12:00 PM — 20:00 PM", href: "", track: "", pixelEvent: "" },
-        { label: "Check-out", value: "6:00 AM — 12:00 PM", href: "", track: "", pixelEvent: "" },
+        { label: "Check-in", value: "13:00", href: "", track: "", pixelEvent: "" },
+        { label: "Check-out", value: "12:00 trưa", href: "", track: "", pixelEvent: "" },
       ],
     },
     roomDetail: {
@@ -152,7 +159,7 @@ export const siteContent = {
     locationBlock: {
       label: "Vị Trí & Đặt Phòng", heading: "Tìm Chúng Tôi",
       addressLabel: "Địa Chỉ", phoneLabel: "Điện Thoại",
-      checkinLabel: "Check-in / Check-out", checkinValue: "12:00 — 20:00 / trước 12:00",
+      checkinLabel: "Check-in / Check-out", checkinValue: "13:00 / trước 12:00 trưa",
       formHeading: "Liên Hệ Nhanh",
       thanks: "Cảm ơn bạn!", confirmation: "Chúng tôi sẽ liên hệ lại trong vòng 24 giờ.",
       nameLabel: "Họ & Tên", namePlaceholder: "Nguyễn Văn A",
@@ -167,6 +174,10 @@ export const siteContent = {
     nav: {
       rooms: "Rooms", amenities: "Amenities", location: "Location",
       about: "About Us", book: "Book Now",
+    },
+    mobileCta: {
+      call: "Call Now",
+      book: "Book Direct",
     },
     hero: {
       label: "Tay Ho, Hanoi — Vietnam",
@@ -198,7 +209,7 @@ export const siteContent = {
     contact: {
       address: "181 Nguyen Dinh Thi, Tay Ho, Hanoi",
       phone: "024 3847 4646",
-      checkin: "12:00 PM — 8:00 PM", checkout: "6:00 AM — 12:00 PM",
+      checkin: "1:00 PM", checkout: "12:00 PM (noon)",
       tagline: "Where West Lake Meets Elegance",
     },
     phongPage: {
@@ -213,7 +224,7 @@ export const siteContent = {
       storyLine1: "A Peaceful Corner", storyLine2: "in the Heart of Tay Ho",
       body1: "Ven Ho Hotel is located at 181 Nguyen Dinh Thi — one of the most beautiful streets along West Lake, where greenery and the lakefront create a poetic scene throughout the seasons.",
       body2: "We were built with a simple philosophy: to offer a genuine retreat, close to nature yet fully equipped with modern amenities. Waking up each morning to the view of West Lake is an unforgettable experience.",
-      body3: "With 10 elegantly designed rooms, a dedicated 24/7 service team, and a truly special location — right beside the lake, Ven Ho Hotel is the ideal choice for travelers and those seeking a peaceful haven in Hanoi.",
+      body3: "With 12 elegantly designed rooms, a dedicated 24/7 service team, and a truly special location — right beside the lake, Ven Ho Hotel is the ideal choice for travelers and those seeking a peaceful haven in Hanoi.",
       cta: "Book Now",
       values: [
         { title: "Unique West Lake Views", desc: "Rooms with a direct view of West Lake — especially magical in the evening when city lights reflect on the water." },
@@ -231,8 +242,8 @@ export const siteContent = {
         { group: "General Facilities", items: ["Hotel-wide WiFi (free)", "Free parking", "Bicycle rental", "Non-smoking areas"] },
       ],
       policy: [
-        { label: "Check-in", value: "12:00 PM — 8:00 PM" },
-        { label: "Check-out", value: "6:00 AM — 12:00 PM" },
+        { label: "Check-in", value: "1:00 PM" },
+        { label: "Check-out", value: "12:00 PM (noon)" },
         { label: "Children", value: "Under 9 years free" },
         { label: "Requirements", value: "ID + credit card" },
       ],
@@ -259,9 +270,12 @@ export const siteContent = {
         { name: "Noi Bai Airport", distance: "19.4 km" },
       ],
     },
-    contactPage: {
+      contactPage: {
       label: "Contact & Booking", heading: "Book Now",
       infoHeading: "Contact Information", formHeading: "Send Booking Request",
+      directTitle: "Book direct with Ven Ho",
+      directBody: "Send the form or call the hotel for quick confirmation, room guidance, and special requests.",
+      directBenefits: ["Quick confirmation", "Room guidance", "Special requests noted"],
       thanks: "Thank you!", confirmation: "We will contact you within 24 hours to confirm your booking.",
       errorDefault: "Cannot send request. Please try again.",
       errorNetwork: "Cannot connect to server. Please call directly at 024 3847 4646.",
@@ -285,8 +299,8 @@ export const siteContent = {
         { label: "Address", value: "181 Nguyen Dinh Thi, Tay Ho, Hanoi", href: "", track: "", pixelEvent: "" },
         { label: "Phone", value: "024 3847 4646", href: "tel:02438474646", track: "phone_click", pixelEvent: "Contact" },
         { label: "Facebook", value: "facebook.com/venhohotelhanoi", href: "https://www.facebook.com/venhohotelhanoi", track: "facebook_click", pixelEvent: "facebook_click" },
-        { label: "Check-in", value: "12:00 PM — 8:00 PM", href: "", track: "", pixelEvent: "" },
-        { label: "Check-out", value: "6:00 AM — 12:00 PM", href: "", track: "", pixelEvent: "" },
+        { label: "Check-in", value: "1:00 PM", href: "", track: "", pixelEvent: "" },
+        { label: "Check-out", value: "12:00 PM (noon)", href: "", track: "", pixelEvent: "" },
       ],
     },
     roomDetail: {
@@ -316,7 +330,7 @@ export const siteContent = {
     locationBlock: {
       label: "Location & Booking", heading: "Find Us",
       addressLabel: "Address", phoneLabel: "Phone",
-      checkinLabel: "Check-in / Check-out", checkinValue: "12:00 PM — 8:00 PM / before 12:00 PM",
+      checkinLabel: "Check-in / Check-out", checkinValue: "1:00 PM / before 12:00 PM (noon)",
       formHeading: "Quick Contact",
       thanks: "Thank you!", confirmation: "We will get back to you within 24 hours.",
       nameLabel: "Full Name", namePlaceholder: "John Doe",
@@ -335,13 +349,13 @@ export const siteContent = {
 // ============================================================
 export const weeklyContent = {
   // Tiêu đề bài viết tuần này (dùng cho cả website và Facebook caption)
-  title: "Hồ Tây mùa hè — Gió mát và ánh đèn lung linh",
+  title: "Tháng 7 bên Hồ Tây — nghỉ chậm giữa lòng Hà Nội",
 
   // Nội dung đầy đủ cho website (section Trải Nghiệm Hồ Tây)
-  websiteBody: "Hồ Tây vào mùa hè lung linh dưới ánh đèn phản chiếu — những buổi tối dạo quanh hồ, thưởng thức kem tràng tiền và nghe gió thổi qua hàng liễu rủ.",
+  websiteBody: "Tháng 7 ở Hồ Tây có những buổi chiều nhiều gió, mặt nước đổi màu sau cơn mưa và ánh đèn lên rất dịu. Từ Ven Hồ Hotel, bạn chỉ cần vài bước là chạm vào nhịp sống chậm của Tây Hồ.",
 
   // Caption ngắn cho Facebook (150-200 ký tự)
-  facebookCaption: "Buổi tối tại Ven Hồ Hotel 🌙 Hồ Tây lên đèn từ cửa sổ phòng ngủ — khoảnh khắc không thể quên cho mỗi chuyến nghỉ dưỡng tại Hà Nội. Đặt phòng ngay hôm nay! 👇",
+  facebookCaption: "Tháng 7 bên Hồ Tây: chiều nhiều gió, tối lên đèn, sáng thức dậy thật gần mặt nước. Ven Hồ Hotel — 181 Nguyễn Đình Thi, Tây Hồ.",
 
   // Hashtags cho Facebook
   hashtags: "#VenHoHotel #HoTay #WestLake #HaNoi #TayHo #KhachSanHaNoi #DuLichHaNoi #HotelHanoi",
@@ -350,5 +364,5 @@ export const weeklyContent = {
   featuredImage: "/images/Lake-view/lake-view-1.jpg",
 
   // Ngày đăng
-  publishDate: "2026-06-09",
+  publishDate: "2026-07-07",
 };

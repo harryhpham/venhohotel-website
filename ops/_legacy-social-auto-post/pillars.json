@@ -1,0 +1,56 @@
+{
+  "monday": {
+    "id": "kham_pha",
+    "name": "Khám Phá Hồ Tây",
+    "emoji": "🌅",
+    "description": "Giới thiệu vẻ đẹp, điểm đến, trải nghiệm xung quanh Hồ Tây và khu Tây Hồ. Mục tiêu: kéo khách tiềm năng quan tâm đến vùng Tây Hồ — từ đó quan tâm đến Ven Hồ Hotel.",
+    "tone": "Thơ mộng, gợi cảm hứng khám phá, nhẹ nhàng và ấm áp",
+    "cta": "Ghé Ven Hồ Hotel để thức dậy mỗi sáng với khung cảnh này",
+    "topics": [
+      {"id": "binh_minh_ho_tay", "title": "Bình minh Hồ Tây", "desc": "Khoảnh khắc bình minh tuyệt đẹp trên Hồ Tây — ánh sáng vàng, mặt hồ phẳng lặng, không khí trong lành"},
+      {"id": "hoang_hon_tim", "title": "Hoàng hôn tím Hồ Tây", "desc": "Hồ Tây khi hoàng hôn — màu tím hồng phản chiếu xuống mặt hồ, khung cảnh lãng mạn nhất Hà Nội"},
+      {"id": "con_duong_thanh_nien", "title": "Con đường Thanh Niên", "desc": "Con đường lãng mạn chạy giữa hai hồ Tây và Trúc Bạch — địa điểm đi bộ, chạy bộ buổi sáng tuyệt vời"},
+      {"id": "chua_tran_quoc", "title": "Chùa Trấn Quốc", "desc": "Ngôi chùa cổ hơn 1500 năm trên đảo nhỏ trong Hồ Tây — biểu tượng văn hóa tâm linh của Hà Nội"},
+      {"id": "lang_hoa_nhat_tan", "title": "Làng hoa Nhật Tân", "desc": "Vườn đào, vườn quất rực rỡ, đặc biệt dịp Tết — nét đẹp truyền thống ngay cạnh Tây Hồ"},
+      {"id": "phu_tay_ho", "title": "Phủ Tây Hồ", "desc": "Ngôi đền thờ bà Chúa Liễu Hạnh linh thiêng bên Hồ Tây — điểm cầu may nổi tiếng của người Hà Nội"},
+      {"id": "dap_xe_quanh_ho", "title": "Đạp xe quanh Hồ Tây", "desc": "Trải nghiệm đạp xe 17km quanh Hồ Tây — khám phá từng ngóc ngách của hồ lớn nhất Hà Nội"},
+      {"id": "ngay_he_ho_tay", "title": "Hồ Tây ngày hè", "desc": "Mùa hè Hồ Tây với sen nở rộ, bãi tắm xưa, không khí trong lành xa lánh ồn ào thành phố"}
+    ]
+  },
+  "wednesday": {
+    "id": "am_thuc",
+    "name": "Ẩm Thực Hồ Tây",
+    "emoji": "🍜",
+    "description": "Giới thiệu văn hóa ẩm thực đặc sắc của khu Tây Hồ — những món ăn địa phương không thể bỏ qua khi đến Hà Nội.",
+    "tone": "Hấp dẫn, gợi vị giác, tự hào về ẩm thực địa phương",
+    "cta": "Đặt phòng Ven Hồ Hotel — sáng dậy bước ra là có ngay những thiên đường ẩm thực này",
+    "topics": [
+      {"id": "banh_tom_ho_tay", "title": "Bánh tôm Hồ Tây", "desc": "Đặc sản bánh tôm chiên giòn nổi tiếng — ăn với rau sống và nước chấm chua ngọt, chỉ có ở Tây Hồ mới ngon nhất"},
+      {"id": "bun_oc_nguoi", "title": "Bún ốc nguội", "desc": "Tô bún ốc mát lạnh, chua chua ngọt ngọt — món ăn sáng đặc trưng của người Tây Hồ từ bao thế hệ"},
+      {"id": "ca_phe_trung", "title": "Cà phê trứng Hà Nội", "desc": "Ly cà phê trứng béo ngậy, thơm nức — phát minh của Hà Nội, thưởng thức với view Hồ Tây càng thêm tuyệt vời"},
+      {"id": "xoi_yen", "title": "Xôi Yến buổi sáng", "desc": "Hàng xôi nổi tiếng đất Tây Hồ — tô xôi nóng hổi thơm lừng đậu xanh, lạc rang, sáng ra ăn no bụng"},
+      {"id": "che_bun_tay_ho", "title": "Chè và bún Tây Hồ", "desc": "Những hàng chè, quán bún lề đường quen thuộc — hương vị bình dân nhưng chứa đựng cả hồn ẩm thực Hà Nội"},
+      {"id": "ca_phe_view_ho", "title": "Cà phê view Hồ Tây", "desc": "Ngồi nhâm nhi cà phê nhìn ra Hồ Tây rộng mênh mông — trải nghiệm sáng Hà Nội không thể quên"},
+      {"id": "nem_cuon_tay_ho", "title": "Hải sản ven hồ", "desc": "Những quán hải sản nhỏ xíu ven hồ — tôm hùm, cua, mực nướng vừa ngon vừa rẻ theo kiểu Hà Nội"},
+      {"id": "pho_ha_noi", "title": "Phở Hà Nội chính gốc", "desc": "Tô phở bò Hà Nội nước trong, ngọt xương, thịt tái mềm — chuẩn hương vị Hà Nội mà không đâu làm được"}
+    ]
+  },
+  "friday": {
+    "id": "thuong_hieu",
+    "name": "Social Proof & Thương Hiệu",
+    "emoji": "⭐",
+    "description": "Xây dựng uy tín thương hiệu Ven Hồ Hotel — review thật từ khách, điểm nổi bật của khách sạn, câu chuyện thương hiệu.",
+    "tone": "Tự hào, chân thật, ấm áp — không quảng cáo lộ liễu",
+    "cta": "Đặt phòng tại venhohotel.com hoặc gọi 024 3847 4646",
+    "topics": [
+      {"id": "agoda_rating", "title": "Agoda 8.5 — Khách nói gì?", "desc": "Điểm Agoda 8.5/10 tổng thể, 9.2/10 vị trí — chia sẻ những lời khen thật từ 45 đánh giá"},
+      {"id": "vi_tri_vang", "title": "Vị trí vàng — 5 phút đến Hồ Tây", "desc": "Lợi thế địa điểm 181 Nguyễn Đình Thi: gần hồ, yên tĩnh, tiện đi lại — điểm vị trí 9.2 không phải ngẫu nhiên"},
+      {"id": "phong_deluxe", "title": "Phòng Deluxe — Chi tiết sang trọng", "desc": "Căn phòng 18m² với Queen bed, thiết kế ấm áp tinh tế — từng chi tiết được chọn lựa kỹ lưỡng"},
+      {"id": "phong_view_ho", "title": "Phòng View Hồ — Đặc quyền hiếm có", "desc": "Thức dậy mở cửa sổ nhìn ra Hồ Tây — trải nghiệm chỉ có tại Ven Hồ Hotel trong khu vực"},
+      {"id": "khach_san_12_phong", "title": "Khách sạn boutique — Sự khác biệt", "desc": "12 phòng nhỏ xinh — mỗi khách đều được chăm sóc tận tình, không bị lạc trong đám đông như khách sạn lớn"},
+      {"id": "check_in_moment", "title": "Khoảnh khắc check-in đáng nhớ", "desc": "Khoảnh khắc bước vào phòng, mở cửa sổ lần đầu — cảm giác mà mỗi khách của Ven Hồ đều trân trọng"},
+      {"id": "gia_tri_xung_dang", "title": "Giá trị xứng đáng từng đồng", "desc": "Phòng từ 412.500đ/đêm tại vị trí Hồ Tây đắc địa — câu hỏi không phải 'có đáng không' mà là 'còn chỗ không'"},
+      {"id": "chuyen_ve_ven_ho", "title": "Câu chuyện Ven Hồ Hotel", "desc": "Câu chuyện về khách sạn nhỏ bên Hồ Tây — nơi Hồ Tây gặp gỡ sự tinh tế, triết lý phục vụ của Ven Hồ"}
+    ]
+  }
+}

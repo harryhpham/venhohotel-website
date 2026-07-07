@@ -46,7 +46,7 @@ export default function ContactClient() {
       const res = await fetch("/api/booking", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, source: "contact_page" }),
       });
 
       let data: { error?: string; success?: boolean } = {};
@@ -122,6 +122,21 @@ export default function ContactClient() {
                   <p className="label-tag mb-4">
                     {lang === "vi" ? "Đặt Phòng Trực Tuyến" : "Book Online"}
                   </p>
+                  <div className="border border-[#D9D9D9] bg-white px-5 py-4 mb-3">
+                    <p className="font-display text-xl text-[#1A1A1A] mb-1">
+                      {t.directTitle}
+                    </p>
+                    <p className="font-sans text-sm text-[#6B6B6B] leading-relaxed">
+                      {t.directBody}
+                    </p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {t.directBenefits.map((benefit) => (
+                        <span key={benefit} className="label-tag border border-[#EDE8E0] px-2.5 py-1 text-[#6B6B6B]">
+                          {benefit}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                   <div className="flex flex-col gap-3">
                     <a
                       href={agodaUrl("contact_page")}
@@ -134,7 +149,7 @@ export default function ContactClient() {
                       className="flex items-center justify-between border border-[#D9D9D9] px-5 py-4 hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors group"
                     >
                       <span className="font-sans text-sm text-[#1A1A1A] group-hover:text-[#C9A84C] transition-colors">
-                        {lang === "vi" ? "Đặt qua Agoda" : "Book on Agoda"}
+                        {lang === "vi" ? "Xem Ven Hồ trên Agoda" : "View Ven Ho on Agoda"}
                       </span>
                       <span className="font-sans text-xs text-[#6B6B6B] group-hover:text-[#C9A84C] transition-colors">8.5 ★</span>
                     </a>

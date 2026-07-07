@@ -1,0 +1,110 @@
+[
+  {
+    "week_monday": "2026-06-29",
+    "post_date": "2026-07-01",
+    "topic": "View Hồ Tây buổi sáng",
+    "description": "Bình minh yên bình trên Hồ Tây nhìn từ khách sạn — cảm giác thư giãn, thoát khỏi ồn ào thành phố",
+    "content_pillar": "destination",
+    "image_folder": "Lake-view",
+    "tone": "thơ mộng, nhẹ nhàng"
+  },
+  {
+    "week_monday": "2026-07-06",
+    "post_date": "2026-07-08",
+    "topic": "Phòng Deluxe — không gian nghỉ ngơi hoàn hảo",
+    "description": "Giới thiệu phòng Deluxe Double 18m², Queen bed, thiết kế ấm áp — nhấn vào sự thoải mái và tinh tế",
+    "content_pillar": "room",
+    "image_folder": "Deluxe-double",
+    "tone": "sang trọng, ấm áp"
+  },
+  {
+    "week_monday": "2026-07-13",
+    "post_date": "2026-07-15",
+    "topic": "Vị trí vàng — 5 phút đến Hồ Tây",
+    "description": "Nhấn mạnh lợi thế địa điểm: gần hồ, gần các điểm ăn uống nổi tiếng Tây Hồ, yên tĩnh nhưng tiện lợi",
+    "content_pillar": "location",
+    "image_folder": "Exterior",
+    "tone": "năng động, hấp dẫn"
+  },
+  {
+    "week_monday": "2026-07-20",
+    "post_date": "2026-07-22",
+    "topic": "Trải nghiệm của khách — câu chuyện thật",
+    "description": "Chia sẻ cảm nhận khách hàng (Agoda 8.5/10, điểm vị trí 9.2/10) — dùng ngôn ngữ khách, không PR quá lộ",
+    "content_pillar": "social_proof",
+    "image_folder": "Lake-view",
+    "tone": "chân thật, gần gũi"
+  },
+  {
+    "week_monday": "2026-07-27",
+    "post_date": "2026-07-29",
+    "topic": "Cuối tuần tại Hà Nội — staycation Hồ Tây",
+    "description": "Gợi ý trải nghiệm cuối tuần: check-in khách sạn, khám phá Tây Hồ, thưởng thức cà phê view hồ",
+    "content_pillar": "lifestyle",
+    "image_folder": null,
+    "tone": "vui vẻ, gợi cảm hứng"
+  },
+  {
+    "week_monday": "2026-08-03",
+    "post_date": "2026-08-05",
+    "topic": "Bình minh Hồ Tây — khoảnh khắc không thể quên",
+    "description": "Bài thứ 2 về view hồ — lần này nhấn vào ánh sáng buổi sáng, cảm giác thức dậy nhìn ra hồ",
+    "content_pillar": "destination",
+    "image_folder": "Lake-view",
+    "tone": "thơ mộng, cảm xúc"
+  },
+  {
+    "week_monday": "2026-08-10",
+    "post_date": "2026-08-12",
+    "topic": "Phòng Ba Người — hoàn hảo cho gia đình nhỏ",
+    "description": "Giới thiệu Standard Triple 18m² phù hợp gia đình 3 người hoặc nhóm bạn — tiện lợi, tiết kiệm",
+    "content_pillar": "room",
+    "image_folder": "Standard-triple",
+    "tone": "ấm áp, gia đình"
+  },
+  {
+    "week_monday": "2026-08-17",
+    "post_date": "2026-08-19",
+    "topic": "Không gian phòng tắm — chi tiết sang trọng",
+    "description": "Highlight phòng tắm sạch sẽ, tiện nghi — chi tiết nhỏ tạo nên trải nghiệm đẳng cấp",
+    "content_pillar": "room",
+    "image_folder": "Bathroom",
+    "tone": "tinh tế, chú trọng chi tiết"
+  },
+  {
+    "week_monday": "2026-08-24",
+    "post_date": "2026-08-26",
+    "topic": "Mùa thu Hà Nội — thời điểm lý tưởng ghé thăm",
+    "description": "Mùa thu Hà Nội (tháng 9-10) đẹp nhất — gợi ý đặt phòng sớm cho mùa cao điểm",
+    "content_pillar": "seasonal",
+    "image_folder": null,
+    "tone": "lãng mạn, gợi nhớ"
+  },
+  {
+    "week_monday": "2026-08-31",
+    "post_date": "2026-09-02",
+    "topic": "View Hồ Tây — hoàng hôn tím",
+    "description": "Hoàng hôn trên Hồ Tây — thời khắc đẹp nhất trong ngày nhìn từ khách sạn",
+    "content_pillar": "destination",
+    "image_folder": "Lake-view",
+    "tone": "lãng mạn, nghệ thuật"
+  },
+  {
+    "week_monday": "2026-09-07",
+    "post_date": "2026-09-09",
+    "topic": "Phòng Double View Hồ — trải nghiệm đặc biệt",
+    "description": "Giới thiệu Phòng Double View Hồ Tây — điểm bán hàng độc đáo nhất của khách sạn",
+    "content_pillar": "room",
+    "image_folder": "Lake-view",
+    "tone": "exclusive, đặc biệt"
+  },
+  {
+    "week_monday": "2026-09-14",
+    "post_date": "2026-09-16",
+    "topic": "Check-in Ven Hồ — khoảnh khắc đáng nhớ",
+    "description": "Khuyến khích khách tag @venhohotelhanoi khi check-in — tạo UGC và tương tác",
+    "content_pillar": "engagement",
+    "image_folder": "Exterior",
+    "tone": "vui vẻ, tương tác"
+  }
+]

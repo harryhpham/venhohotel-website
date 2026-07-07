@@ -76,10 +76,10 @@ Cải thiện khả năng xuất hiện của venhohotel.com trên Google và t�
 | @id | `https://venhohotel.com/#hotel` |
 | Tên | Ven Hồ Hotel |
 | Điện thoại (E.164) | `+842438474646` |
-| Email | `booking@venhohotel.com` |
+| Email | `venhohotel@gmail.com` |
 | Địa chỉ | 181 Nguyễn Đình Thi, Tây Hồ, Hà Nội |
 | Số phòng | 12 |
-| Check-in | 12:00 |
+| Check-in | 13:00 |
 | Check-out | 12:00 |
 | Agoda rating | 8.5/10 (45 reviews) |
 | Tọa độ | lat: 21.0510, lng: 105.8277 |

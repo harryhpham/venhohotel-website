@@ -4,16 +4,65 @@ import { useState } from "react";
 import { useLang } from "@/lib/context/LangContext";
 import { siteContent } from "@/lib/data/content";
 
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+    fbq?: (...args: unknown[]) => void;
+  }
+}
+
 export default function LocationBlock() {
   const { lang } = useLang();
   const t = siteContent[lang].locationBlock;
 
   const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const [form, setForm] = useState({ name: "", phone: "", date: "", note: "" });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch("/api/booking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          phone: form.phone,
+          checkin: form.date,
+          note: form.note,
+          source: "homepage_quick_contact",
+        }),
+      });
+
+      let data: { error?: string } = {};
+      try {
+        data = await res.json();
+      } catch {
+        throw new Error(`Server error ${res.status}`);
+      }
+
+      if (!res.ok) {
+        setError(data.error || (lang === "vi" ? "Không thể gửi yêu cầu. Vui lòng thử lại." : "Cannot send request. Please try again."));
+        return;
+      }
+
+      setSubmitted(true);
+      window.gtag?.("event", "generate_lead", {
+        event_category: "booking_form",
+        form_location: "homepage_quick_contact",
+      });
+      window.fbq?.("track", "Lead", { content_name: "homepage_quick_contact" });
+    } catch {
+      setError(lang === "vi"
+        ? "Không thể kết nối đến máy chủ. Vui lòng gọi trực tiếp 024 3847 4646."
+        : "Cannot connect to server. Please call directly at 024 3847 4646.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -124,10 +173,12 @@ export default function LocationBlock() {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-[#C9A84C] text-white font-sans font-medium text-sm tracking-wide py-4 hover:bg-[#b8963d] transition-colors min-h-[44px]"
+                  disabled={isLoading}
+                  className="w-full bg-[#C9A84C] text-white font-sans font-medium text-sm tracking-wide py-4 hover:bg-[#b8963d] transition-colors min-h-[44px] disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  {t.submit}
+                  {isLoading ? (lang === "vi" ? "Đang gửi..." : "Sending...") : t.submit}
                 </button>
+                {error && <p className="font-sans text-sm text-red-600 text-center">{error}</p>}
               </form>
             )}
           </div>

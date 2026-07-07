@@ -10,6 +10,25 @@ import { useLang } from "@/lib/context/LangContext";
 import { siteContent } from "@/lib/data/content";
 import { agodaUrl, bookingUrl } from "@/lib/data/ota";
 
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+    fbq?: (...args: unknown[]) => void;
+  }
+}
+
+function trackOtaClick(platform: "agoda" | "booking_com", roomSlug: string) {
+  window.gtag?.("event", `${platform}_click`, {
+    event_category: "ota",
+    room_type: roomSlug,
+    source: "room_detail",
+  });
+  window.fbq?.("track", "InitiateCheckout", {
+    content_name: platform,
+    content_category: roomSlug,
+  });
+}
+
 // Lightbox overlay
 function Lightbox({ images, index, onClose, onPrev, onNext }: {
   images: readonly string[];
@@ -247,6 +266,7 @@ export default function RoomDetailClient({ slug }: { slug: string }) {
                       href={agodaUrl("room_detail")}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => trackOtaClick("agoda", room.slug)}
                       className="block text-center w-full border border-[#D9D9D9] text-[#1A1A1A] font-sans text-sm py-3.5 hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors min-h-[44px] mb-2"
                     >
                       {t.agodaButton}
@@ -255,6 +275,7 @@ export default function RoomDetailClient({ slug }: { slug: string }) {
                       href={bookingUrl("room_detail")}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => trackOtaClick("booking_com", room.slug)}
                       className="block text-center w-full border border-[#D9D9D9] text-[#1A1A1A] font-sans text-sm py-3.5 hover:border-[#003580] hover:text-[#003580] transition-colors min-h-[44px]"
                     >
                       {t.bookingButton}
@@ -266,11 +287,6 @@ export default function RoomDetailClient({ slug }: { slug: string }) {
           </div>
         </section>
 
-        <div className="fixed bottom-0 left-0 right-0 lg:hidden bg-white border-t border-[#D9D9D9] p-4 z-40">
-          <Link href="/lien-he" className="block text-center w-full bg-[#C9A84C] text-white font-sans font-medium text-sm tracking-wide py-4 hover:bg-[#b8963d] transition-colors">
-            {t.bookButton}
-          </Link>
-        </div>
       </main>
       <Footer />
     </>

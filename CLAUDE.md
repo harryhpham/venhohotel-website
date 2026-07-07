@@ -3,8 +3,8 @@
 Tài liệu hướng dẫn cho Claude Code khi làm việc với project này.
 
 > **Universe context:** Ven Hồ Hotel là base camp của **The West Lake Living** universe.  
-> Master CLAUDE.md: `projects/CLAUDE.md` · DNA: `projects/VenHoBrandSystem/`  
-> Nhân vật: Hồ Tây (`projects/Ho Tay/`) · Linh An (`projects/Linh An/`)
+> Master CLAUDE.md: `projects/CLAUDE.md` · DNA: `projects/02_KNOWLEDGE/`  
+> Nhân vật: Hồ Tây (`projects/01_BRANDS/WEST_LAKE/`) · Linh An (`projects/01_BRANDS/LINH_AN/`)
 
 ---
 
@@ -37,18 +37,7 @@ Tài liệu hướng dẫn cho Claude Code khi làm việc với project này.
 | Package mgr | npm 10.8.2 |
 | OS         | macOS (Apple Silicon) |
 
-### Màu sắc thương hiệu
-```
-Gold:        #C9A84C  → Accent, CTA, highlights
-Deep Navy:   #1B2D4F  → Sections tối, footer
-Warm White:  #F7F4EF  → Nền trang
-Cream:       #EDE8E0  → Sections xen kẽ
-Charcoal:    #1A1A1A  → Text chính
-```
-
-### Font
-- **Display:** Cormorant Garamond
-- **Body:** DM Sans
+> **Màu sắc, Font, Tagline:** xem `projects/CLAUDE.md` — Brand DNA Quick Reference
 
 ---
 
@@ -103,7 +92,7 @@ src/
 | Phòng Đôi View Hồ Tây | `double-lake-view` | 16 m² | 600,000đ/đêm |
 | Phòng Tiêu Chuẩn Ba Người | `standard-triple` | 18 m² | 500,000đ/đêm |
 
-Check-in: 12:00–20:00 · Check-out: 06:00–12:00 · Trẻ em dưới 9 tuổi: miễn phí
+Check-in: 13:00 · Check-out: 12:00 trưa · Trẻ em dưới 9 tuổi: miễn phí
 
 ---
 
@@ -140,23 +129,24 @@ git push origin main
 |--------|---------|----------|
 | Form đặt phòng (Resend) | `ops/email-form/` | `notes.md` |
 | Social Media AI (skill `/tao-social-post`) | `ops/VenHoSocialManager/` | `README.md` |
-| **Social Video Content** | `ops/social-video/` | `README.md` |
+| **Social Video Content** | `local-generated/social-video/` | Local generated, không commit |
 | Phân tích đối thủ | `ops/competitor-analysis/` | `notes.md` |
 | Google Analytics GA4 | `ops/analytics/` | `notes.md` |
 | OTA (Agoda/Booking.com) | `ops/agoda/` | — |
 | AI Agent doanh thu | `ops/ai-agent/` | `notes.md` |
 | SEO | `ops/seo/` | `notes.md` |
 | **Hồ Tây Image DNA** | `ops/` | `ho-tay-image-dna.md` |
-| **Universe Brand DNA** | `projects/VenHoBrandSystem/DNA/` | 5 DNA files + `Linh An Universe/07_LINH_AN_KOL_SYSTEM/` (07A–07F) |
-| **Linh An Production** | `Linh An Universe/07_LINH_AN_KOL_SYSTEM/` | 07E Production Prompt System · 07F QC Scoring Rubric |
-| **Ho Tay Content Library** | `projects/Ho Tay/` | SceneLibrary, Prompts, References |
-| **Linh An Character Library** | `projects/Linh An/` | CharacterBible, Prompts, Wardrobe |
-| **ContentProduction** | `projects/ContentProduction/` | Output content đã tạo |
+| **Universe Brand DNA** | `projects/02_KNOWLEDGE/DNA/` | 5 DNA files + `Linh An Universe/07_LINH_AN_KOL_SYSTEM/` (07A–07F) |
+| **Linh An Production** | `02_KNOWLEDGE/DNA/Linh An Universe/07_LINH_AN_KOL_SYSTEM/` | 07E Production Prompt System · 07F QC Scoring Rubric |
+| **Ho Tay Content Library** | `projects/01_BRANDS/WEST_LAKE/` | SceneLibrary, Prompts, References |
+| **Linh An Character Library** | `projects/01_BRANDS/LINH_AN/` | CharacterBible, Prompts, Wardrobe |
+| **ContentProduction** | `projects/04_PRODUCTION/` | Output content đã tạo |
+| **VENHO AI Studio** | `projects/03_AI_STUDIO/venho-ai-studio/` | Knowledge Studio v2.4 (Phase 8 complete · 90/90 tests pass · validated với API thật) — Mode A + Mode B · Pass 2A tất định · Curated Overlay (`overrides.yaml`) · ALLOWED IMPERFECTIONS · COMPACT output · English values rule · 1 subject = 1 hạng · FORBIDDEN = policy · QC gate linh_an · contract 1.1 · `--classify` flag · `--all` flag · `overlay_applied` manifest · cache key = `{hash}_{schema_id}_{sv}_{pv}` · DNA regen key = hash + schema_version + prompt_version (`needs_regeneration()`) · prompt_version 1.1 (fix forbidden_hints noise) · DNA generated: `lake_view_room` · `deluxe_double` · `lobby` · `facade` · `linh_an` · `westlake` · `outside` — tất cả có overrides.yaml · CLI: `venho vision observe --mode b --project venho_hotel --subject {subject} --input {dir}` · CLI all: `venho vision observe --all --project venho_hotel` · DNA: `data/projects/venho_hotel/knowledge/VENHO_HOTEL_{SUBJECT}_DNA.md` · Master Plan: `docs/dna_studio_master_plan_v2_4.md` · `venho` CLI global (PATH: `/Users/hanhpham/Library/Python/3.9/bin`) |
 
 > Tài liệu chung (Venhohotel.md, DEPLOY-GUIDE.md): `docs/`
 
 **Lịch sử phát triển:** xem `CHANGELOG.md`  
-**Universe history:** xem `projects/CHANGELOG.md`
+**Universe history:** xem `projects/00_PROJECT_HQ/CHANGELOG.md`
 
 ---
 
@@ -174,7 +164,7 @@ Hệ thống tạo video ngắn 15 giây cho TikTok / Instagram Reels / YouTube 
 | Khu vực | Tây Hồ, Hà Nội |
 | Vai trò | Xuất hiện tự nhiên trong video — KHÔNG phải người quảng cáo |
 
-**Character DNA đầy đủ (v3.1):** `projects/VenHoBrandSystem/DNA/Linh An Universe/07_LINH_AN_KOL_SYSTEM/`
+**Character DNA đầy đủ (v3.1):** `projects/02_KNOWLEDGE/DNA/Linh An Universe/07_LINH_AN_KOL_SYSTEM/`
 - `07A` — Visual DNA v3.1 (character identity)
 - `07B` — Master Reference Pack v3.0 (reference scores: B3=9.4–9.5 PRIMARY, A2=9.2, C=9.2, D=9.4)
 - `07C` — Face Lock System v1.1 (tại sao người nhận ra Linh An)
@@ -183,33 +173,10 @@ Hệ thống tạo video ngắn 15 giây cho TikTok / Instagram Reels / YouTube 
 
 **Identity stack (khi xung đột):** Master Face #001 > 07C Face Lock > 07B Reference Pack > 07A Visual DNA > 07E Prompt
 
-**Character Library:** `projects/Linh An/` (CharacterBible, Prompts, Wardrobe)  
-**Legacy prompts:** `ops/social-video/linh-an-storyboard-prompts.md` (vẫn dùng cho `/tao-video-script`)
+**Character Library:** `projects/01_BRANDS/LINH_AN/` (CharacterBible, Prompts, Wardrobe)  
+**Legacy prompts:** `local-generated/social-video/linh-an-storyboard-prompts.md` (local generated, vẫn dùng cho `/tao-video-script`)
 
-**Face Lock v3.1 (dùng trong mọi Seedance prompt — production validated):**
-```
-Linh An, Vietnamese female influencer, 24 years old,
-soft elongated oval face, balanced facial geometry,
-slim natural nose bridge, long almond eyes, horizontal eye emphasis,
-slightly narrow eye opening, thin upper eyelid, warm brown irises,
-very subtle outer corner lift, natural eye asymmetry,
-low-position eyebrows, minimal arch, close eye-brow distance,
-natural full lips with slightly thinner upper lip and slightly fuller lower lip,
-very subtle upward lip corners, slightly shorter philtrum,
-soft feminine jawline, delicate chin,
-fair warm ivory skin, healthy natural glow, realistic skin texture, natural pores,
-long dark chocolate brown layered wavy hair, natural center part,
-small pearl drop earrings,
-gentle feminine beauty, elegant Vietnamese appearance,
-luxury lifestyle creator, consistent facial identity,
-photorealistic, natural beauty,
-no plastic skin, no doll face, no exaggerated makeup.
-168cm height, slim elegant body, defined waistline,
-long legs, natural feminine curves, healthy feminine silhouette,
-graceful posture, confident but relaxed body language.
-10-20 degree soft hero left angle, natural eye contact,
-Living Expression — subtle anticipation smile, genuine engagement.
-```
+**Face Lock v3.1:** xem `projects/CLAUDE.md` (Linh An — Quick Reference) hoặc `07A_LINH_AN_VISUAL_DNA_v3.1.md`
 
 **Outfit Pack:**
 - **A – Cafe Girl:** cream knit top, beige A-line skirt, small luxury handbag
@@ -236,7 +203,7 @@ Living Expression — subtle anticipation smile, genuine engagement.
 ### Files
 
 ```
-ops/social-video/
+local-generated/social-video/
 ├── README.md                        ← Chiến lược tổng thể
 ├── content-calendar.md              ← Lịch 14 video (Tuần 1–4, tháng 6–7/2026)
 ├── linh-an-storyboard-prompts.md   ← ⭐ Character DNA đầy đủ của Linh An
@@ -262,7 +229,7 @@ Skill file: `.claude/commands/tao-video-script.md`
 
 **Cách 2 — Web app (dùng khi cộng tác viên cần dùng):**
 ```bash
-cd "ops/social-video/script-generator"
+cd "local-generated/social-video/script-generator"
 npm start   # → http://localhost:3000
 ```
 Yêu cầu: `ANTHROPIC_API_KEY` trong file `.env` · Chi phí ~700–1,000đ/script
@@ -338,31 +305,9 @@ python3 generate_image.py "[scene prompt]" "photos-ai/YYYY/DD-MM-slug" [size] --
 
 ## Brand DNA Principles
 
-> Nguồn: `projects/VenHoBrandSystem/DNA/` · Approved June 2026
-
-**Core Brand Values:** Hospitality · Authenticity · Simplicity · Reliability · Warmth
-
-**Khi có xung đột, ưu tiên theo thứ tự:**
-- Authenticity > Beauty
-- Trust > Promotion
-- Brand Value > Short-Term Results
-- West Lake Identity > Generic Travel Content
-- Consistency > Experimentation
-
-**Decision Framework — 5 câu hỏi trước khi approve content:**
-1. Điều này có giúp ích cho khách không?
-2. Điều này có củng cố thương hiệu không?
-3. Điều này có phù hợp với Hồ Tây không?
-4. Điều này có phù hợp với Ven Hồ Hotel không?
-5. Harry có approve điều này không?
-> Nếu bất kỳ câu nào = Không → chỉnh lại trước khi tiếp tục.
-
-**DNA files:**
-- `02_VENHO_BRAND_DNA_v1.1.md` — Hotel brand identity
-- `03_WESTLAKE_LIFESTYLE_DNA_v1.1.md` — Lifestyle content system
-- `04_WESTLAKE_LIVING_UNIVERSE_v1.0.md` — Universe philosophy
-- `VENHO_HOTEL_MASTER_REFERENCE_PACK_v1_FINAL.md` — Hotel visual DNA: building, lobby, room, rooftop, Linh An compatibility (LOCKED v1.0)
-- `Linh An Universe/` — 10-module AI production system (Brand System, Visual Identity, Content Strategy, Social Media System, West Lake Environment, Location Library, Linh An KOL, Production Mode, Prompt Library, Reference Library)
+> Master DNA: `projects/02_KNOWLEDGE/DNA/` (6 files + 10-module Linh An Universe) · Approved June 2026  
+> Brand values, Decision Framework (5 câu hỏi), màu sắc, font: xem `projects/CLAUDE.md`  
+> Hotel visual DNA (LOCKED): `VENHO_HOTEL_MASTER_REFERENCE_PACK_v2.0_FINAL.md`
 
 ---
 

@@ -1,186 +1,165 @@
-# Changelog — Ven Hồ Hotel Website
+# Changelog — Ven Hồ Hotel Website & Ops
 
-## 2026-06-28 (3)
-- **VenHoSocialManager — chuyển từ cron Mac sang GitHub Actions**
-  - Chẩn đoán: cron job T2/4/6 không chạy vì Mac ngủ lúc 10AM, chỉ có 1 entry log toàn bộ tháng 6
-  - Tạo `.github/workflows/social-content.yml`: schedule T2/T4/T6 3:00 UTC (10:00 AM Vietnam)
-  - Thêm 3 GitHub Secrets: `OPENAI_API_KEY`, `SOCIAL_GMAIL_SENDER`, `SOCIAL_GMAIL_APP_PASS`
-  - Upload toàn bộ VenHoSocialManager pipeline lên GitHub (15 files, `.gitignore` bảo vệ .env/credentials/ảnh)
-  - Fix bug `KeyError: 'pillar_id'` trong `update_index()`: entries từ `/tao-social-post` skill không có trường này
-  - Fix lỗi 403 khi commit: thêm `permissions: contents: write` vào workflow
-  - Fix email thiếu ảnh: nhúng ảnh AI inline (MIMEImage CID) vào HTML email — không cần Drive
-  - Kết quả: workflow chạy thành công ~4 phút, email kèm ảnh preview đầy đủ
+> Chỉ lưu thay đổi liên quan đến **website, ops automation, và hotel systems**.  
+> Thay đổi về AI Studio, DNA, Universe: xem `projects/00_PROJECT_HQ/CHANGELOG.md`
 
-## 2026-06-24 (4)
-- **Location Master Ref + Room DNA + Logo — update toàn bộ `/tao-anh-ai` system**
-  - Harry tạo `06_LOCATION_MASTER_REFERENCE_PACK_v1.0_FINAL.md` trong `VenHoBrandSystem/DNA/Linh An Universe/06_LOCATION_LIBRARY_SYSTEM/` — canonical source of truth cho location/environment
-  - Harry upload 2 ảnh phòng thực vào `assets/`: `View-Ho-room.jpg` (wide shot) + `View-Ho-Room-from-inside.jpeg` (cửa sổ + hồ)
-  - Harry upload `Logo.JPG` vào `assets/` — logo Ven Hồ Hotel (gold lotus + star, "VEN HO HOTEL · LAKE SHORE")
-  - Convert 3 file JPEG → PNG: `View-Ho-room.png`, `View-Ho-room-from-inside.png`, `Logo.png` (yêu cầu của `--ref-env`)
-  - **Sửa lỗi Hotel Room environment block** trong skill `/tao-anh-ai`: block cũ sai hoàn toàn ("cream and beige palette", "floor-to-ceiling window") → block mới đúng với phòng thực (tường trắng, đồ gỗ nâu đỏ đậm, cửa sổ nhôm đen lưới 2×2, rèm xám nâu, 2 ghế gỗ + bàn kính, 3 tranh hoa phấn hồng, gợi ý `--ref-env`)
-  - **Thêm Logo block** vào skill: hướng dẫn dùng logo trên vật phẩm (ly cà phê, thẻ phòng, khăn, menu)
-  - **Cập nhật Negative Prompt**: thêm "floor-to-ceiling glass wall, marble luxury interior, generic AI hotel room, cream and white luxury room"
-  - **Cập nhật Reference table** trong skill + `CLAUDE.md`: thêm `View-Ho-room.png`, `View-Ho-room-from-inside.png`, `Logo.png` + link Location Master Ref
-  - Cập nhật Proven formula: thêm rule hotel room (`--ref-env View-Ho-room-from-inside.png` + plain English editorial prompt)
+---
 
-## 2026-06-24 (3)
-- **Skill `/tao-anh-ai` — production session đầu tiên + dual reference upgrade**
-  - Tạo 4 ảnh hoàng hôn rooftop (Linh An · Outfit B · square 1:1): đứng lan can, ngồi ghế mây, dạo bộ candid, chân dung gần
-  - Feedback Harry: image 1 & 4 (portrait đơn giản) khuôn mặt chuẩn · image 2 & 3 (nhiều props + wide shot) hơi AI feel · khung cảnh Hồ Tây chưa giống thực
-  - Harry upload 3 ảnh rooftop thực vào `assets/`: `Rooftop-Panorama-view.jpeg`, `Rooftop-railing.jpeg`, `Rooftop-corner-view.jpeg`
-  - **Nâng cấp `generate_image.py`:** thêm flag `--ref-env <path>` — dual reference (face + environment) bằng cách truyền list 2 ảnh vào `images.edit()`
-  - Convert `Rooftop-railing.jpeg` → PNG (dùng `sips`) vì API chỉ chấp nhận PNG cho ref thứ 2
-  - Test dual ref thành công: lan can đen vòng tròn, gạch đỏ thô, skyline Hà Nội authentic — cải thiện rõ rệt so với text-only environment
-  - Harry approved: "Tuyệt vời" · Output: `photos-ai/2026/24-06-hoang-hon-rooftop/` + `24-06-hoang-hon-rooftop-test/`
+## 2026-07-07 (5) — VENHO AI Studio: Phase 8 tests + outside DNA + venho CLI fix
 
-## 2026-06-28 (2)
-- **Tạo ảnh AI — `/tao-anh-ai` session: 4 ảnh mới (2 batch)**
-  - **Batch 1:** West Lake Café · Linh An · 16:9 (1280×720) · 2 ảnh
-    - Ảnh 1: Ngồi bên cửa sổ cầm ly cà phê nhìn ra hồ, ánh sáng sáng sớm 8:30, 85mm portrait
-    - Ảnh 2: Wide shot nội thất quán (brick wall, Edison lights, vintage chairs), coffee raised, 35mm
-    - Outfit A · `--ref linh-an-master-face.png` · Output: `photos-ai/2026/26-06-linh-an-cafe-ho-tay/`
-  - **Batch 2:** Hoàng hôn Hồ Tây từ rooftop · Không Linh An · Square 1:1 (1024×1024) · 2 ảnh
-    - Ảnh 1: Railing foreground gần, panoramic lake view, golden sunset 18:00, 24mm
-    - Ảnh 2: Ultra-wide 16mm, perspective gạch terracotta, purple-gold dusk sky 18:30
-    - Text-to-image (no --ref) · Output: `photos-ai/2026/28-06-hoang-hon-ho-tay/`
-  - Lưu ý: Google Drive token hết hạn — đã xóa `token.json` cũ, cần re-auth bằng `python3 google_drive.py` trước khi upload Batch 2
+- **`test_phase8.py`** (12 tests mới — Phase 8 coverage): `TestRecursiveMediaLoader` (rglob tìm ảnh trong subfolder, sorted, ignore non-image, regression test `assets/raw/room/`), `TestOpenAIProviderParam` (confirm `max_completion_tokens`, không còn `max_tokens`), `TestModelConfig` (confirm `gpt-5.5`, keys required đủ)
+- **`outside` subject** — schema + DNA đầy đủ:
+  - `config/projects/venho_hotel/subjects/outside.yaml` — 16 aggregation keys (space_type, lake_view, sky, furniture, railing, flooring, lighting...)
+  - `config/projects/venho_hotel/subjects/outside.overrides.yaml` — 6 curated FORBIDDEN, 5 ALLOWED IMPERFECTIONS, wording_overrides
+  - `VENHO_HOTEL_OUTSIDE_DNA.md` sinh từ 7 ảnh thực tế: 11 invariant · 2 variable · 1 weak (`lake_view_color` — cần thêm ảnh từ tầng cao)
+- **Fix `venho` CLI global**: thêm `/Users/hanhpham/Library/Python/3.9/bin` vào `~/.zshrc` — `venho --help` hoạt động từ bất kỳ terminal nào
+- **90/90 tests pass** — tăng từ 78 → 90
 
-## 2026-06-28
-- **DNA Update — 06 Location Library v2.0 + 07 Linh An System v3.1**
-  - `06_LOCATION_MASTER_REFERENCE_PACK_v2.0_FINAL.md` — merge Location Pack + Image DNA + Phòng View Hồ thành 20-section canonical guide (màu HEX đầy đủ, AI prompt library, checklist xuất bản)
-  - `07A_LINH_AN_VISUAL_DNA_v3.1.md` — Visual DNA cập nhật (sensuality guidelines, 3 hairstyle chính thức, character rules)
-  - `07B_MASTER_REFERENCE_PACK_v3.0.md` — Reference scores: B3=9.4–9.5 (PRIMARY), A2=9.2, C=9.2, D=9.4
-  - `07C_FACE_LOCK_SYSTEM_v1.1.md` — Mới: identity stack, 5 LABs, Positive-Constraint Rule (dùng mô tả tích cực thay negative prompts)
-  - `07E_PRODUCTION_PROMPT_SYSTEM_v1_1.md` — 3-block universal core (FACE/SCENE/CAMERA), engine appendix cho Google Flow + ChatGPT
-  - Cập nhật `CLAUDE.md` (master + Ven Ho Hotel): identity stack, reference scores, Face Lock v3.1
+## 2026-07-07 (4) — VENHO AI Studio Phase 8: chạy thật với API + fix forbidden_hints
 
-## 2026-06-24 (2)
-- **Linh An Image Generation — nâng cấp sang `images.edit()` + reference face**
-  - Phát hiện: text-to-image không thể lock khuôn mặt Linh An (6–8.4/10); `images.edit()` + reference đạt **9/10**
-  - Nâng cấp `generate_image.py`: thêm `--ref <path>` flag — dùng `images.edit()` thay `images.generate()` khi có reference
-  - Nâng cấp `google_drive.py`: thay logic SKIP → UPDATE (overwrite file đã tồn tại trên Drive)
-  - Thêm 5 reference images vào `ops/VenHoSocialManager/assets/`: `linh-an-master-face.png`, `A2_Front.png`, `B3_Hero.png`, `C_LeftProfile.png`, `D_RightProfile.png`
-  - Cập nhật skill `/tao-social-post` Bước 7: bắt buộc dùng `--ref` khi `linh_an: true`
-  - Cập nhật `CLAUDE.md` với reference image system + nguyên tắc prompt edit mode
-  - **Bài đã tạo:** `2026-06-24_linh-an-cafe-rooftop` — P1 TOFU · 91/100 · Linh An rooftop cafe Ven Hồ
+- **Xác nhận kiến trúc v2.4 (Step 0–13) chạy đúng với API thật** — GPT-4o (observe) + Claude Sonnet (consolidate), không chỉ mock.
+- **Bug fix (root cause)**: 5/6 prompt subject (`observe_room.md`, `observe_facade.md`, `observe_lobby.md`, `observe_westlake.md`, `observe_linh_an.md`) thiếu định nghĩa field `notable_features`/`uncertainty`/`forbidden_hints` trong OUTPUT FORMAT → GPT-4o đoán bừa, khiến FORBIDDEN của DNA phòng bị liệt kê ngược (VD: "Curtains", "chairs" — thứ ĐANG có lại ghi là cấm). Đây chính là known issue đã ghi ở entry (2) bên dưới.
+  - Fix: thêm đúng 3 field vào cả 5 prompt, khớp `observe_universal.md`.
+- **Fix thêm 1 lỗ hổng liên quan**: `hashes_changed()` trong `dna_manifest.py` chỉ so hash ảnh, không so `prompt_version` → sửa prompt nhưng ảnh không đổi thì Pass 2 bị skip, DNA cũ vẫn giữ nguyên rác. Thêm `needs_regeneration()` (so cả hash + schema_version + prompt_version), cập nhật `pipeline.py` dùng hàm mới — đúng chính sách cache Master Plan §11.
+- Bump `prompt_version` 1.0 → 1.1, chạy lại **6 subject bằng API thật**: `lake_view_room`, `deluxe_double`, `facade`, `lobby`, `westlake`, `linh_an` → FORBIDDEN section sạch hẳn, không còn liệt kê ngược.
+- **Test Mode A với API thật lần đầu** (trước giờ chỉ có bằng chứng Mode B) — chạy đúng, output đọc được.
+- **78/78 tests pass** sau toàn bộ thay đổi.
+- **Còn tồn đọng**: chưa có DNA cho phòng "Tiêu Chuẩn Ba Người" (standard-triple) — chưa có ảnh/config; `room`/`room_1`/`room_2` (subject cũ trùng lặp) giữ nguyên theo yêu cầu Harry.
 
-## 2026-06-24
-- **VENHO_HOTEL_MASTER_REFERENCE_PACK_v1.0_FINAL** — Hotel Visual DNA (LOCKED)
-  - Thêm `VENHO_HOTEL_MASTER_REFERENCE_PACK_v1_FINAL.md` vào `VenHoBrandSystem/DNA/`
-  - 19 DNA blocks: Building, Facade, Lobby, Reception, Corridor, Stair, Elevator, Lake View Room, Window, Balcony Railing, West Lake Room Experience, Nguyễn Đình Thi Street, West Lake Environment, Rooftop, Rooftop Railing, Rooftop Panorama, Sunset, Linh An Compatibility Rule
-  - Status: READY FOR AI PRODUCTION — canonical reference cho mọi nội dung AI/KOL/marketing
-  - Cập nhật CLAUDE.md (master + Ven Ho Hotel) để reference file này
+## 2026-07-07 (3) — VENHO AI Studio: westlake DNA + fix schema
 
-## 2026-06-28
-- **Fix — Disable scheduled cloud routine bị lỗi 8AM hàng ngày**
-  - Nguyên nhân: Routine cũ "Ven Hồ — Báo Cáo Doanh Thu Hàng Ngày" (`trig_01YVD8GP1HiyZQtKmmb8inbH`) tạo từ 15/6 cố scrape SkyHotel từ cloud environment Claude Code → bị proxy chặn kết nối HTTPS đến `admin1.skyhotel.vn` (403 policy denial)
-  - Giải pháp: Disable routine này — GitHub Actions (`daily-revenue.yml`) đã làm đúng việc này ở 9AM, không bị chặn
-  - Routine theo dõi đối thủ (`trig_01HhEDr4CRLV1Krf32A1o3AG`) giữ nguyên — chỉ dùng web search, không cần SkyHotel
+- **Root cause fix**: `westlake.yaml` dùng `feature_keys` (grouped) thay vì `aggregation_keys` (flat) → Pass 2A có 0 invariant
+  - Fix: chuyển sang `aggregation_keys` format với 17 keys (water, vegetation, infrastructure, sky, light, atmosphere)
+  - Xóa 10 observation cache cũ (thiếu key injection) → re-observe fresh
+- **`VENHO_HOTEL_WESTLAKE_DNA.md`** sinh thành công: 10 ảnh · 11 invariant · 5 variable · 0 weak
+  - INVARIANT perfect: `water_surface_texture: calm` (100%), `water_visibility_range: far` (100%), `distant_cityscape: yes` (100%)
+  - INVARIANT curated: `water_color: muted jade-teal #4E8FA0` (wording_override)
+  - VARIABLE: `light_quality`, `time_of_day`, `vegetation_presence`, `lamp_post_presence`, `general_scene_character`
+  - FORBIDDEN: 7 curated + 5 observed · ALLOWED IMPERFECTIONS: 5 curated + 9 observed
+- **Fix `consolidate_westlake.md`**: rewrite format cũ → Pass 2B format `[{key, canonical}]` — loại bỏ 11 WARN/run
+- **Fix wording_overrides** `westlake.overrides.yaml`: thêm normalize `True`→`yes` cho presence keys
+- **78/78 tests pass** · tất cả 6 subjects đã có DNA: `lake_view_room` · `deluxe_double` · `lobby` · `facade` · `linh_an` · `westlake`
 
-## 2026-06-26 (2)
-- **AI Agent — Phiếu Chi + Monthly Summary**
-  - Thêm section **Phiếu Chi** vào email báo cáo ngày: tên phiếu, số tiền, hình thức thanh toán, lợi nhuận ước tính
-  - Tạo workflow mới `.github/workflows/monthly-summary.yml` — chạy 10AM ngày 1 mỗi tháng
-  - Email tháng tổng kết: doanh thu cả tháng trước + chi phí theo loại + lợi nhuận
-  - Viết lại `ops/ai-agent/skyhotel-scraper.py`: thêm `navigate_to_phieu_chi()`, `parse_phieu_chi()`, `build_monthly_email()`, `run_monthly()` + flag `--monthly`
-  - Phiếu Chi dùng Python-level date filtering (không dựa vào UI date filter của SkyHotel)
-  - Test thủ công cả 2 workflow trên GitHub Actions → pass ✓
+## 2026-07-07 (2) — VENHO AI Studio Phase 6: cache fix + DNA canonical subjects
 
-## 2026-06-26
-- **GitHub Actions — Daily Revenue Report**: chuyển từ launchd local → cloud GitHub
-  - Workflow: `.github/workflows/daily-revenue.yml` — chạy 9:00 AM (UTC+7) mỗi ngày
-  - Không cần Mac bật — chạy hoàn toàn trên GitHub cloud
-  - 4 GitHub Secrets: SKYHOTEL_USER, SKYHOTEL_PASS, GMAIL_USER, GMAIL_APP_PASS
-  - Test thủ công: Actions → Daily Revenue Report → Run workflow ✓
+- **Fix cache key bug**: thêm `schema_id` vào cache key (`{hash}_{schema_id}_{sv}_{pv}`)
+  - Trước: 2 schemas khác nhau (room_2 vs lake_view_room) trên cùng ảnh → cache hit sai
+  - Sau: mỗi schema_id có cache riêng biệt → observations đúng schema, không nhiễm chéo
+- **Sinh DNA canonical subjects** mới (fresh observations, không dùng cache cũ):
+  - `VENHO_HOTEL_LAKE_VIEW_ROOM_DNA.md` — 8 ảnh ViewHo-room-2 · 13 invariant · 5 variable · 8 curated forbidden
+  - `VENHO_HOTEL_DELUXE_DOUBLE_DNA.md` — 4 ảnh VenHo-room-1 · 10 invariant · 8 variable · 8 curated forbidden
+  - Cả hai có ALLOWED IMPERFECTIONS + CURATOR NOTES + COMPACT version
+  - Overlay curated đúng: `style_category: boutique Vietnamese heritage hotel`, `hotel_tier: boutique mid-range`, `window_frame: matte black aluminum…`
+- **13 tests mới** (`test_phase6.py`) · tổng: 55/55 pass
+- **Known issue (TODO)**: `forbidden_hints` observed noise — AI liệt một số room features (Curtains, Window view) như forbidden hints → sẽ fix prompt trong phase tiếp theo
+- `westlake` DNA: pending (chưa có ảnh)
 
-## 2026-06-22 (2)
-- **Fix AI Agent — báo cáo bị miss khi Mac reboot sau 9h**
-  - launchd không catch-up missed job sau reboot (chỉ sau sleep) → thêm lịch dự phòng 10:30 AM
-  - Thêm lock file `/tmp/venho-revenue-YYYY-MM-DD.lock` vào `run-daily-report.sh` để chống gửi đôi
-  - Plist dùng `StartCalendarInterval` array: 9:00 + 10:30
+## 2026-07-07 — Trim tài liệu + tách scope CHANGELOG
 
-## 2026-06-22
-- **The West Lake Living Universe** — Ven Hồ Hotel trở thành base camp của universe lớn hơn
-  - Tạo `projects/Ho Tay/` — content library West Lake (SceneLibrary 9 families, Prompts, References)
-  - Tạo `projects/Linh An/` — character library (CharacterBible, Prompts x4, Wardrobe x4 seasons)
-  - Tạo `projects/ContentProduction/` — output folder (Albums/2026 x5 themes, FB, IG, Reels, Video)
-  - Cập nhật `projects/VenHoBrandSystem/` — convert 4 RTF DNA → markdown + PromptEngine + SceneArchitecture
-  - Tạo `projects/CLAUDE.md` + `projects/CHANGELOG.md` — master universe context
-  - Tạo `website/`, `social/`, `marketing/`, `assets/` sub-folders trong Ven Ho Hotel
-  - Cập nhật `CLAUDE.md` — thêm universe context + reference đến new DNA locations
+- Trim `Ven Ho Hotel/CLAUDE.md` (397 → ~320 lines): xóa 3 section duplicate với master
+  - Removed: Màu sắc + Font block → 1-line pointer
+  - Removed: Face Lock v3.1 full text block → 1-line pointer
+  - Simplified: Brand DNA Principles (27 lines → 3 lines)
+  - Fixed: stale path `projects/CHANGELOG.md` → `projects/00_PROJECT_HQ/CHANGELOG.md`
+- Tách scope CHANGELOG: hotel (website/ops) vs universe (`projects/00_PROJECT_HQ/CHANGELOG.md`)
+- Archive `VENHO_AI_Studio_Complete_Master_Plan_v1_2.md` → `09_ARCHIVE/`
 
-## 2026-06-21 (2)
-- **Hồ Tây Image DNA** — tạo `ops/ho-tay-image-dna.md`
-  - DNA cố định cho mọi prompt ảnh AI về Hồ Tây / Nguyễn Đình Thi
-  - Màu nước mặc định: jade-teal `#4E8FA0` (ngày thường); xám bạc `#B8C4C8` (haze); amber `#C07840` (hoàng hôn)
-  - Gồm: identity block, lake water, atmosphere, vegetation, urban elements, local life, color palette, what to avoid, ready-to-use prefix block
-  - Nguồn: ảnh thực Harry chụp tại Nguyễn Đình Thi tháng 6/2026
-  - Dùng cho: gpt-image-2, Midjourney, DALL-E, Seedance, Flux và mọi AI image tool
-- **Trigger "Kết thúc Task"** — thêm vào quy tắc làm việc trong `CLAUDE.md`
-  - Mỗi khi Harry nhắn "Kết thúc Task", tự động cập nhật `CLAUDE.md` + `CHANGELOG.md`
+## 2026-07-07 + 2026-06-30 — VENHO AI Studio v2.4 + v2.3
 
-## 2026-06-21
-- **Fix VenHoSocialManager — skill `/tao-social-post` thiếu 3 bước sau tạo ảnh**
-  - `send_email.py`: bỏ phụ thuộc `index.json`; tự scan folder mới nhất trong database; hỗ trợ cả format manual-skill lẫn `generate_content.py`; subject email lấy từ `concept` của bài mới nhất
-  - `google_drive.py`: thêm CLI `python3 google_drive.py upload <folder>` để upload bài thủ công
-  - Skill `.claude/commands/tao-social-post.md`: thêm **Bước 5b** — sau khi tạo ảnh tự động upload Drive, cập nhật `meta.json` với `drive_url`, cập nhật `index.json` + `index.md`
-- **Fix AI Agent — báo cáo doanh thu không gửi**: 2 lỗi
-  - Plist trỏ đường dẫn cũ `AI Agent/` (đã xóa sau reorganize) → sửa thành `ops/ai-agent/`
-  - Gmail App Password hết hạn → cập nhật mới trong `run-daily-report.sh`
-  - Reload launchd, test chạy OK — email gửi thành công
+> Chi tiết đầy đủ: `projects/00_PROJECT_HQ/CHANGELOG.md`  
+> Tóm tắt v2.4: English values rule · 1 subject = 1 hạng · FORBIDDEN = policy · Curated Overlay · ALLOWED IMPERFECTIONS · QC gate 07F · contract_version 1.1 · 23/23 tests pass  
+> Tóm tắt v2.3: Mode A + Mode B · Pass 2A tất định · DNA Regeneration · 6 DNA files cho venho_hotel · 21/21 tests pass
 
-## 2026-06-20
-- **Fix AI Agent — chuyển cron → launchd**: cron bỏ qua job khi Mac ngủ; launchd chạy ngay khi Mac thức
-  - Plist: `~/Library/LaunchAgents/com.venhohotel.daily-revenue.plist`
-- **Phần 4 — VenHoSocialManager**: pipeline GPT-5 → gpt-image-1 → Drive → email hoàn thành
-  - 5 pillars, 20-slot weighted rotation, cron T2/T4/T6 10AM
+## 2026-06-28 (3) — VenHoSocialManager — chuyển cron Mac → GitHub Actions
+- Tạo `.github/workflows/social-content.yml`: schedule T2/T4/T6 3:00 UTC (10:00 AM Vietnam)
+- 3 GitHub Secrets: `OPENAI_API_KEY`, `SOCIAL_GMAIL_SENDER`, `SOCIAL_GMAIL_APP_PASS`
+- Fix bug `KeyError: 'pillar_id'` trong `update_index()`
+- Fix lỗi 403 commit: thêm `permissions: contents: write` vào workflow
+- Fix email thiếu ảnh: nhúng ảnh AI inline (MIMEImage CID) — không cần Drive
+- Kết quả: workflow ~4 phút, email kèm ảnh preview đầy đủ
 
-## 2026-06-19
-- **Migration Windows → macOS**
-  - Homebrew + Node v20.20.2 + npm 10.8.2
-  - Playwright + Chromium cài lại trên macOS
-  - 6 file Windows (.ps1, .bat) → 5 bash scripts (.sh)
-  - launchd job VenHo-DailyRevenue 9:00 AM chạy OK
-  - Terminal Full Disk Access đã cấp
-- **Fix song ngữ EN/VI toàn bộ trang web**
-  - 4 trang con tách thành Client Components (useLang)
-  - 6 section EN mới trong content.ts; rooms.ts: thêm descriptionEn, amenitiesEn, bedsEn
-  - FeaturedRooms, ServicesGrid, NearbySection, LocationBlock: thêm useLang
-  - Cập nhật giá phòng: Deluxe 400k, Lake View 600k, Triple 500k
-  - GitHub token lưu macOS Keychain — push tự động
-- **Phần 7 — Tích Hợp Agoda / Booking.com**
-  - `src/lib/data/ota.ts` — `agodaUrl()` / `bookingUrl()` với UTM
-  - GA4 events: `agoda_click`, `booking_click`; Booking.com giữ `aid=304142`
-  - Build 16/16 trang pass — deploy lên Vercel
+## 2026-06-24 (4) — Location Reference + Room DNA — nâng cấp `/tao-anh-ai`
+- Harry upload 2 ảnh phòng thực: `View-Ho-room.jpg` + `View-Ho-Room-from-inside.jpeg`
+- Harry upload `Logo.JPG` — logo Ven Hồ Hotel
+- Convert 3 file JPEG → PNG (yêu cầu `--ref-env`)
+- Fix Hotel Room environment block trong skill `/tao-anh-ai`: block cũ sai (cream palette, floor-to-ceiling window) → block mới đúng thực tế
+- Thêm Logo block + Negative Prompt cập nhật
+- Cập nhật Reference table trong skill + `CLAUDE.md`
 
-## 2026-06-15
-- **Phần 5 — Phân Tích Đối Thủ**: 5 đối thủ trực tiếp khu Tây Hồ (Đan Thanh sát vách)
-  - Ven Hồ: Agoda 8.5 cao nhất phân khúc, duy nhất có website+booking
-  - Scheduled Agent tự động cập nhật mỗi Thứ Hai 9AM → email báo cáo
-- **Phần 8 — AI Agent Doanh Thu**
-  - Playwright scrape SkyHotel PMS → parse Excel → gửi email
-  - CCR bị block egress admin1.skyhotel.vn → dùng local cron job
-- **Phần 9 — SEO**
-  - robots.ts, sitemap.ts (9 URLs), JsonLd.tsx (Hotel + HotelRoom + BreadcrumbList)
-  - metadataBase, og:image, Twitter Card, title.template
-  - Build 16/16 trang pass sạch
+## 2026-06-24 (3) — `/tao-anh-ai` production session + dual reference
+- 4 ảnh hoàng hôn rooftop (Linh An · Outfit B · square 1:1)
+- Feedback: portrait đơn giản 9/10, many props + wide shot → AI feel, Hồ Tây chưa giống thực
+- Harry upload 3 ảnh rooftop thực vào `assets/`
+- Nâng cấp `generate_image.py`: thêm `--ref-env <path>` — dual reference (face + env)
+- Test dual ref: lan can đen, gạch đỏ, skyline authentic — rõ rệt hơn text-only
 
-## 2026-06-10
-- **Google Analytics GA4**: Measurement ID G-4242ESCGY7
-  - GoogleAnalytics component (next/script afterInteractive)
-  - Conversion events: generate_lead, phone_click
-  - DebugView xác nhận data đổ về
-- **Email Resend**: verify domain venhohotel.com; đổi sender → no-reply@venhohotel.com
-- **Debug build**: resend@6 yêu cầu Node ≥20 → thêm engines vào package.json
-- **Fix Resend**: move init vào trong try-catch; fix RESEND_API_KEY trong Vercel env
+## 2026-06-28 (2) — 4 ảnh AI mới (West Lake Café + Hoàng hôn Hồ Tây)
+- Batch 1: Linh An West Lake Café · 16:9 · `--ref linh-an-master-face.png`
+- Batch 2: Hoàng hôn Hồ Tây rooftop · Square · text-to-image (no --ref)
+- Google Drive token hết hạn — đã xóa `token.json`, re-auth xong
 
-## 2026-06-09
-- Form đặt phòng kết nối email qua Resend (API route POST /api/booking)
-- Push lên GitHub (harryhpham/venhohotel-website)
-- Deploy thành công lên Vercel — **venhohotel.com** live
+## 2026-06-28 — Fix — Disable scheduled cloud routine lỗi 8AM
+- Routine cũ cố scrape SkyHotel từ cloud → bị proxy chặn 403
+- Disable routine — GitHub Actions `daily-revenue.yml` đã làm đúng ở 9AM
+- Routine theo dõi đối thủ giữ nguyên (chỉ dùng web search)
 
-## 2026-06-04
-- Website 7 trang hoàn chỉnh, build clean
-- VI/EN language switcher
-- Gallery + lightbox + auto-slideshow 10s
-- Mobile responsive, SEO metadata, JSON-LD schema
+## 2026-06-26 (2) — AI Agent — Phiếu Chi + Monthly Summary
+- Thêm section Phiếu Chi vào email báo cáo ngày
+- Tạo `.github/workflows/monthly-summary.yml` — 10AM ngày 1 mỗi tháng
+- Viết lại `skyhotel-scraper.py`: thêm `navigate_to_phieu_chi()`, `parse_phieu_chi()`, `build_monthly_email()`
+- Test 2 workflows → pass ✓
+
+## 2026-06-26 — GitHub Actions — Daily Revenue Report
+- `.github/workflows/daily-revenue.yml` — 9:00 AM (UTC+7) mỗi ngày, chạy cloud
+- 4 GitHub Secrets: SKYHOTEL_USER, SKYHOTEL_PASS, GMAIL_USER, GMAIL_APP_PASS
+
+## 2026-06-24 (2) — Linh An Image Generation — nâng cấp sang `images.edit()` + reference
+- text-to-image: 6–8.4/10; `images.edit()` + reference: **9/10**
+- Nâng cấp `generate_image.py`: thêm `--ref <path>` flag
+- Nâng cấp `google_drive.py`: SKIP → UPDATE
+- Thêm 5 reference images vào `assets/`: `linh-an-master-face.png`, A2, B3, C, D
+- Cập nhật skill `/tao-social-post`: bắt buộc `--ref` khi `linh_an: true`
+
+## 2026-06-22 (2) — Fix AI Agent — báo cáo miss khi Mac reboot
+- launchd thêm lịch dự phòng 10:30 AM
+- Thêm lock file `/tmp/venho-revenue-YYYY-MM-DD.lock` → chống gửi đôi
+
+## 2026-06-21 (2) — Hồ Tây Image DNA + Trigger "Kết thúc Task"
+- Tạo `ops/ho-tay-image-dna.md`: màu nước jade-teal `#4E8FA0`, identity block đầy đủ
+- Thêm trigger "Kết thúc Task" vào quy tắc làm việc `CLAUDE.md`
+
+## 2026-06-21 — Fix VenHoSocialManager + Fix AI Agent
+- `send_email.py`: tự scan folder mới nhất, không phụ thuộc `index.json`
+- `google_drive.py`: thêm CLI `upload <folder>`
+- Skill `/tao-social-post`: thêm Bước 5b (upload Drive, cập nhật `meta.json`, `index.json`)
+- Fix AI Agent: plist trỏ đường dẫn cũ `AI Agent/` → `ops/ai-agent/`; Gmail App Password cập nhật
+
+## 2026-06-20 — Fix AI Agent + VenHoSocialManager v1
+- Chuyển cron → launchd: `com.venhohotel.daily-revenue.plist`
+- VenHoSocialManager: pipeline GPT → gpt-image-1 → Drive → email · 5 pillars · cron T2/T4/T6 10AM
+
+## 2026-06-19 — Migration Windows → macOS + Song ngữ EN/VI + OTA Integration
+- Homebrew + Node v20.20.2 · Playwright + Chromium cài lại
+- 6 file Windows (.ps1/.bat) → 5 bash scripts (.sh) · launchd OK
+- Fix song ngữ: 4 trang con → Client Components; 6 section EN trong `content.ts`; `rooms.ts` thêm EN fields
+- Cập nhật giá: Deluxe 400k, Lake View 600k, Triple 500k
+- `src/lib/data/ota.ts` — `agodaUrl()` / `bookingUrl()` với UTM; GA4 events OTA click
+
+## 2026-06-15 — Phân Tích Đối Thủ + AI Agent Doanh Thu + SEO
+- 5 đối thủ Tây Hồ; Scheduled Agent Thứ Hai 9AM → email báo cáo
+- AI Agent: Playwright scrape SkyHotel PMS → parse Excel → email
+- SEO: robots.ts, sitemap.ts (9 URLs), JsonLd.tsx; build 16/16 pass
+
+## 2026-06-10 — GA4 + Resend Email + Debug Build
+- GA4 Measurement ID `G-4242ESCGY7` · conversion events: generate_lead, phone_click
+- Resend: verify domain venhohotel.com; sender no-reply@venhohotel.com
+- Fix: resend@6 yêu cầu Node ≥20 → `engines` trong `package.json`
+
+## 2026-06-09 — Launch
+- Form đặt phòng kết nối Resend (`POST /api/booking`)
+- Deploy Vercel → **venhohotel.com** live
+
+## 2026-06-04 — Website v1.0
+- 7 trang hoàn chỉnh, build clean
+- VI/EN language switcher · Gallery + lightbox + auto-slideshow 10s
+- Mobile responsive · SEO metadata · JSON-LD schema
