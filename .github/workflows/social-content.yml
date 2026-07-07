@@ -2,7 +2,7 @@ name: Social Content Generator
 
 on:
   schedule:
-    - cron: '0 3 * * 1,3,5'  # 10:00 AM Vietnam (UTC+7), Thứ 2/4/6
+    - cron: '0 1 * * 1,3,5'  # 8:00 AM Vietnam (UTC+7), Thứ 2/4/6
   workflow_dispatch:           # Cho phép chạy thủ công từ GitHub UI
 
 jobs:
@@ -31,14 +31,17 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           GMAIL_SENDER: ${{ secrets.SOCIAL_GMAIL_SENDER }}
           GMAIL_APP_PASSWORD: ${{ secrets.SOCIAL_GMAIL_APP_PASS }}
+          SKIP_GOOGLE_DRIVE: "1"
         run: python3 generate_content.py --force
 
-      - name: Commit rotation state
+      - name: Commit generated content
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add ops/VenHoSocialManager/database/rotation_state.json \
                   ops/VenHoSocialManager/database/index.json \
-                  ops/VenHoSocialManager/database/index.md
-          git diff --staged --quiet || git commit -m "chore: social rotation state [skip ci]"
+                  ops/VenHoSocialManager/database/index.md \
+                  'ops/VenHoSocialManager/database/**/*.json' \
+                  'ops/VenHoSocialManager/database/**/*.txt'
+          git diff --staged --quiet || git commit -m "chore: social content state [skip ci]"
           git push

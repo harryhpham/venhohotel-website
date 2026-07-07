@@ -1,12 +1,12 @@
 """
 generate_content.py — Ven Hồ Hotel Social Media Content Generator
-Chạy tự động Thứ 2 / 4 / 6 lúc 10:00 sáng qua cron job macOS
+Chạy tự động Thứ 2 / 4 / 6 lúc 8:00 sáng qua GitHub Actions
 
 Luồng:
   1. Xác định pillar theo rotation (20-slot weighted cycle)
   2. Chọn topic tiếp theo (xoay vòng trong pillar)
-  3. GPT-4o sinh: title, caption FB, caption IG, hashtag, image prompt
-  4. DALL-E 3 tạo ảnh (1024×1024) — tải về ngay
+  3. gpt-5.5 sinh: title, caption FB, caption IG, hashtag, image prompt
+  4. gpt-image-2 tạo ảnh (1024×1024) — lưu ngay
   5. Lưu vào database/YYYY-MM-DD_pillar_id/ (meta.json + image.png)
   6. Cập nhật rotation_state.json + database/index
   7. Gọi send_email.py gửi preview (có ảnh nhúng)
@@ -142,6 +142,7 @@ Sau đó viết theo cấu trúc: hook thu hút → mở bài đánh đúng vấ
 - Threads: 100-150 từ, conversational, gần gũi như nói chuyện với người quen, 3-5 hashtag tối đa, CTA nhẹ nhàng tự nhiên
 - Không bắt đầu bằng emoji
 - Không dùng "sang trọng", "đẳng cấp", "xa xỉ" — thay bằng "tinh tế", "ấm áp", "chân thật"
+- Không bịa đặt review, trích dẫn hoặc lời khách hàng như quote thật. Nếu chưa có quote nguồn, hãy viết ở dạng tổng hợp cảm nhận/điểm mạnh.
 - Hashtag: mix tiếng Việt + tiếng Anh, local (#HồTây #WestLake #HàNội #Hanoi) + thương hiệu (#VenHoHotel)
 - image_prompt: tiếng Anh, photorealistic, tả cảnh thực tế đẹp, không có chữ trong ảnh
 
@@ -313,19 +314,22 @@ def main():
     save_state(state)
     log(f"Rotation index tiếp theo: {state['rotation_index']}")
 
-    log("Đang upload lên Google Drive...")
     drive_url = None
-    try:
-        import google_drive
-        drive_url = google_drive.upload_to_drive(file_info["folder"], file_info["content_dir"])
-        log(f"Google Drive: {drive_url}")
-        # Ghi drive_url vào meta.json
-        meta_path = file_info["content_dir"] / "meta.json"
-        record    = json.loads(meta_path.read_text(encoding="utf-8"))
-        record["drive_url"] = drive_url
-        meta_path.write_text(json.dumps(record, ensure_ascii=False, indent=2), encoding="utf-8")
-    except Exception as e:
-        log(f"LỖI Google Drive: {e}")
+    if os.environ.get("SKIP_GOOGLE_DRIVE") == "1":
+        log("Bỏ qua Google Drive upload (SKIP_GOOGLE_DRIVE=1).")
+    else:
+        log("Đang upload lên Google Drive...")
+        try:
+            import google_drive
+            drive_url = google_drive.upload_to_drive(file_info["folder"], file_info["content_dir"])
+            log(f"Google Drive: {drive_url}")
+            # Ghi drive_url vào meta.json
+            meta_path = file_info["content_dir"] / "meta.json"
+            record    = json.loads(meta_path.read_text(encoding="utf-8"))
+            record["drive_url"] = drive_url
+            meta_path.write_text(json.dumps(record, ensure_ascii=False, indent=2), encoding="utf-8")
+        except Exception as e:
+            log(f"LỖI Google Drive: {e}")
 
     log("Đang gửi email preview...")
     try:

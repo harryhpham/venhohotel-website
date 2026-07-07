@@ -28,6 +28,7 @@ CREDS_PATH = BASE_DIR / "credentials.json"
 
 load_dotenv(BASE_DIR / ".env")
 ROOT_FOLDER = os.environ.get("DRIVE_ROOT_FOLDER", "VenHoSocialManager")
+ROOT_FOLDER_ID = os.environ.get("GOOGLE_DRIVE_ROOT_FOLDER_ID")
 
 
 def get_service():
@@ -139,7 +140,7 @@ def upload_to_drive(folder_rel: str, content_dir: Path) -> str:
     year, month, folder_name = parts
     service = get_service()
 
-    root_id  = get_or_create_folder(service, ROOT_FOLDER)
+    root_id  = ROOT_FOLDER_ID or get_or_create_folder(service, ROOT_FOLDER)
     year_id  = get_or_create_folder(service, year,        parent_id=root_id)
     month_id = get_or_create_folder(service, month,       parent_id=year_id)
     sub_id   = get_or_create_folder(service, folder_name, parent_id=month_id)
@@ -149,6 +150,7 @@ def upload_to_drive(folder_rel: str, content_dir: Path) -> str:
         ("meta.json",        "application/json"),
         ("facebook.txt",     "text/plain"),
         ("instagram.txt",    "text/plain"),
+        ("threads.txt",      "text/plain"),
         ("image_prompt.txt", "text/plain"),
     ]
     for filename, mimetype in files_to_upload:
