@@ -141,7 +141,7 @@ git push origin main
 | **Ho Tay Content Library** | `projects/01_BRANDS/WEST_LAKE/` | SceneLibrary, Prompts, References |
 | **Linh An Character Library** | `projects/01_BRANDS/LINH_AN/` | CharacterBible, Prompts, Wardrobe |
 | **ContentProduction** | `projects/04_PRODUCTION/` | Output content đã tạo |
-| **VENHO AI Studio** | `projects/03_AI_STUDIO/venho-ai-studio/` | Knowledge Studio v2.4 (Phase 8 complete · 90/90 tests pass · validated với API thật) — Mode A + Mode B · Pass 2A tất định · Curated Overlay (`overrides.yaml`) · ALLOWED IMPERFECTIONS · COMPACT output · English values rule · 1 subject = 1 hạng · FORBIDDEN = policy · QC gate linh_an · contract 1.1 · `--classify` flag · `--all` flag · `overlay_applied` manifest · cache key = `{hash}_{schema_id}_{sv}_{pv}` · DNA regen key = hash + schema_version + prompt_version (`needs_regeneration()`) · prompt_version 1.1 (fix forbidden_hints noise) · DNA generated: `lake_view_room` · `deluxe_double` · `lobby` · `facade` · `linh_an` · `westlake` · `outside` — tất cả có overrides.yaml · CLI: `venho vision observe --mode b --project venho_hotel --subject {subject} --input {dir}` · CLI all: `venho vision observe --all --project venho_hotel` · DNA: `data/projects/venho_hotel/knowledge/VENHO_HOTEL_{SUBJECT}_DNA.md` · Master Plan: `docs/dna_studio_master_plan_v2_4.md` · `venho` CLI global (PATH: `/Users/hanhpham/Library/Python/3.9/bin`) |
+| **VENHO AI Studio** | `projects/03_AI_STUDIO/venho-ai-studio/` | Knowledge Studio v2.4 (Phase 8 complete · 90/90 tests pass · validated với API thật) — Mode A + Mode B · Pass 2A tất định · Curated Overlay (`overrides.yaml`) · ALLOWED IMPERFECTIONS · COMPACT output · English values rule · 1 subject = 1 hạng · FORBIDDEN = policy · QC gate linh_an · contract 1.1 · `--classify` flag · `--all` flag · `overlay_applied` manifest · cache key = `{hash}_{schema_id}_{sv}_{pv}` · DNA regen key = hash + schema_version + prompt_version (`needs_regeneration()`) · prompt_version 1.1 (fix forbidden_hints noise) · DNA generated: `lake_view_room` · `deluxe_double` · `lobby` · `facade` · `linh_an` · `westlake` · `outside` (v1.1, 14 ảnh — gộp street-level + rooftop qua `space_type` variable) — tất cả có overrides.yaml · CLI: `venho vision observe --mode b --project venho_hotel --subject {subject} --input {dir}` · CLI all: `venho vision observe --all --project venho_hotel` · DNA: `data/projects/venho_hotel/knowledge/VENHO_HOTEL_{SUBJECT}_DNA.md` · Master Plan: `docs/dna_studio_master_plan_v2_4.md` · `venho` CLI global (PATH: `/Users/hanhpham/Library/Python/3.9/bin`) · **`/tao-anh-ai` + `/tao-social-post` đọc `_DNA_COMPACT.md` tự động trước khi viết prompt** (DNA thắng nếu mâu thuẫn với block cứng) |
 
 > Tài liệu chung (Venhohotel.md, DEPLOY-GUIDE.md): `docs/`
 
@@ -325,11 +325,10 @@ python3 generate_image.py "[scene prompt]" "photos-ai/YYYY/DD-MM-slug" [size] --
   - Test thủ công: Actions → chọn workflow → Run workflow
   - Backup launchd local: `~/Library/LaunchAgents/com.venhohotel.daily-revenue.plist` (9:00 + 10:30 AM)
 - **VenHoSocialManager dùng GitHub Actions** (cloud) — không cần Mac bật
-  - Workflow: `.github/workflows/social-content.yml` — T2/T4/T6 lúc 10:00 AM (UTC+7)
-  - Pipeline: GPT → caption FB/IG/Threads + gpt-image-2 → email kèm ảnh inline → commit rotation state
+  - Workflow: `.github/workflows/social-content.yml` — T2/T4/T6 lúc **8:00 AM** (UTC+7)
+  - Pipeline: gpt-5.5 → caption FB/IG/Threads + gpt-image-2 → email kèm ảnh inline → commit rotation state + caption/meta/index text (không commit `image.png`)
   - Secrets: OPENAI_API_KEY, SOCIAL_GMAIL_SENDER, SOCIAL_GMAIL_APP_PASS
-  - Google Drive bị skip (không có OAuth trong cloud) — email thay thế hoàn toàn với ảnh nhúng inline
-  - Rotation state tự commit vào repo sau mỗi run (`database/rotation_state.json`)
+  - Google Drive bị skip hẳn qua `SKIP_GOOGLE_DRIVE=1` — email thay thế hoàn toàn với ảnh nhúng inline; `google_drive.py` chỉ dùng khi chạy local (hỗ trợ override `ROOT_FOLDER_ID` qua env)
   - Test thủ công: Actions → "Social Content Generator" → Run workflow
   - Cron Mac cũ (`0 10 * * 1,3,5`) vẫn còn trong crontab nhưng redundant
 - Scheduled Agent theo dõi đối thủ: chạy mỗi Thứ Hai 9AM, gửi email báo cáo

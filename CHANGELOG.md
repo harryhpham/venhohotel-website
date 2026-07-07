@@ -5,6 +5,20 @@
 
 ---
 
+## 2026-07-07 (6) — Workspace reorg + booking security fix + mobile sticky CTA + social pipeline gpt-5.5
+
+- **Commit toàn bộ Phase work** (3 commit, đã push `origin/main`):
+  - `68ce882` — reorg thư mục cũ (`Form email/`, `SEO/`, `Social Media content/`) vào `ops/email-form/`, `ops/seo/`, `ops/social-content/`; thêm `docs/`, `marketing/`, `social/`, `assets/`, `website/` (README reference)
+  - `9b97287` — tích hợp DNA compact vào `/tao-anh-ai` + `/tao-social-post`
+  - `695c6ae` — social pipeline lên gpt-5.5/gpt-image-2
+- **Booking API bảo mật hơn** (`src/app/api/booking/route.ts`): thêm `escapeHtml()` + `normalizeText()` chống XSS trong email HTML (trước đó nội dung form chèn thẳng vào template không escape); validate email format + checkout phải sau checkin
+- **Mobile Sticky CTA mới** (`src/components/ui/MobileStickyCTA.tsx`): thanh CTA cố định đáy màn hình trên mobile (gọi điện + đặt phòng), có GA4 (`phone_click`, `booking_cta_click`) + Meta Pixel (`Contact`, `Lead`) tracking — nhúng vào `layout.tsx`
+- **Footer**: thêm dòng Check-out (trước chỉ có Check-in)
+- **SEO metadata** (`layout.tsx`): sửa giá phòng trong description/OG/Twitter card từ 412,500đ → 400,000đ/đêm cho khớp giá thật
+- **DNA `outside` → v1.1** (venho-ai-studio, 14 ảnh — từ 7): Harry bổ sung 4 ảnh rooftop chụp từ tầng cao. Phát hiện: schema `outside` vốn thiết kế gộp nhiều loại không gian ngoài trời (`space_type`: rooftop_terrace/balcony/entrance_area/street_level_exterior) trong 1 subject — quyết định giữ nguyên, không tách subject riêng (xem memory `project-outside-dna-schema`)
+- **Tích hợp DNA vào skill AI** — `/tao-anh-ai` và `/tao-social-post` giờ bắt buộc đọc `VENHO_HOTEL_{SUBJECT}_DNA_COMPACT.md` trước khi viết prompt (nguồn xác thực, thắng block cứng nếu mâu thuẫn); sửa toàn bộ path cũ trỏ `VenHoBrandSystem/` (đã archive) → `02_KNOWLEDGE/DNA/`
+- **Social pipeline** (`ops/VenHoSocialManager/`): model gpt-5 → gpt-5.5, gpt-image-1 → gpt-image-2; GitHub Actions đổi lịch 10AM → 8AM VN, thêm `SKIP_GOOGLE_DRIVE=1` (bỏ hẳn Drive trên cloud), commit thêm caption/meta/index text vào repo (trước chỉ commit rotation state); `google_drive.py` cho phép override `ROOT_FOLDER_ID` qua env, upload thêm `threads.txt`; thêm rule chống bịa review/quote khách trong caption
+
 ## 2026-07-07 (5) — VENHO AI Studio: Phase 8 tests + outside DNA + venho CLI fix
 
 - **`test_phase8.py`** (12 tests mới — Phase 8 coverage): `TestRecursiveMediaLoader` (rglob tìm ảnh trong subfolder, sorted, ignore non-image, regression test `assets/raw/room/`), `TestOpenAIProviderParam` (confirm `max_completion_tokens`, không còn `max_tokens`), `TestModelConfig` (confirm `gpt-5.5`, keys required đủ)
