@@ -125,6 +125,20 @@ Dựa vào phân tích ở Bước 2 để viết đúng tone và funnel stage.
 - Nếu Linh An xuất hiện: thêm **Face Lock v3.0** vào đầu prompt (xem phần tham chiếu bên dưới)
 - Kết thúc với: `Photorealistic, 4K, professional photography, luxury boutique hotel aesthetic, warm tones.`
 
+**Trước khi viết prompt — Read DNA compact tương ứng (bắt buộc, nguồn xác thực):**
+
+| Ảnh có gì | Subject | File cần Read |
+|-----------|---------|---------------|
+| Linh An | `linh_an` | `projects/03_AI_STUDIO/venho-ai-studio/data/projects/venho_hotel/knowledge/VENHO_HOTEL_LINH_AN_DNA_COMPACT.md` |
+| Hồ Tây / Nguyễn Đình Thi | `westlake` | `..._WESTLAKE_DNA_COMPACT.md` |
+| Mặt tiền khách sạn | `facade` | `..._FACADE_DNA_COMPACT.md` |
+| Sảnh / lễ tân | `lobby` | `..._LOBBY_DNA_COMPACT.md` |
+| Phòng view hồ | `lake_view_room` | `..._LAKE_VIEW_ROOM_DNA_COMPACT.md` |
+| Phòng Deluxe Đôi | `deluxe_double` | `..._DELUXE_DOUBLE_DNA_COMPACT.md` |
+| Rooftop / sân thượng | `outside` | `..._OUTSIDE_DNA_COMPACT.md` — subject này gộp nhiều không gian ngoài trời, `space_type` là VARIABLE không phải INVARIANT; cần đọc thêm bản đầy đủ `VENHO_HOTEL_OUTSIDE_DNA.md` và chọn giá trị `rooftop_terrace` trong mục VARIABLE |
+
+Đưa **INVARIANT** vào prompt, **FORBIDDEN** vào negative/tránh, bỏ qua **ALLOWED IMPERFECTIONS** (không cần ép tránh). Nếu mâu thuẫn với bảng "Hotel Visual DNA" cứng bên dưới → DNA compact thắng (mới hơn, đã qua QC). Bảng cứng chỉ dùng khi chưa có DNA cho subject đó.
+
 Ví dụ format (không có Linh An):
 ```
 A tranquil West Lake view at golden hour seen from a hotel balcony.
@@ -149,7 +163,7 @@ luxury boutique hotel aesthetic, warm tones.
 
 **KHÔNG BAO GIỜ generate:** blue-glass modern hotel · Korean/Singapore style · artificial lake · dense urban skyline
 
-> Nguồn đầy đủ: `projects/VenHoBrandSystem/DNA/VENHO_HOTEL_MASTER_REFERENCE_PACK_v1_FINAL.md`
+> Nguồn đầy đủ: `projects/02_KNOWLEDGE/DNA/VENHO_HOTEL_MASTER_REFERENCE_PACK_v2.0_FINAL.md`
 
 ---
 
@@ -380,7 +394,7 @@ Living Expression — subtle anticipation smile, genuine engagement.
 - **Core Values:** Hospitality · Authenticity · Simplicity · Reliability · Warmth
 - **Xung đột:** Authenticity > Beauty · Trust > Promotion · Brand Value > Short-Term
 - **Không bao giờ:** clickbait · hard-sell · luxury exaggeration · generic travel clichés
-- **DNA đầy đủ:** `projects/VenHoBrandSystem/DNA/Linh An Universe/01_BRAND_SYSTEM.md`
+- **DNA đầy đủ:** `projects/02_KNOWLEDGE/DNA/Linh An Universe/01_BRAND_SYSTEM/`
 
 ### Màu sắc brand
 Gold `#C9A84C` · Deep Navy `#1B2D4F` · Warm White `#F7F4EF` · Cream `#EDE8E0`
@@ -401,4 +415,4 @@ Gold `#C9A84C` · Deep Navy `#1B2D4F` · Warm White `#F7F4EF` · Cream `#EDE8E0`
 
 **KHÔNG:** Blue-glass modern hotel · Korean/Singapore/Dubai style · artificial lake · dense skyline · old jade stone railing
 
-> File: `projects/VenHoBrandSystem/DNA/VENHO_HOTEL_MASTER_REFERENCE_PACK_v1_FINAL.md`
+> File: `projects/02_KNOWLEDGE/DNA/VENHO_HOTEL_MASTER_REFERENCE_PACK_v2.0_FINAL.md`

@@ -30,14 +30,34 @@ Nếu `$ARGUMENTS` trống, hỏi lần lượt:
 
 Đọc topic và phân vào một trong các scenario:
 
-| Scenario | Từ khóa gợi ý | Environment block dùng |
-|----------|---------------|----------------------|
-| Nguyễn Đình Thi / lakeside | ven hồ, dạo bộ, đường, xe máy | Street-Level block |
-| Rooftop | rooftop, sân thượng, tầng thượng | Rooftop block |
-| Hotel room / balcony | phòng, ban công, cửa sổ, checkin | Hotel Room block |
-| Tây Hồ café | cà phê, café, ngồi | West Lake Café block |
-| Chân dung / portrait | chân dung, portrait, close-up | Hero Portrait block |
-| West Lake landscape | cảnh, hoàng hôn, bình minh, mặt hồ | Wide Lake View block |
+| Scenario | Từ khóa gợi ý | Environment block dùng | DNA subject (Bước 2b) |
+|----------|---------------|----------------------|------------------------|
+| Nguyễn Đình Thi / lakeside | ven hồ, dạo bộ, đường, xe máy | Street-Level block | `westlake` (+ `outside`, lọc `space_type: street_level_exterior`, nếu thấy mặt tiền khách sạn) |
+| Rooftop | rooftop, sân thượng, tầng thượng | Rooftop block | `outside` (lọc `space_type: rooftop_terrace`) |
+| Hotel room / balcony | phòng, ban công, cửa sổ, checkin | Hotel Room block | `lake_view_room` (view hồ) hoặc `deluxe_double` (không view hồ) |
+| Tây Hồ café | cà phê, café, ngồi | West Lake Café block | *(chưa có DNA — dùng block cứng)* |
+| Chân dung / portrait | chân dung, portrait, close-up | Hero Portrait block | `linh_an` |
+| West Lake landscape | cảnh, hoàng hôn, bình minh, mặt hồ | Wide Lake View block | `westlake` |
+| Mặt tiền / lobby khách sạn | mặt tiền, sảnh, lễ tân, check-in | Rooftop/Hotel Room block gần nhất | `facade` (mặt tiền) hoặc `lobby` (sảnh) |
+
+---
+
+### Bước 2b — Đọc DNA compact tương ứng (bắt buộc)
+
+Trước khi viết prompt ở Bước 3, **Read** file COMPACT DNA khớp với subject ở bảng trên:
+
+```
+projects/03_AI_STUDIO/venho-ai-studio/data/projects/venho_hotel/knowledge/VENHO_HOTEL_{SUBJECT}_DNA_COMPACT.md
+```
+(SUBJECT viết hoa, VD: `VENHO_HOTEL_LINH_AN_DNA_COMPACT.md`, `VENHO_HOTEL_WESTLAKE_DNA_COMPACT.md`, `VENHO_HOTEL_LAKE_VIEW_ROOM_DNA_COMPACT.md`, `VENHO_HOTEL_FACADE_DNA_COMPACT.md`, `VENHO_HOTEL_LOBBY_DNA_COMPACT.md`, `VENHO_HOTEL_DELUXE_DOUBLE_DNA_COMPACT.md`, `VENHO_HOTEL_OUTSIDE_DNA_COMPACT.md`)
+
+File này có 3 phần: **INVARIANT** (đặc điểm bắt buộc — đưa thẳng vào prompt), **ALLOWED IMPERFECTIONS** (chi tiết tự nhiên được phép, không cần ép tránh), **FORBIDDEN** (thêm vào Global Negative Prompt ở Bước 3).
+
+**Nếu DNA compact mâu thuẫn với Environment block cứng bên dưới → DNA compact thắng** (đây là nguồn đã qua Pass 2A tất định + QC, cập nhật hơn). Environment block cứng chỉ là fallback khi chưa có DNA cho subject đó (café).
+
+**Lưu ý riêng cho `outside`:** subject này gộp nhiều loại không gian ngoài trời (street-level, rooftop, balcony, entrance) trong một schema — `space_type` là **VARIABLE**, không phải INVARIANT. Compact chỉ hiện phần INVARIANT chung cho mọi loại; khi cần khóa đúng loại không gian (VD rooftop vs street-level), đọc thêm bản đầy đủ `VENHO_HOTEL_OUTSIDE_DNA.md` và chọn giá trị `space_type` phù hợp trong mục VARIABLE (`rooftop_terrace`, `street_level_exterior`, `balcony`, `entrance_area`) để đưa vào prompt.
+
+Nếu không có Linh An trong ảnh, bỏ qua `linh_an` DNA.
 
 ---
 
@@ -255,7 +275,7 @@ Chấm điểm từng ảnh sau khi generate. Dùng **10-second fast triage** tr
 - **8.0–8.9** → CONDITIONAL: dùng scene phụ / story
 - **< 8.0 hoặc bất kỳ FAIL** → REJECT: re-anchor Master Face #001, regenerate
 
-*Full weighted rubric: `VenHoBrandSystem/DNA/Linh An Universe/07_LINH_AN_KOL_SYSTEM/07F_QC_CHECKLIST_SCORING_RUBRIC_v1_0.md`*
+*Full weighted rubric: `projects/02_KNOWLEDGE/DNA/Linh An Universe/07_LINH_AN_KOL_SYSTEM/07F_QC_CHECKLIST_SCORING_RUBRIC_v1_0.md`*
 
 ---
 
@@ -293,19 +313,22 @@ In ra Drive URL khi hoàn thành. Nếu lỗi xác thực, chạy `python3 googl
 
 ## Reference nhanh — DNA sources
 
+**Production DNA (dùng ở Bước 2b — nguồn xác thực, tất định + QC):**
+`projects/03_AI_STUDIO/venho-ai-studio/data/projects/venho_hotel/knowledge/VENHO_HOTEL_{SUBJECT}_DNA_COMPACT.md`
+Subjects hiện có: `linh_an` · `westlake` · `outside` · `facade` · `lobby` · `lake_view_room` · `deluxe_double` · `room` · `room_1` · `room_2`
+
+**Narrative DNA (bối cảnh, character bible — tham khảo khi cần mô tả sâu hơn):**
+
 | Tài liệu | Đường dẫn |
 |----------|-----------|
-| Linh An Visual DNA v3.1 | `07_LINH_AN_KOL_SYSTEM/07A_LINH_AN_VISUAL_DNA_v3.1.md` |
-| Master Reference Pack v3.0 | `07_LINH_AN_KOL_SYSTEM/07B_MASTER_REFERENCE_PACK_v3.0.md` |
-| Face Lock System v1.1 | `07_LINH_AN_KOL_SYSTEM/07C_FACE_LOCK_SYSTEM_v1.1.md` |
-| **Production Prompt System v1.1** | `07_LINH_AN_KOL_SYSTEM/07E_PRODUCTION_PROMPT_SYSTEM_v1_1.md` ← engine guides |
-| **QC Scoring Rubric v1.0** | `07_LINH_AN_KOL_SYSTEM/07F_QC_CHECKLIST_SCORING_RUBRIC_v1_0.md` ← **chấm điểm** |
-| West Lake Environment v2.1 | `05_WEST_LAKE_ENVIRONMENT_SYSTEM/05_WEST_LAKE_ENVIRONMENT_SYSTEM_v2_1.md` |
-| **Location Master Ref v1.0** | `06_LOCATION_LIBRARY_SYSTEM/06_LOCATION_MASTER_REFERENCE_PACK_v1.0_FINAL.md` ← **ƯU TIÊN** |
-| Hotel Building DNA v2.0 | `06_LOCATION_LIBRARY_SYSTEM/06B_VEN_HO_HOTEL_BUILDING_DNA_v2.0.md` |
-| Hotel Master Reference Pack | `VenHoBrandSystem/DNA/VENHO_HOTEL_MASTER_REFERENCE_PACK_v1_FINAL.md` |
-
-*Tất cả file trên trong: `VenHoBrandSystem/DNA/Linh An Universe/07_LINH_AN_KOL_SYSTEM/` (trừ Hotel Master Reference Pack)*
+| Linh An Visual DNA v3.1 | `projects/02_KNOWLEDGE/DNA/Linh An Universe/07_LINH_AN_KOL_SYSTEM/07A_LINH_AN_VISUAL_DNA_v3.1.md` |
+| Master Reference Pack v3.0 | `projects/02_KNOWLEDGE/DNA/Linh An Universe/07_LINH_AN_KOL_SYSTEM/07B_MASTER_REFERENCE_PACK_v3.0.md` |
+| Face Lock System v1.1 | `projects/02_KNOWLEDGE/DNA/Linh An Universe/07_LINH_AN_KOL_SYSTEM/07C_FACE_LOCK_SYSTEM_v1.1.md` |
+| **Production Prompt System v1.1** | `projects/02_KNOWLEDGE/DNA/Linh An Universe/07_LINH_AN_KOL_SYSTEM/07E_PRODUCTION_PROMPT_SYSTEM_v1_1.md` ← engine guides |
+| **QC Scoring Rubric v1.0** | `projects/02_KNOWLEDGE/DNA/Linh An Universe/07_LINH_AN_KOL_SYSTEM/07F_QC_CHECKLIST_SCORING_RUBRIC_v1_0.md` ← **chấm điểm** |
+| West Lake Environment v2.1 | `projects/02_KNOWLEDGE/DNA/Linh An Universe/05_WEST_LAKE_ENVIRONMENT_SYSTEM/05_WEST_LAKE_ENVIRONMENT_SYSTEM_v2_1.md` |
+| **Location Master Ref v2.7** | `projects/02_KNOWLEDGE/DNA/Linh An Universe/06_LOCATION_LIBRARY_SYSTEM/06_LOCATION_MASTER_REFERENCE_PACK_v2.7_FINAL.md` |
+| Hotel Master Reference Pack (LOCKED) | `projects/02_KNOWLEDGE/DNA/VENHO_HOTEL_MASTER_REFERENCE_PACK_v2.0_FINAL.md` |
 
 **Reference images** (`ops/VenHoSocialManager/assets/`):
 
