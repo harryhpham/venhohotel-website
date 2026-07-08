@@ -1,9 +1,10 @@
 {
-  "rotation_index": 10,
+  "rotation_index": 11,
   "topic_counters": {
     "ho_tay": 5,
     "am_thuc": 2,
     "social_proof": 2,
-    "cong_tac": 1
+    "cong_tac": 1,
+    "thuong_hieu": 1
   }
 }

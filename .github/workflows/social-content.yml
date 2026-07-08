@@ -45,7 +45,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add ops/VenHoSocialManager/database/rotation_state.json \
+          git add -f ops/VenHoSocialManager/database/rotation_state.json \
                   ops/VenHoSocialManager/database/index.json \
                   ops/VenHoSocialManager/database/index.md \
                   'ops/VenHoSocialManager/database/**/*.json' \
