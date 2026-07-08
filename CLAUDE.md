@@ -332,7 +332,10 @@ python3 generate_image.py "[scene prompt]" "photos-ai/YYYY/DD-MM-slug" [size] --
   - Google Drive **không còn bị skip** (đã bỏ `SKIP_GOOGLE_DRIVE=1`) — bắt buộc chạy để lấy `image_public_url` cho Make; nếu Drive upload lỗi thì bước Make bị bỏ qua (không đăng)
   - Make.com scenario chuẩn 3 module: `Webhooks (Custom webhook)` → `HTTP (Get a file)` → `Facebook Pages (Create a Post with Photos)` — chi tiết setup + lỗi thường gặp khi map field: `ops/VenHoSocialManager/README.md`
   - Test thủ công: Actions → "Social Content Generator" → Run workflow (sẽ đăng bài thật nếu Make scenario đang `ON`)
-  - Cron Mac cũ (`0 10 * * 1,3,5`) vẫn còn trong crontab nhưng redundant
+  - `git add -f` trong bước "Commit generated content" — `.gitignore` ignore toàn bộ `database/`, và git áp dụng exclude rule cho pathspec có wildcard (`**/*.json`, `**/*.txt`) trước khi resolve nên luôn khớp 0 file nếu không có `-f` (bug từng khiến job báo "All jobs have failed" dù bài đã đăng thật lên Facebook — 2026-07-08)
+  - **Cron Mac cũ (`0 10 * * 1,3,5`) đã XÓA khỏi crontab** (2026-07-08) — từng chạy song song với GitHub Actions bằng code local, gây trùng rotation state vì local `.env` không có `MAKE_WEBHOOK_URL` nên âm thầm bỏ qua bước đăng Facebook. Giờ GitHub Actions là nguồn chạy duy nhất
+  - **Ảnh dùng ref thật của khách sạn theo pillar** (2026-07-08): `pillars.json` có field `ref_image` (`thuong_hieu`→`Hotel-front-view.jpg` · `cong_tac`→`Lobby-1.jpeg` · `social_proof`→`Reception.jpeg` · `ho_tay`→`View-Ho-room-from-inside.png` · `am_thuc`→không dùng ref) — `generate_image()` tự chuyển sang `client.images.edit()` khi có ref thay vì text-to-image thuần (từng khiến ảnh AI không giống Ven Hồ Hotel thật)
+  - **Hashtag bắt buộc không dấu** (2026-07-08) — chỉ tiếng Anh hoặc tiếng Việt không dấu (`#HoTay` không phải `#HồTây`)
 - Scheduled Agent theo dõi đối thủ: chạy mỗi Thứ Hai 9AM, gửi email báo cáo
 
 ---

@@ -5,6 +5,19 @@
 
 ---
 
+## 2026-07-08 (2) — Fix bug commit state, xóa cron trùng, ảnh + hashtag đúng chuẩn
+
+- **Sự cố "All jobs have failed"** (run GitHub Actions đầu tiên sau khi bật lại Drive): bài thực ra **đã đăng thành công lên Facebook** (Make trả `HTTP 200 Accepted`), job chỉ fail ở bước cuối "Commit generated content"
+  - Root cause: `.gitignore` ignore toàn bộ `ops/VenHoSocialManager/database/`; git áp dụng exclude rule cho pathspec có wildcard (`'database/**/*.json'`, `'database/**/*.txt'`) TRƯỚC KHI resolve, nên luôn khớp 0 file dù có hàng chục file thật tồn tại (verify bằng `git add --dry-run`, tái hiện được lỗi cục bộ)
+  - Fix: thêm `-f` vào `git add` trong workflow — bypass `.gitignore` cho các file text/json này (không ảnh hưởng `image.png`, vẫn không commit ảnh)
+  - Khôi phục thủ công `rotation_state.json`/`index.json`/`index.md` khớp đúng bài đã đăng thật (đánh dấu `status: "posted"`) vì bước commit lỗi nên state chưa từng được lưu — tránh Thứ 6 lặp lại đúng slot
+- **Phát hiện cron Mac cũ (`0 10 * * 1,3,5`) gây xung đột thật**: chạy song song với GitHub Actions bằng code local (đã update), tạo content + upload Drive thật, nhưng **âm thầm bỏ qua bước đăng Facebook** vì `.env` local không có `MAKE_WEBHOOK_URL` (secret đó chỉ có trên GitHub) → tốn 1 slot rotation local không đăng được gì. Đã revert state trùng + **xóa hẳn cron này khỏi crontab** — giờ chỉ còn GitHub Actions là nguồn chạy duy nhất
+- **Fix chất lượng nội dung** theo phản hồi Harry:
+  - Hashtag có dấu tiếng Việt (`#HồTây`) không đúng chuẩn → sửa system prompt bắt buộc không dấu (`#HoTay`)
+  - Ảnh AI không giống Ven Hồ Hotel thật (do `generate_content.py` gọi `gpt-image-2` text-to-image thuần, không như skill `/tao-anh-ai` luôn dùng `--ref-env`) → thêm field `ref_image` cho từng pillar trong `pillars.json` (`thuong_hieu`→`Hotel-front-view.jpg` · `cong_tac`→`Lobby-1.jpeg` · `social_proof`→`Reception.jpeg` · `ho_tay`→`View-Ho-room-from-inside.png` · `am_thuc`→không dùng ref), `generate_image()` tự chuyển sang `client.images.edit()` khi pillar có ref
+- **Test end-to-end xác nhận qua GitHub Actions workflow_dispatch** (pillar `am_thuc`, gặp lỗi OpenAI quota giữa chừng — Harry nạp credit — chạy lại thành công): hashtag đúng không dấu, Make đăng Facebook thành công (`HTTP 200`), bước commit state chạy đúng (không cần can thiệp tay)
+- Còn tồn đọng: fix ảnh dùng `ref_image` chưa được test thật (slot `am_thuc` không dùng ref) — sẽ tự xác nhận ở lần chạy tiếp theo rơi vào pillar có ref
+
 ## 2026-07-08 — Make.com tự đăng Facebook: JSON + Google Drive image URL
 
 - Harry tạo tài khoản Make.com, dựng scenario 3 module: `Webhooks (Custom webhook)` → `HTTP (Get a file)` → `Facebook Pages (Create a Post with Photos)`
