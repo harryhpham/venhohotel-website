@@ -127,6 +127,7 @@ export const siteContent = {
       infoItems: [
         { label: "Địa Chỉ", value: "181 Nguyễn Đình Thi, Tây Hồ, Hà Nội", href: "", track: "", pixelEvent: "" },
         { label: "Điện Thoại", value: "024 3847 4646", href: "tel:02438474646", track: "phone_click", pixelEvent: "Contact" },
+        { label: "Zalo OA", value: "Ven Hồ Hotel", href: "https://zalo.me/3777187281915018911", track: "zalo_click", pixelEvent: "Contact" },
         { label: "Facebook", value: "facebook.com/venhohotelhanoi", href: "https://www.facebook.com/venhohotelhanoi", track: "facebook_click", pixelEvent: "facebook_click" },
         { label: "Check-in", value: "13:00", href: "", track: "", pixelEvent: "" },
         { label: "Check-out", value: "12:00 trưa", href: "", track: "", pixelEvent: "" },
@@ -298,6 +299,7 @@ export const siteContent = {
       infoItems: [
         { label: "Address", value: "181 Nguyen Dinh Thi, Tay Ho, Hanoi", href: "", track: "", pixelEvent: "" },
         { label: "Phone", value: "024 3847 4646", href: "tel:02438474646", track: "phone_click", pixelEvent: "Contact" },
+        { label: "Zalo OA", value: "Ven Ho Hotel", href: "https://zalo.me/3777187281915018911", track: "zalo_click", pixelEvent: "Contact" },
         { label: "Facebook", value: "facebook.com/venhohotelhanoi", href: "https://www.facebook.com/venhohotelhanoi", track: "facebook_click", pixelEvent: "facebook_click" },
         { label: "Check-in", value: "1:00 PM", href: "", track: "", pixelEvent: "" },
         { label: "Check-out", value: "12:00 PM (noon)", href: "", track: "", pixelEvent: "" },
