@@ -15,6 +15,7 @@
       "description": "Giới thiệu vẻ đẹp, điểm đến, trải nghiệm xung quanh Hồ Tây và khu Tây Hồ. Mục tiêu: kéo người yêu Hồ Tây quan tâm đến vùng Tây Hồ — từ đó quan tâm đến Ven Hồ Hotel.",
       "tone": "Thơ mộng, gợi cảm hứng khám phá, nhẹ nhàng và ấm áp",
       "cta": "Ghé Ven Hồ Hotel để thức dậy mỗi sáng với khung cảnh này",
+      "ref_image": "assets/View-Ho-room-from-inside.png",
       "topics": [
         {"id": "binh_minh_ho_tay", "title": "Bình minh Hồ Tây", "desc": "Khoảnh khắc bình minh tuyệt đẹp trên Hồ Tây — ánh sáng vàng, mặt hồ phẳng lặng, không khí trong lành"},
         {"id": "hoang_hon_tim", "title": "Hoàng hôn tím Hồ Tây", "desc": "Hồ Tây khi hoàng hôn — màu tím hồng phản chiếu xuống mặt hồ, khung cảnh lãng mạn nhất Hà Nội"},
@@ -35,6 +36,7 @@
       "description": "Giới thiệu văn hóa ẩm thực đặc sắc của khu Tây Hồ — những món ăn địa phương không thể bỏ qua khi đến Hà Nội.",
       "tone": "Hấp dẫn, gợi vị giác, tự hào về ẩm thực địa phương",
       "cta": "Đặt phòng Ven Hồ Hotel — sáng dậy bước ra là có ngay những thiên đường ẩm thực này",
+      "ref_image": null,
       "topics": [
         {"id": "banh_tom_ho_tay", "title": "Bánh tôm Hồ Tây", "desc": "Đặc sản bánh tôm chiên giòn nổi tiếng — ăn với rau sống và nước chấm chua ngọt, chỉ có ở Tây Hồ mới ngon nhất"},
         {"id": "bun_oc_nguoi", "title": "Bún ốc nguội", "desc": "Tô bún ốc mát lạnh, chua chua ngọt ngọt — món ăn sáng đặc trưng của người Tây Hồ từ bao thế hệ"},
@@ -55,6 +57,7 @@
       "description": "Tips và gợi ý dành cho khách công tác từ tỉnh khác đến Hà Nội, và cả dân Hà Nội dùng Tây Hồ làm điểm làm việc. Mục tiêu: kéo nhóm khách công tác chọn Ven Hồ là điểm dừng chân.",
       "tone": "Thực tế, hữu ích, đồng cảm với người bận rộn — không hoa mỹ",
       "cta": "Ven Hồ Hotel — điểm dừng chân lý tưởng cho chuyến công tác Hà Nội của bạn",
+      "ref_image": "assets/Lobby-1.jpeg",
       "topics": [
         {"id": "cafe_lam_viec", "title": "Cà phê làm việc Tây Hồ", "desc": "Top quán cà phê có wifi tốt, không gian yên tĩnh khu Tây Hồ cho người cần làm việc hoặc họp online"},
         {"id": "tu_noi_bai", "title": "Từ Nội Bài về Tây Hồ", "desc": "Tuyến đường di chuyển từ sân bay Nội Bài về khu Tây Hồ nhanh nhất, tiết kiệm nhất — taxi, xe buýt, grab"},
@@ -75,6 +78,7 @@
       "description": "Chia sẻ review thật từ khách, khoảnh khắc đáng nhớ, câu chuyện khách hàng. Mục tiêu: xây dựng uy tín và trust — kéo người chưa quyết định sang đặt phòng.",
       "tone": "Chân thật, ấm áp, tự hào — không quảng cáo lộ liễu",
       "cta": "Đặt phòng tại venhohotel.com hoặc gọi 024 3847 4646",
+      "ref_image": "assets/Reception.jpeg",
       "topics": [
         {"id": "agoda_85", "title": "Agoda 8.5 — Khách nói gì?", "desc": "Điểm Agoda 8.5/10 tổng thể, 9.2/10 vị trí — chia sẻ những lời khen thật từ 45 đánh giá"},
         {"id": "vi_tri_9_2", "title": "Điểm vị trí 9.2 — Không ngẫu nhiên", "desc": "Agoda chấm vị trí 9.2/10: gần hồ, yên tĩnh, tiện đi lại — khách thực sự đánh giá cao điều này"},
@@ -95,6 +99,7 @@
       "description": "Câu chuyện thương hiệu, triết lý phục vụ, những điều làm nên sự khác biệt của Ven Hồ Hotel. Mục tiêu: kết nối cảm xúc khách hàng với thương hiệu.",
       "tone": "Tự hào, chân thành, có chiều sâu — kể chuyện, không quảng cáo",
       "cta": "Đặt phòng tại venhohotel.com — Nơi Hồ Tây Gặp Gỡ Sự Tinh Tế",
+      "ref_image": "assets/Hotel-front-view.jpg",
       "topics": [
         {"id": "cau_chuyen_ven_ho", "title": "Câu chuyện Ven Hồ Hotel", "desc": "Nguồn gốc cái tên Ven Hồ, triết lý phục vụ, lý do chọn 181 Nguyễn Đình Thi — câu chuyện thương hiệu"},
         {"id": "boutique_12_phong", "title": "12 phòng — Sự khác biệt cố ý", "desc": "Tại sao Ven Hồ chỉ có 12 phòng? Vì mỗi khách đều xứng đáng được chú ý — không bị lạc trong đám đông"},

@@ -99,6 +99,15 @@ def generate_content(pillar: dict, topic: dict) -> dict:
     cfg   = CONFIG["hotel"]
     brand = CONFIG["brand"]
 
+    ref_image_note = ""
+    if pillar.get("ref_image"):
+        ref_image_note = (
+            " Ảnh sẽ được chỉnh sửa (edit) trên nền một ảnh THẬT của không gian này tại Ven Hồ Hotel"
+            " — mô tả phải giữ đúng bố cục/kiến trúc/vật liệu thật đã có trong ảnh gốc,"
+            " chỉ thêm/thay đổi ánh sáng, thời điểm trong ngày, chi tiết nhỏ hoặc không khí;"
+            " KHÔNG tự bịa ra một không gian/bố cục hoàn toàn khác."
+        )
+
     system_prompt = f"""Bạn là Chuyên gia viết nội dung có kinh nghiệm xây dựng thương hiệu cho Ven Hồ Hotel — khách sạn boutique tại Hồ Tây, Hà Nội.
 
 ─── VAI TRÒ & PHƯƠNG PHÁP ───
@@ -143,14 +152,14 @@ Sau đó viết theo cấu trúc: hook thu hút → mở bài đánh đúng vấ
 - Không bắt đầu bằng emoji
 - Không dùng "sang trọng", "đẳng cấp", "xa xỉ" — thay bằng "tinh tế", "ấm áp", "chân thật"
 - Không bịa đặt review, trích dẫn hoặc lời khách hàng như quote thật. Nếu chưa có quote nguồn, hãy viết ở dạng tổng hợp cảm nhận/điểm mạnh.
-- Hashtag: mix tiếng Việt + tiếng Anh, local (#HồTây #WestLake #HàNội #Hanoi) + thương hiệu (#VenHoHotel)
-- image_prompt: tiếng Anh, photorealistic, tả cảnh thực tế đẹp, không có chữ trong ảnh
+- Hashtag: BẮT BUỘC không dấu — chỉ dùng tiếng Anh hoặc tiếng Việt không dấu (ví dụ: #HoTay #WestLake #HaNoi #Hanoi #VenHoHotel). TUYỆT ĐỐI không viết hashtag có dấu tiếng Việt (không viết #HồTây, #HàNội)
+- image_prompt: tiếng Anh, photorealistic, tả cảnh thực tế đẹp, không có chữ trong ảnh{ref_image_note}
 
 ─── CHUẨN SEO ───
 - Tiêu đề/hook phải chứa từ khóa chính (ví dụ: "Ven Hồ Hotel", "lưu trú Tây Hồ", "Hồ Tây Hà Nội")
 - Đưa từ khóa vào tự nhiên trong 2-3 câu đầu — không nhồi nhét
 - Từ khóa phụ liên quan: "phòng view Hồ Tây", "khách sạn boutique Hà Nội", "nghỉ dưỡng Tây Hồ", "du lịch Hồ Tây", "ăn gì Hồ Tây", "chơi gì Hồ Tây"
-- Hashtag đóng vai keyword: ưu tiên hashtag có lượng tìm kiếm cao (#HồTây #KháchSạnHàNội #DuLịchHàNội #TâyHồ #WestLakeHanoi)
+- Hashtag đóng vai keyword: ưu tiên hashtag có lượng tìm kiếm cao, luôn không dấu (#HoTay #KhachSanHaNoi #DuLichHaNoi #TayHo #WestLakeHanoi)
 - Câu kết luôn có địa chỉ hoặc tên thương hiệu để tăng local SEO"""
 
     user_prompt = f"""Viết content cho bài đăng Facebook và Instagram về chủ đề: "{topic['title']}"
@@ -191,18 +200,31 @@ Trả về JSON với format chính xác sau (không có text nào ngoài JSON):
 
 # ── 4. gpt-image-2: tạo ảnh ──────────────────────────────────────────────────
 
-def generate_image(image_prompt: str, save_path: Path) -> Path:
+def generate_image(image_prompt: str, save_path: Path, ref_image: str = None) -> Path:
     log(f"Đang gọi {CONFIG['dalle_model']} tạo ảnh...")
 
     client   = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
-    response = client.images.generate(
-        model=CONFIG["dalle_model"],
-        prompt=image_prompt,
-        size=CONFIG["image_sizes"]["square"],
-        quality=CONFIG.get("image_quality", "high"),
-        output_format="png",
-        n=1,
-    )
+    ref_path = BASE_DIR / ref_image if ref_image else None
+
+    if ref_path and ref_path.exists():
+        log(f"Dùng ảnh tham chiếu thật của Ven Hồ Hotel: {ref_image}")
+        with open(ref_path, "rb") as ref_file:
+            response = client.images.edit(
+                model=CONFIG["dalle_model"],
+                image=ref_file,
+                prompt=image_prompt,
+                size=CONFIG["image_sizes"]["square"],
+                n=1,
+            )
+    else:
+        response = client.images.generate(
+            model=CONFIG["dalle_model"],
+            prompt=image_prompt,
+            size=CONFIG["image_sizes"]["square"],
+            quality=CONFIG.get("image_quality", "high"),
+            output_format="png",
+            n=1,
+        )
 
     img_data = response.data[0]
     save_path.write_bytes(base64.b64decode(img_data.b64_json))
@@ -222,9 +244,9 @@ def save_to_database(pillar: dict, topic: dict, content: dict) -> dict:
     content_dir = DB_DIR / year / month / folder_name
     content_dir.mkdir(parents=True, exist_ok=True)
 
-    # Tạo ảnh
+    # Tạo ảnh — dùng ảnh tham chiếu thật của khách sạn nếu pillar có cấu hình ref_image
     image_path = content_dir / "image.png"
-    generate_image(content["image_prompt"], image_path)
+    generate_image(content["image_prompt"], image_path, ref_image=pillar.get("ref_image"))
 
     # Lưu từng file riêng
     (content_dir / "facebook.txt").write_text(content["facebook_caption"], encoding="utf-8")
