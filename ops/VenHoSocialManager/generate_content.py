@@ -315,18 +315,23 @@ def main():
     log(f"Rotation index tiếp theo: {state['rotation_index']}")
 
     drive_url = None
+    image_public_url = None
     if os.environ.get("SKIP_GOOGLE_DRIVE") == "1":
         log("Bỏ qua Google Drive upload (SKIP_GOOGLE_DRIVE=1).")
     else:
         log("Đang upload lên Google Drive...")
         try:
             import google_drive
-            drive_url = google_drive.upload_to_drive(file_info["folder"], file_info["content_dir"])
+            result = google_drive.upload_to_drive(file_info["folder"], file_info["content_dir"])
+            drive_url = result["folder_url"]
+            image_public_url = result["image_public_url"]
             log(f"Google Drive: {drive_url}")
-            # Ghi drive_url vào meta.json
+            log(f"Ảnh public URL: {image_public_url}")
+            # Ghi drive_url + image_public_url vào meta.json
             meta_path = file_info["content_dir"] / "meta.json"
             record    = json.loads(meta_path.read_text(encoding="utf-8"))
             record["drive_url"] = drive_url
+            record["image_public_url"] = image_public_url
             meta_path.write_text(json.dumps(record, ensure_ascii=False, indent=2), encoding="utf-8")
         except Exception as e:
             log(f"LỖI Google Drive: {e}")
@@ -340,19 +345,22 @@ def main():
         log(f"Content đã lưu tại: database/{file_info['folder']}/")
         log("Gửi email thủ công: python3 send_email.py")
 
-    log("Đang gửi dữ liệu sang Make.com...")
-    try:
-        import post_to_make
-        make_result = post_to_make.send_to_make(
-            pillar,
-            topic,
-            content,
-            file_info,
-            file_info["image_path"],
-        )
-        log(f"Make.com: {make_result}")
-    except Exception as e:
-        log(f"LỖI Make.com webhook: {e}")
+    if not image_public_url:
+        log("Bỏ qua Make.com: chưa có image_public_url (cần Google Drive upload thành công trước).")
+    else:
+        log("Đang gửi dữ liệu sang Make.com...")
+        try:
+            import post_to_make
+            make_result = post_to_make.send_to_make(
+                pillar,
+                topic,
+                content,
+                file_info,
+                image_public_url,
+            )
+            log(f"Make.com: {make_result}")
+        except Exception as e:
+            log(f"LỖI Make.com webhook: {e}")
 
     log("=== Hoàn thành ===")
 

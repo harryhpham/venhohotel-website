@@ -23,7 +23,13 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install openai python-dotenv
+        run: pip install openai python-dotenv google-api-python-client google-auth-oauthlib google-auth-httplib2
+
+      - name: Restore Google Drive token
+        working-directory: ops/VenHoSocialManager
+        env:
+          GOOGLE_DRIVE_TOKEN_JSON: ${{ secrets.GOOGLE_DRIVE_TOKEN_JSON }}
+        run: echo "$GOOGLE_DRIVE_TOKEN_JSON" > token.json
 
       - name: Generate social content
         working-directory: ops/VenHoSocialManager
@@ -31,7 +37,6 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           GMAIL_SENDER: ${{ secrets.SOCIAL_GMAIL_SENDER }}
           GMAIL_APP_PASSWORD: ${{ secrets.SOCIAL_GMAIL_APP_PASS }}
-          SKIP_GOOGLE_DRIVE: "1"
           MAKE_WEBHOOK_URL: ${{ secrets.MAKE_WEBHOOK_URL }}
           MAKE_WEBHOOK_SECRET: ${{ secrets.MAKE_WEBHOOK_SECRET }}
         run: python3 generate_content.py --force

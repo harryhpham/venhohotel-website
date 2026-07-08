@@ -75,7 +75,7 @@ def get_file_id_in_folder(service, name: str, parent_id: str):
     return files[0]["id"] if files else None
 
 
-def upload_file(service, file_path: Path, mimetype: str, parent_id: str):
+def upload_file(service, file_path: Path, mimetype: str, parent_id: str) -> str:
     existing_id = get_file_id_in_folder(service, file_path.name, parent_id)
     media = MediaFileUpload(str(file_path), mimetype=mimetype, resumable=False)
     if existing_id:
@@ -84,13 +84,24 @@ def upload_file(service, file_path: Path, mimetype: str, parent_id: str):
             media_body=media,
         ).execute()
         print(f"  [UPDATE] {file_path.name} đã cập nhật trên Drive")
+        return existing_id
     else:
-        service.files().create(
+        created = service.files().create(
             body={"name": file_path.name, "parents": [parent_id]},
             media_body=media,
             fields="id",
         ).execute()
         print(f"  [OK]   {file_path.name} đã upload")
+        return created["id"]
+
+
+def make_public(service, file_id: str) -> str:
+    """Set quyền 'anyone with link can view' và trả về link direct-download."""
+    service.permissions().create(
+        fileId=file_id,
+        body={"type": "anyone", "role": "reader"},
+    ).execute()
+    return f"https://drive.google.com/uc?export=download&id={file_id}"
 
 
 PHOTOS_AI_ROOT = "Photos AI"
@@ -126,12 +137,13 @@ def upload_photos_ai_folder(folder_rel: str, content_dir: Path) -> str:
     return f"https://drive.google.com/drive/folders/{sub_id}"
 
 
-def upload_to_drive(folder_rel: str, content_dir: Path) -> str:
+def upload_to_drive(folder_rel: str, content_dir: Path) -> dict:
     """
-    Upload 5 files lên Google Drive / {ROOT_FOLDER} / YYYY / MM / {folder_name} /
+    Upload 6 files lên Google Drive / {ROOT_FOLDER} / YYYY / MM / {folder_name} /
     folder_rel = "YYYY/MM/YYYY-MM-DD_topic_id" (path tương đối từ DB_DIR)
     Bỏ qua file đã tồn tại (tránh trùng lặp).
-    Trả về URL folder trên Drive.
+    image.png được set quyền public để có link direct-download dùng cho Make.com.
+    Trả về {"folder_url": ..., "image_public_url": ...}.
     """
     parts = folder_rel.split("/")   # ["2026", "06", "2026-06-20_topic"]
     if len(parts) != 3:
@@ -153,12 +165,18 @@ def upload_to_drive(folder_rel: str, content_dir: Path) -> str:
         ("threads.txt",      "text/plain"),
         ("image_prompt.txt", "text/plain"),
     ]
+    image_public_url = None
     for filename, mimetype in files_to_upload:
         path = content_dir / filename
         if path.exists():
-            upload_file(service, path, mimetype, sub_id)
+            file_id = upload_file(service, path, mimetype, sub_id)
+            if filename == "image.png":
+                image_public_url = make_public(service, file_id)
 
-    return f"https://drive.google.com/drive/folders/{sub_id}"
+    return {
+        "folder_url": f"https://drive.google.com/drive/folders/{sub_id}",
+        "image_public_url": image_public_url,
+    }
 
 
 if __name__ == "__main__":
@@ -168,8 +186,9 @@ if __name__ == "__main__":
         folder_arg  = sys.argv[2]                                # "database/2026/06/..."
         content_dir = BASE_DIR / folder_arg
         folder_rel  = "/".join(Path(folder_arg).parts[1:])       # strip "database/"
-        drive_url   = upload_to_drive(folder_rel, content_dir)
-        print(drive_url)
+        result      = upload_to_drive(folder_rel, content_dir)
+        print(result["folder_url"])
+        print(result["image_public_url"])
     elif len(sys.argv) > 1 and sys.argv[1] == "upload-photos-ai":
         # CLI: python3 google_drive.py upload-photos-ai photos-ai/2026/24-06-slug
         folder_arg  = sys.argv[2]                                # "photos-ai/2026/DD-MM-slug"
