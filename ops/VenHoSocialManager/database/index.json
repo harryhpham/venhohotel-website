@@ -145,6 +145,16 @@
       "folder": "2026/07/2026-07-08_cau_chuyen_ven_ho",
       "drive_url": "https://drive.google.com/drive/folders/1v5V5zzkUKbmfaLC4-mm--Cloe6Ck-W7_",
       "note": "Đã đăng thật qua Make (GitHub Actions run 28917043517) — bước commit state bị lỗi git pathspec, đã ghi lại state thủ công"
+    },
+    {
+      "date": "2026-07-08",
+      "pillar_id": "am_thuc",
+      "pillar_name": "Ẩm Thực Hồ Tây",
+      "topic_id": "ca_phe_trung",
+      "topic_title": "Cà phê trứng Hà Nội",
+      "title": "Cà phê trứng bên Hồ Tây",
+      "status": "pending_review",
+      "folder": "2026/07/2026-07-08_ca_phe_trung"
     }
   ]
 }

@@ -1,9 +1,10 @@
 # Database Index — Ven Hồ Hotel Social Media
-Cập nhật lần cuối: 08/07/2026 11:27
+Cập nhật lần cuối: 08/07/2026 04:50
 
 | Ngày | Pillar | Chủ đề | Tiêu đề | Trạng thái |
 |------|--------|--------|---------|------------|
 | 2026-07-08 | 🏨 Thương Hiệu Ven Hồ Hotel | Câu chuyện Ven Hồ Hotel | Ven Hồ Hotel: Chuyện Bên Hồ | posted |
+| 2026-07-08 | 🍜 Ẩm Thực Hồ Tây | Cà phê trứng Hà Nội | Cà phê trứng bên Hồ Tây | pending_review |
 | 2026-07-06 | 🌅 Khám Phá Hồ Tây | Làng hoa Nhật Tân | Làng Hoa Nhật Tân Bên Hồ Tây | pending_review |
 | 2026-07-03 | ⭐ Trải Nghiệm Khách Hàng | Điểm vị trí 9.2 — Không ngẫu nhiên | Ven Hồ Hotel: Vị Trí 9.2 | pending_review |
 | 2026-07-01 | 🍜 Ẩm Thực Hồ Tây | Bún ốc nguội | Bún ốc nguội Hồ Tây Hà Nội | pending_review |
