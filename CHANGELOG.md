@@ -5,6 +5,22 @@
 
 ---
 
+## 2026-07-08 — Make.com tự đăng Facebook: JSON + Google Drive image URL
+
+- Harry tạo tài khoản Make.com, dựng scenario 3 module: `Webhooks (Custom webhook)` → `HTTP (Get a file)` → `Facebook Pages (Create a Post with Photos)`
+- **Đổi kiến trúc gửi ảnh sang Make**: từ multipart (đính kèm file binary trong `post_to_make.py`) sang **JSON thuần + `image_url`** — vì Module 2 (`HTTP Get a file`) cần tải ảnh từ URL public, không nhận file đính kèm trực tiếp
+  - `google_drive.py`: thêm `make_public()` — set quyền "anyone with link can view" cho `image.png`, trả về link direct-download (`drive.google.com/uc?export=download&id=...`); `upload_to_drive()` giờ trả `{"folder_url", "image_public_url"}`
+  - `post_to_make.py`: viết lại hoàn toàn — bỏ multipart/boundary, POST JSON với field `image_url`
+  - `generate_content.py`: dùng `image_public_url`; bỏ qua bước gửi Make nếu Drive upload lỗi (không còn URL để gửi)
+  - GitHub Actions (`social-content.yml`): bỏ `SKIP_GOOGLE_DRIVE=1` (bật lại Drive upload — bắt buộc để có `image_url`), thêm bước khôi phục `token.json` từ secret `GOOGLE_DRIVE_TOKEN_JSON` (dùng lại `refresh_token` local, không cần OAuth browser flow trong CI), cài thêm 3 thư viện Google
+- **Test end-to-end bằng curl trực tiếp vào webhook** (4 lần, phát hiện + fix 2 lỗi mapping trong Make UI):
+  - Lỗi 1: Module 3 (Facebook Pages) field Message map cả `payload_json` lẫn `facebook_caption` → bài đăng lộ nguyên JSON thô. Fix: xoá hết, chỉ giữ 1 chip `facebook_caption`
+  - Lỗi 2: Module 2 (HTTP Get a file) field URL vẫn còn trỏ ảnh cũ từ lúc test riêng lẻ (không phải `image_url` từ webhook) → đăng nhầm ảnh không liên quan. Fix: xoá hết, chỉ giữ 1 chip `image_url`
+  - Sau khi fix cả 2: xác nhận qua WebFetch — bài test lần 4 đăng đúng caption + đúng ảnh lên `facebook.com/venhohotelhanoi`
+- **Quan trọng — không có bước duyệt thủ công**: từ lịch chạy T2/T4/T6 tiếp theo (Thứ 6, 2026-07-10), agent sẽ tự tạo content và **đăng thẳng lên Facebook Page thật**, không qua review của Harry trước khi lên bài
+- Đã commit + push (`02e24fa`) để lịch Thứ 6 dùng đúng code mới
+- Còn tồn đọng: 4 bài test (`curl-json-test` 1-4) cần Harry vào Facebook Page xoá thủ công
+
 ## 2026-07-07 (6) — Workspace reorg + booking security fix + mobile sticky CTA + social pipeline gpt-5.5
 
 - **Commit toàn bộ Phase work** (3 commit, đã push `origin/main`):

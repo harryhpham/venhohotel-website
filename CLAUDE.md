@@ -326,10 +326,12 @@ python3 generate_image.py "[scene prompt]" "photos-ai/YYYY/DD-MM-slug" [size] --
   - Backup launchd local: `~/Library/LaunchAgents/com.venhohotel.daily-revenue.plist` (9:00 + 10:30 AM)
 - **VenHoSocialManager dùng GitHub Actions** (cloud) — không cần Mac bật
   - Workflow: `.github/workflows/social-content.yml` — T2/T4/T6 lúc **8:00 AM** (UTC+7)
-  - Pipeline: gpt-5.5 → caption FB/IG/Threads + gpt-image-2 → email kèm ảnh inline → commit rotation state + caption/meta/index text (không commit `image.png`)
-  - Secrets: OPENAI_API_KEY, SOCIAL_GMAIL_SENDER, SOCIAL_GMAIL_APP_PASS
-  - Google Drive bị skip hẳn qua `SKIP_GOOGLE_DRIVE=1` — email thay thế hoàn toàn với ảnh nhúng inline; `google_drive.py` chỉ dùng khi chạy local (hỗ trợ override `ROOT_FOLDER_ID` qua env)
-  - Test thủ công: Actions → "Social Content Generator" → Run workflow
+  - Pipeline: gpt-5.5 → caption FB/IG/Threads + gpt-image-2 → lưu local → **upload Google Drive (set public) → lấy `image_public_url`** → email preview (song song, không chặn) → **POST JSON sang Make.com webhook → Make tự đăng thẳng lên Facebook Page** → commit rotation state + caption/meta/index text (không commit `image.png`)
+  - ⚠️ **Không có bước duyệt thủ công trước khi đăng** — bài lên Facebook Page thật ngay trong cùng lần chạy T2/T4/T6
+  - Secrets: `OPENAI_API_KEY`, `SOCIAL_GMAIL_SENDER`, `SOCIAL_GMAIL_APP_PASS`, `GOOGLE_DRIVE_TOKEN_JSON` (OAuth token Drive, tự refresh trong CI), `MAKE_WEBHOOK_URL`, `MAKE_WEBHOOK_SECRET` (optional)
+  - Google Drive **không còn bị skip** (đã bỏ `SKIP_GOOGLE_DRIVE=1`) — bắt buộc chạy để lấy `image_public_url` cho Make; nếu Drive upload lỗi thì bước Make bị bỏ qua (không đăng)
+  - Make.com scenario chuẩn 3 module: `Webhooks (Custom webhook)` → `HTTP (Get a file)` → `Facebook Pages (Create a Post with Photos)` — chi tiết setup + lỗi thường gặp khi map field: `ops/VenHoSocialManager/README.md`
+  - Test thủ công: Actions → "Social Content Generator" → Run workflow (sẽ đăng bài thật nếu Make scenario đang `ON`)
   - Cron Mac cũ (`0 10 * * 1,3,5`) vẫn còn trong crontab nhưng redundant
 - Scheduled Agent theo dõi đối thủ: chạy mỗi Thứ Hai 9AM, gửi email báo cáo
 
