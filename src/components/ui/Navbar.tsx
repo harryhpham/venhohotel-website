@@ -35,6 +35,7 @@ export default function Navbar() {
     { href: "/phong",        label: t.rooms },
     { href: "/tien-ich",     label: t.amenities },
     { href: "/vi-tri",       label: t.location },
+    { href: "/blog",         label: lang === "vi" ? "Blog" : "Journal" },
     { href: "/ve-chung-toi", label: t.about },
   ];
 

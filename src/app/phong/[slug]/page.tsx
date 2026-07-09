@@ -7,8 +7,13 @@ export function generateStaticParams() {
   return rooms.map((r) => ({ slug: r.slug }));
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const room = rooms.find((r) => r.slug === params.slug);
+type RoomRouteProps = {
+  params: Promise<{ slug: string }>;
+};
+
+export async function generateMetadata({ params }: RoomRouteProps) {
+  const { slug } = await params;
+  const room = rooms.find((r) => r.slug === slug);
   if (!room) return {};
   return {
     title: room.nameVi,
@@ -26,8 +31,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default function RoomDetailPage({ params }: { params: { slug: string } }) {
-  const room = rooms.find((r) => r.slug === params.slug);
+export default async function RoomDetailPage({ params }: RoomRouteProps) {
+  const { slug } = await params;
+  const room = rooms.find((r) => r.slug === slug);
   if (!room) notFound();
 
   const base = "https://venhohotel.com";
@@ -80,7 +86,7 @@ export default function RoomDetailPage({ params }: { params: { slug: string } })
     <>
       <JsonLd data={roomSchema} />
       <JsonLd data={breadcrumbSchema} />
-      <RoomDetailClient slug={params.slug} />
+      <RoomDetailClient slug={slug} />
     </>
   );
 }

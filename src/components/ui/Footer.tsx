@@ -34,6 +34,7 @@ export default function Footer() {
     { href: "/phong",        label: lang === "vi" ? "Phòng" : "Rooms" },
     { href: "/tien-ich",     label: lang === "vi" ? "Tiện Ích" : "Amenities" },
     { href: "/vi-tri",       label: lang === "vi" ? "Vị Trí" : "Location" },
+    { href: "/blog",         label: lang === "vi" ? "Blog Hồ Tây" : "West Lake Journal" },
     { href: "/ve-chung-toi", label: lang === "vi" ? "Về Chúng Tôi" : "About" },
     { href: "/lien-he",      label: lang === "vi" ? "Liên Hệ" : "Contact" },
   ];

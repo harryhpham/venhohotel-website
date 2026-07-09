@@ -5,6 +5,23 @@
 
 ---
 
+## 2026-07-09 — Creative Studio tích hợp vào Streamlit UI (M10)
+
+- **3 mode Creative Studio mới** trong sidebar `ui/studio_app.py` (localhost:8501):
+  - **Tạo Ảnh AI** — form topic/scenario/outfit/action → assemble prompt → chạy `generate_image.py` subprocess → hiển thị ảnh kết quả ngay trong UI; hỗ trợ 1–4 ảnh/batch
+  - **Tạo Social Post** — phân tích Content Strategy v2.0 (persona/funnel/golden rule) tự động theo pillar; sinh sẵn prompt template để Harry copy sang ChatGPT viết 3 caption (FB/IG/Threads); tạo ảnh AI kèm lưu `meta.json`
+  - **Tạo Video Script** — tự detect số thứ tự script tiếp theo; sinh script 3 scene × Seedance prompt đầy đủ; preview trong UI + nút Lưu file `.md` vào `local-generated/social-video/scripts/`
+
+- **Fix `BASE_DIR = Path(__file__).resolve().parent.parent`** — Streamlit truyền `__file__` dạng relative (`ui/studio_app.py`) khiến `SOCIAL_MANAGER_DIR` thành relative path không tồn tại (`Ven Ho Hotel/ops/VenHoSocialManager`); `.resolve()` fix absolute path
+
+- **Timeout tăng 120s → 300s** cho subprocess `generate_image.py` (gpt-image-2 + `--ref` thường mất 90–150s)
+
+- **Action-first prompt assembly** — khi user nhập action, action dẫn đầu prompt (dòng 1); default pose `"10-20 degree soft hero left angle / Living Expression"` bị strip khỏi Face Lock; trước đó action bị chôn sau 20 dòng Face Lock nên bị bỏ qua
+
+- **`use_ref` toggle** — checkbox "Dùng reference image": bật (mặc định) = dùng `--ref` cho portrait/standing (face consistency 9/10); tắt = text-to-image không `--ref` cho full-body action (đạp xe, chạy, ngồi) — face consistency 7–8.5 nhưng pose tự do
+
+---
+
 ## 2026-07-08 (2) — Fix bug commit state, xóa cron trùng, ảnh + hashtag đúng chuẩn
 
 - **Sự cố "All jobs have failed"** (run GitHub Actions đầu tiên sau khi bật lại Drive): bài thực ra **đã đăng thành công lên Facebook** (Make trả `HTTP 200 Accepted`), job chỉ fail ở bước cuối "Commit generated content"
