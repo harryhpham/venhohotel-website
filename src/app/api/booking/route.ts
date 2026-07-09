@@ -16,6 +16,13 @@ function normalizeText(value: unknown, maxLength = 500) {
 
 export async function POST(req: NextRequest) {
   try {
+    const body = await req.json();
+    const company = normalizeText(body.company, 120);
+
+    if (company) {
+      return NextResponse.json({ success: true });
+    }
+
     if (!process.env.RESEND_API_KEY) {
       return NextResponse.json(
         { error: "Cấu hình email chưa sẵn sàng. Vui lòng liên hệ trực tiếp qua điện thoại." },
@@ -23,7 +30,6 @@ export async function POST(req: NextRequest) {
       );
     }
     const resend = new Resend(process.env.RESEND_API_KEY);
-    const body = await req.json();
     const name = normalizeText(body.name, 120);
     const phone = normalizeText(body.phone, 40);
     const email = normalizeText(body.email, 160);

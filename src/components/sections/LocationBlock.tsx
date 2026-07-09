@@ -18,7 +18,7 @@ export default function LocationBlock() {
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [form, setForm] = useState({ name: "", phone: "", date: "", note: "" });
+  const [form, setForm] = useState({ name: "", phone: "", date: "", note: "", company: "" });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,6 +34,7 @@ export default function LocationBlock() {
           phone: form.phone,
           checkin: form.date,
           note: form.note,
+          company: form.company,
           source: "homepage_quick_contact",
         }),
       });
@@ -126,6 +127,16 @@ export default function LocationBlock() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
+                <input
+                  type="text"
+                  name="company"
+                  value={form.company}
+                  onChange={(e) => setForm({ ...form, company: e.target.value })}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  className="hidden"
+                  aria-hidden="true"
+                />
                 <div>
                   <label htmlFor="lb-name" className="label-tag block mb-1.5">{t.nameLabel}</label>
                   <input

@@ -34,7 +34,7 @@ export default function ContactClient() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [form, setForm] = useState({
-    name: "", phone: "", email: "", checkin: "", checkout: "", room: "", guests: "", note: "",
+    name: "", phone: "", email: "", checkin: "", checkout: "", room: "", guests: "", note: "", company: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -181,6 +181,16 @@ export default function ContactClient() {
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-4">
+                    <input
+                      type="text"
+                      name="company"
+                      value={form.company}
+                      onChange={(e) => setForm({ ...form, company: e.target.value })}
+                      tabIndex={-1}
+                      autoComplete="off"
+                      className="hidden"
+                      aria-hidden="true"
+                    />
                     {t.fields.map((f) => (
                       <div key={f.id}>
                         <label htmlFor={f.id} className="label-tag block mb-1.5">{f.label}</label>
