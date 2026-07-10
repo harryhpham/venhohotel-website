@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-07-10 — Creative Studio: action prompt v2 + outfit Sport & Active
+
+- **Action prompt formula v2** (`ui/studio_app.py`): đổi từ `\n\n` block tách đôi sang một câu liên tục duy nhất — gpt-image-2 treats `\n\n` là paragraph separator, làm character block trở thành entity độc lập và nhân vật biến mất. Giờ dùng `"Linh An {action}, she is a Vietnamese female lifestyle influencer, 24 years old, ... MAIN SUBJECT in the foreground, full body visible, no conical hat, photorealistic."` — tất cả một câu
+- **Lens 85mm → 35mm cho action shots** — 85mm portrait lens crop tight vào face/vai, không render full body khi cần thấy xe đạp; 35mm cho full body visible
+- **Outfit mới E — Sport & Active** — `light pastel-green fitted sports top, slim-fit black cycling leggings, white sneakers`; khi chọn E hair tự đổi sang ponytail (validated: phù hợp hơn cho cycling vs center part)
+- **Extra negatives cho action mode** — no conical hat on main subject, no dark work clothes, no decorative ornate wrought-iron railing
+- **Test validated** (chạy thực tế với gpt-image-2): Linh An xuất hiện đúng trên xe đạp, trang phục thể thao, tóc đuôi ngựa, cảnh bên hồ Hà Nội — commit `3a9be1c`, `fc3e31c`
+
+---
+
 ## 2026-07-09 — Creative Studio tích hợp vào Streamlit UI (M10)
 
 - **3 mode Creative Studio mới** trong sidebar `ui/studio_app.py` (localhost:8501):
