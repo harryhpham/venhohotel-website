@@ -17,7 +17,7 @@ export type BlogFaq = {
 
 export type BlogPost = {
   slug: string;
-  locale: "vi";
+  locale: "vi" | "en";
   title: string;
   excerpt: string;
   category: BlogCategorySlug;
@@ -36,26 +36,58 @@ export type BlogPost = {
   faqs: BlogFaq[];
 };
 
-export const blogCategories: Record<BlogCategorySlug, { name: string; description: string }> = {
+export type BlogLang = "vi" | "en";
+
+export const blogCategories: Record<BlogCategorySlug, Record<BlogLang, { name: string; description: string }>> = {
   "kham-pha-ho-tay": {
-    name: "Khám phá Hồ Tây",
-    description: "Cẩm nang trải nghiệm Hồ Tây, Nguyễn Đình Thi và khu vực Tây Hồ theo nhịp sống địa phương.",
+    vi: {
+      name: "Khám phá Hồ Tây",
+      description: "Cẩm nang trải nghiệm Hồ Tây, Nguyễn Đình Thi và khu vực Tây Hồ theo nhịp sống địa phương.",
+    },
+    en: {
+      name: "Explore West Lake",
+      description: "Local guides to West Lake, Nguyen Dinh Thi Street and the Tay Ho area.",
+    },
   },
   "am-thuc-ho-tay": {
-    name: "Ăn gì ở Hồ Tây",
-    description: "Gợi ý cafe, món ăn và những điểm dừng chân dễ chịu quanh Hồ Tây.",
+    vi: {
+      name: "Ăn gì ở Hồ Tây",
+      description: "Gợi ý cafe, món ăn và những điểm dừng chân dễ chịu quanh Hồ Tây.",
+    },
+    en: {
+      name: "Eat & Drink",
+      description: "Coffee, casual meals and easy stops around West Lake.",
+    },
   },
   "cong-tac-ha-noi": {
-    name: "Công tác Hà Nội",
-    description: "Lịch trình gọn, tiện di chuyển và nghỉ ngơi cho khách đi công tác tại Hà Nội.",
+    vi: {
+      name: "Công tác Hà Nội",
+      description: "Lịch trình gọn, tiện di chuyển và nghỉ ngơi cho khách đi công tác tại Hà Nội.",
+    },
+    en: {
+      name: "Business in Hanoi",
+      description: "Simple stays and smoother schedules for business travelers in Hanoi.",
+    },
   },
   "luu-tru-ho-tay": {
-    name: "Lưu trú Hồ Tây",
-    description: "Kinh nghiệm chọn khách sạn gần Hồ Tây, phù hợp cho nghỉ ngắn ngày hoặc ở dài hơn.",
+    vi: {
+      name: "Lưu trú Hồ Tây",
+      description: "Kinh nghiệm chọn khách sạn gần Hồ Tây, phù hợp cho nghỉ ngắn ngày hoặc ở dài hơn.",
+    },
+    en: {
+      name: "Stay Near West Lake",
+      description: "Practical notes for choosing a hotel near West Lake for short or longer stays.",
+    },
   },
   "ven-ho-stories": {
-    name: "Ven Hồ Stories",
-    description: "Những câu chuyện nhỏ từ Ven Hồ Hotel và khu phố bên hồ.",
+    vi: {
+      name: "Ven Hồ Stories",
+      description: "Những câu chuyện nhỏ từ Ven Hồ Hotel và khu phố bên hồ.",
+    },
+    en: {
+      name: "Ven Ho Stories",
+      description: "Small stories from Ven Ho Hotel and the neighborhood by the lake.",
+    },
   },
 };
 
@@ -349,6 +381,272 @@ export const blogPosts: BlogPost[] = [
 
 export function getBlogPost(slug: string) {
   return blogPosts.find((post) => post.slug === slug);
+}
+
+type BlogPostTranslation = Pick<
+  BlogPost,
+  "title" | "excerpt" | "alt" | "keywords" | "intro" | "quickAnswer" | "sections" | "faqs"
+>;
+
+const englishPosts: Record<string, BlogPostTranslation> = {
+  "ho-tay-co-gi-choi": {
+    title: "What To Do Around West Lake Hanoi: A Local Guide",
+    excerpt:
+      "A simple guide to West Lake from morning to evening: walk along Nguyen Dinh Thi, catch sunset, find coffee by the water and stay nearby.",
+    alt: "West Lake seen from the Nguyen Dinh Thi area in Tay Ho, Hanoi",
+    keywords: ["what to do in West Lake Hanoi", "West Lake travel guide", "Nguyen Dinh Thi Tay Ho", "hotel near West Lake"],
+    intro: [
+      "West Lake is one of the easiest places to experience a calmer side of Hanoi. Beyond the wide water view, the area has walkable streets, coffee shops, restaurants, temples and simple stops that work well for both leisure and business trips.",
+      "If you stay near Nguyen Dinh Thi Street, exploring West Lake is straightforward: walk by the lake in the morning, visit nearby cultural spots during the day, then return for sunset and dinner close to the water.",
+    ],
+    quickAnswer:
+      "West Lake is ideal for walking, sunrise or sunset views, lakeside coffee, visiting Tran Quoc Pagoda, trying Tay Ho food and choosing a hotel near the lake for easier movement.",
+    sections: [
+      {
+        heading: "Morning: walk along Nguyen Dinh Thi",
+        body: [
+          "Nguyen Dinh Thi is one of the pleasant streets for starting a day around West Lake. Early mornings are usually cooler, quieter and open to wide lake views.",
+          "A simple plan is to wake up early, walk by the lake, have a light breakfast and return to the hotel before sightseeing or work.",
+        ],
+      },
+      {
+        heading: "Daytime: keep your route compact",
+        body: [
+          "Instead of crossing the city for too many stops, group your route around the lake, nearby coffee shops, cultural sites and restaurants close to your stay.",
+          "This saves time, especially if you only have one or two days in Hanoi.",
+        ],
+      },
+      {
+        heading: "Late afternoon: make time for sunset",
+        body: [
+          "Sunset is when West Lake feels most atmospheric. On a clear day, even a short walk near the water can feel very different from the busier parts of central Hanoi.",
+          "You can pair it with afternoon coffee, dinner nearby and an early return if you have work or a flight the next morning.",
+        ],
+      },
+      {
+        heading: "Near Ven Ho Hotel",
+        body: [
+          "Ven Ho Hotel is located at 181 Nguyen Dinh Thi, a practical base for guests who want to stay close to West Lake and keep the day simple. From the hotel, you can begin with a short lakeside walk before moving to other parts of Hanoi.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "What is the best time to visit West Lake?",
+        answer: "Early morning and late afternoon are usually the most comfortable times for walking, views and photos around the lake.",
+      },
+      {
+        question: "Is West Lake convenient for central Hanoi?",
+        answer: "Tay Ho works well if you prefer a more open area while still being able to reach central districts by taxi or ride-hailing apps.",
+      },
+      {
+        question: "Should I stay overnight near West Lake?",
+        answer: "Yes, if you want a calmer lakeside rhythm, morning walks and a quieter place to return to after a long day.",
+      },
+    ],
+  },
+  "nguyen-dinh-thi-ho-tay": {
+    title: "Nguyen Dinh Thi, West Lake: Why This Street Is Worth Staying On",
+    excerpt:
+      "Nguyen Dinh Thi offers lake views, a slower local rhythm and a convenient base for experiencing Tay Ho while staying connected to central Hanoi.",
+    alt: "West Lake view from the Nguyen Dinh Thi area",
+    keywords: ["Nguyen Dinh Thi West Lake", "Tay Ho Hanoi", "where to stay near West Lake"],
+    intro: [
+      "Nguyen Dinh Thi is a familiar lakeside street for Hanoians. For travelers and business guests, the area has clear advantages: close to the water, easy to walk, near food and coffee, and not too far from the city center.",
+      "If you want a stay that feels more local than the busiest tourist streets, this area is worth considering.",
+    ],
+    quickAnswer:
+      "Nguyen Dinh Thi is worth staying on because it is by the lake, easy for morning walks, close to Tay Ho food and coffee, and convenient for taking a car into central districts.",
+    sections: [
+      {
+        heading: "A lakeside setting makes the trip lighter",
+        body: [
+          "After a day of travel or work, returning to an area with water views and walkable streets often feels easier to rest in.",
+          "That is one of Tay Ho's biggest differences from denser city neighborhoods.",
+        ],
+      },
+      {
+        heading: "Useful for both leisure and business",
+        body: [
+          "Business guests often need a quiet room, easy transport and nearby food. Leisure travelers need a good base for exploring West Lake.",
+          "Nguyen Dinh Thi sits between those needs: close enough to experience the area, calm enough to rest.",
+        ],
+      },
+      {
+        heading: "Near Ven Ho Hotel",
+        body: [
+          "Ven Ho Hotel is at 181 Nguyen Dinh Thi, suitable for guests looking for a compact stay near the lake with easy direct contact before arrival.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Is Nguyen Dinh Thi close to West Lake?",
+        answer: "Yes. It is a lakeside street, suitable for walking and lake views in the morning or late afternoon.",
+      },
+      {
+        question: "Is this area suitable for business travelers?",
+        answer: "Yes, especially for guests who want a quieter stay while still being able to move around by taxi or ride-hailing apps.",
+      },
+    ],
+  },
+  "top-cafe-view-ho-tay": {
+    title: "West Lake View Cafes: How To Choose A Good, Easy Stop",
+    excerpt:
+      "Instead of chasing a long list, choose a West Lake cafe by time of day, view, seating and distance from where you stay.",
+    alt: "Sunset over West Lake in Hanoi",
+    keywords: ["West Lake cafe", "Tay Ho cafe", "West Lake sunset"],
+    intro: [
+      "Lakeside coffee is a very Hanoi experience: slower, bright and easy to linger over. But instead of only looking for famous places, choose based on the time of day and what you actually need.",
+      "Morning works well for quiet coffee and planning the day. Late afternoon is better for sunset views. If you are in Hanoi for work, an easy-to-reach cafe with comfortable seating may matter more.",
+    ],
+    quickAnswer:
+      "To choose a West Lake cafe, prioritize a location close to your stay, good light for the time of day, comfortable seating and a space that fits conversation, work or lake views.",
+    sections: [
+      {
+        heading: "Choose by time of day",
+        body: [
+          "Early morning is good for light coffee, reading or planning. Late afternoon is better if you want to watch the lake change color.",
+          "If your schedule is short, choose somewhere near the hotel so you do not spend too much time moving around.",
+        ],
+      },
+      {
+        heading: "Choose by your real need",
+        body: [
+          "Solo travel, family time and work calls all require different kinds of cafes. A beautiful but crowded cafe may not be the best choice if you need to rest.",
+          "A comfortable experience is usually better than trying to check off too many places.",
+        ],
+      },
+      {
+        heading: "Near Ven Ho Hotel",
+        body: [
+          "If you stay at Ven Ho Hotel, ask the front desk for cafe suggestions around Nguyen Dinh Thi based on the time of day. Local guidance often leads to a more practical choice.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Should I visit West Lake cafes in the morning or afternoon?",
+        answer: "Both can be good. Morning is calmer; late afternoon is better for sunset.",
+      },
+      {
+        question: "Do I need to book a cafe in advance?",
+        answer: "For popular places on weekends, it is worth checking ahead or going before peak hours.",
+      },
+    ],
+  },
+  "khach-san-gan-ho-tay": {
+    title: "Choosing A Hotel Near West Lake: What To Check Before Booking",
+    excerpt:
+      "A short checklist for choosing a hotel near West Lake: location, room type, direct contact, check-in time and transport needs.",
+    alt: "Ven Ho Hotel exterior on Nguyen Dinh Thi Street, Tay Ho, Hanoi",
+    keywords: ["hotel near West Lake", "Tay Ho hotel", "hotel on Nguyen Dinh Thi"],
+    intro: [
+      "Finding a hotel near West Lake is not only about being close to the water. The better question is whether the location fits your transport, flight time, work schedule and room needs.",
+      "A short checklist before booking can help you avoid guesswork and make the stay easier.",
+    ],
+    quickAnswer:
+      "When choosing a hotel near West Lake, check the exact address, real room photos, check-in and check-out times, direct contact options, room choices and transport convenience.",
+    sections: [
+      {
+        heading: "Check the address and surrounding area",
+        body: [
+          "Two hotels can both be near West Lake but feel very different depending on the street. Check where the hotel is, how easy it is to get a car and whether it fits your plan.",
+          "If you like lakeside walks, Nguyen Dinh Thi is a useful area to consider.",
+        ],
+      },
+      {
+        heading: "Look at room type and real photos",
+        body: [
+          "Check the room type, guest capacity, key amenities and room photos. If you need a lake view or a family room, confirm directly before arrival.",
+          "This is especially useful on weekends or during busy periods.",
+        ],
+      },
+      {
+        heading: "Near Ven Ho Hotel",
+        body: [
+          "Ven Ho Hotel has 12 rooms at 181 Nguyen Dinh Thi, including Deluxe Double, Double Lake View and Standard Triple options. You can contact the hotel directly to confirm the right room before booking.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Should I book directly or through an OTA?",
+        answer: "Both can work. If you need to ask about a specific room or arrival time, direct contact with the hotel is often more convenient.",
+      },
+      {
+        question: "What are Ven Ho Hotel's check-in and check-out times?",
+        answer: "Check-in is from 13:00 and check-out is at 12:00 noon.",
+      },
+      {
+        question: "How many rooms does Ven Ho Hotel have?",
+        answer: "The hotel has 12 rooms, so it is best to confirm early during busy periods.",
+      },
+    ],
+  },
+  "cong-tac-tay-ho-ha-noi": {
+    title: "Business Travel In Tay Ho: Choosing A Stay And Keeping The Schedule Simple",
+    excerpt:
+      "A practical guide for business stays around Tay Ho: quiet rooms, easy transport, nearby food and a calmer place to return to after work.",
+    alt: "West Lake at night in Tay Ho, Hanoi",
+    keywords: ["business travel Tay Ho", "business hotel Hanoi", "stay in Tay Ho for work"],
+    intro: [
+      "For a business trip in Hanoi, the best place to stay does not always have to be in the busiest district. For many guests, a quiet hotel, easy transport and a place to rest after work matter more.",
+      "Tay Ho fits that style of stay: more open, with many food options, while still connected to other parts of Hanoi by taxi or ride-hailing apps.",
+    ],
+    quickAnswer:
+      "For business travel in Tay Ho, choose a stay with easy car access, clear check-in and check-out times, nearby dining and a quiet room for rest after work.",
+    sections: [
+      {
+        heading: "Prioritize a low-friction schedule",
+        body: [
+          "A good business stay often depends on small details: quick transport, nearby food, a quiet room and a front desk that is easy to contact.",
+          "Before booking, check your arrival time, invoice needs if any and the actual number of guests.",
+        ],
+      },
+      {
+        heading: "Keep a small lakeside break",
+        body: [
+          "If your work schedule is dense, a short walk around West Lake in the morning or evening can help reset the day.",
+          "That is why many business guests like Tay Ho instead of staying only near office districts.",
+        ],
+      },
+      {
+        heading: "Near Ven Ho Hotel",
+        body: [
+          "Ven Ho Hotel is suitable for guests who need a compact stay, easy contact, a location near West Lake and the option to confirm rooms directly by phone or website form.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Is Tay Ho suitable for business travel?",
+        answer: "Yes, especially if you prefer a quieter stay, easy car access and food options after work.",
+      },
+      {
+        question: "What should I ask before booking a business stay?",
+        answer: "Ask about check-in time, room type, number of guests, payment method and invoice needs if required.",
+      },
+    ],
+  },
+};
+
+export function getBlogCategory(category: BlogCategorySlug, lang: BlogLang = "vi") {
+  return blogCategories[category][lang];
+}
+
+export function getLocalizedBlogPost(post: BlogPost, lang: BlogLang = "vi"): BlogPost {
+  if (lang === "vi") return post;
+  const translation = englishPosts[post.slug];
+  return translation ? { ...post, ...translation, locale: "en" } : post;
+}
+
+export function getLocalizedBlogPosts(lang: BlogLang = "vi") {
+  return blogPosts.map((post) => getLocalizedBlogPost(post, lang));
+}
+
+export function getLocalizedRelatedPosts(post: BlogPost, lang: BlogLang = "vi") {
+  return getRelatedPosts(post).map((related) => getLocalizedBlogPost(related, lang));
 }
 
 export function getPostsByCategory(category: BlogCategorySlug) {

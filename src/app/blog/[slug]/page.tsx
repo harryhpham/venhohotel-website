@@ -4,7 +4,7 @@ import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import BlogArticleContent from "@/components/sections/BlogArticleContent";
 import JsonLd from "@/components/seo/JsonLd";
-import { blogCategories, blogPosts, getBlogPost } from "@/lib/data/blog";
+import { blogPosts, getBlogCategory, getBlogPost } from "@/lib/data/blog";
 
 const base = "https://venhohotel.com";
 
@@ -78,7 +78,7 @@ export default async function BlogPostPage({ params }: BlogPostRouteProps) {
       url: base,
     },
     mainEntityOfPage: `${base}/blog/${post.slug}`,
-    articleSection: blogCategories[post.category].name,
+    articleSection: getBlogCategory(post.category, "vi").name,
     keywords: post.keywords.join(", "),
   };
 
