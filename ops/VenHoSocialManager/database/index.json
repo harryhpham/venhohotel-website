@@ -155,6 +155,16 @@
       "title": "Cà phê trứng bên Hồ Tây",
       "status": "pending_review",
       "folder": "2026/07/2026-07-08_ca_phe_trung"
+    },
+    {
+      "date": "2026-07-10",
+      "pillar_id": "ho_tay",
+      "pillar_name": "Khám Phá Hồ Tây",
+      "topic_id": "phu_tay_ho",
+      "topic_title": "Phủ Tây Hồ",
+      "title": "Phủ Tây Hồ Bên Sóng Hà Nội",
+      "status": "pending_review",
+      "folder": "2026/07/2026-07-10_phu_tay_ho"
     }
   ]
 }
