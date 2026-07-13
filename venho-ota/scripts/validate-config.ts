@@ -1,0 +1,2 @@
+import { readFile,readdir } from 'node:fs/promises';import { resolve } from 'node:path';import { z } from 'zod';
+const base=z.object({schema_version:z.string().min(1),rule_version:z.string().min(1)}).passthrough();const dir=resolve('config');const files=(await readdir(dir)).filter(f=>f.endsWith('.json'));let failed=false;for(const file of files){try{base.parse(JSON.parse(await readFile(resolve(dir,file),'utf8')));console.log(`OK ${file}`);}catch(error){failed=true;console.error(`INVALID ${file}`,error);}}if(failed)process.exitCode=1;

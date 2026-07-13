@@ -1,0 +1,14 @@
+import { z } from 'zod';
+export const SchemaVersion = z.string().min(1);
+export const IsoDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
+export const IsoDateTime = z.string().datetime({ offset: true });
+export const MoneySchema = z.object({ amount: z.number().int().nonnegative(), currency: z.literal('VND'), fx: z.object({ original: z.number().nonnegative(), rate: z.number().positive(), at: IsoDateTime }).optional() });
+export const AgentModeSchema = z.enum(['RUNNING','READ_ONLY','PAUSED','EMERGENCY_STOP']);
+export const AgentControlSchema = z.object({ schema_version: SchemaVersion, mode: AgentModeSchema, changed_by: z.string().min(1), changed_at: IsoDateTime, reason: z.string().min(1) });
+export const BookingStatusSchema = z.enum(['NEW','CONFIRMED','MODIFIED','CANCELLED','NO_SHOW','COMPLETED']);
+export const BookingSchema = z.object({ schema_version: SchemaVersion, booking_id: z.string().min(1), ota: z.enum(['AGODA','BOOKING','DIRECT']), ota_booking_id: z.string().min(1), property_id: z.string().min(1), source_version: z.number().int().nonnegative(), status: BookingStatusSchema, check_in: IsoDate, check_out: IsoDate, room_type_id: z.string().min(1), gross: MoneySchema, commission_est: MoneySchema, net_est: MoneySchema, source_updated_at: IsoDateTime });
+export const RecommendationStatusSchema = z.enum(['DRAFT','RECOMMENDED','OWNER_REVIEW','APPROVED','MODIFIED','REJECTED','EXPIRED','STALE','SCHEDULED','EXECUTING','PUBLISHED','VERIFIED','COMPLETED','FAILED','ROLLED_BACK','MANUAL_REVIEW']);
+export const RecommendationSchema = z.object({ schema_version: SchemaVersion, rec_id: z.string().min(1), stay_date: IsoDate, room_type_id: z.string().min(1), ota_scope: z.enum(['AGODA','BOOKING','BOTH']), current_rate: z.number().int().nonnegative(), reference_rate: z.number().int().nonnegative(), recommended_rate: z.number().int().nonnegative(), effective_net_rate: z.object({ amount: z.number().int().nonnegative(), basis: z.enum(['estimated','confirmed']) }), confidence: z.number().min(0).max(100), context_hash: z.string().length(64), rule_version: z.string().min(1), status: RecommendationStatusSchema, expires_at: IsoDateTime, stale_reason: z.string().optional() });
+export type AgentMode = z.infer<typeof AgentModeSchema>;
+export type Booking = z.infer<typeof BookingSchema>;
+export type RecommendationStatus = z.infer<typeof RecommendationStatusSchema>;

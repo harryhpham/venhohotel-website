@@ -1,0 +1,2 @@
+import { describe,expect,it } from 'vitest';import { calculateInventory,transitionRecommendation } from '@venho/domain';
+describe('P0 golden safety scenarios',()=>{it('negative inventory remains visible for P1 alerting',()=>expect(calculateInventory({physicalSellable:12,activeBookingNights:13,maintenanceBlocks:0,confirmedInternalHolds:0,safetyBuffer:1})).toBe(-2));it.each(['EXPIRED','STALE'] as const)('%s recommendation is absorbing for execution',status=>expect(()=>transitionRecommendation(status,'EXECUTING')).toThrow());});
