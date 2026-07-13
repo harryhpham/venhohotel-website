@@ -23,8 +23,8 @@ describe('OTA API server', () => {
     expect(res.statusCode).toBe(401);
   });
 
-  it('/health is reachable', async () => {
-    const res = await app.inject({ method: 'GET', url: '/health', headers: { authorization: 'Bearer test-token' } });
+  it('/health is reachable without a bearer token (liveness probe)', async () => {
+    const res = await app.inject({ method: 'GET', url: '/health' });
     expect(res.statusCode).toBe(200);
     expect(res.json()).toMatchObject({ status: 'ok', phase: 'P0' });
   });

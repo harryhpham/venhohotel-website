@@ -12,6 +12,7 @@ export function buildServer() {
   const clock = { now: () => new Date() };
 
   app.addHook('onRequest', async (req, reply) => {
+    if (req.url === '/health') return; // liveness probe: no secrets, must stay reachable by process managers without a token
     const token = process.env.API_AUTH_TOKEN;
     if (!token || req.headers.authorization !== `Bearer ${token}`) {
       return reply.code(401).send({ code: 'UNAUTHORIZED', message: 'Valid bearer token required', details: {} });
