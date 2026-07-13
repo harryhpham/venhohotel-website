@@ -1,6 +1,7 @@
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import Hero from "@/components/sections/Hero";
+import BookingBar from "@/components/sections/BookingBar";
 import StatsStrip from "@/components/sections/StatsStrip";
 import FeaturedRooms from "@/components/sections/FeaturedRooms";
 import WestLakeSection from "@/components/sections/WestLakeSection";
@@ -73,6 +74,7 @@ export default function HomePage() {
       <Navbar />
       <main>
         <Hero />
+        <BookingBar />
         <StatsStrip />
         <FeaturedRooms />
         <WestLakeSection />

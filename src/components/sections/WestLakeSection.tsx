@@ -29,7 +29,7 @@ export default function WestLakeSection() {
                 &ldquo;{c.quote}&rdquo;
               </p>
             </blockquote>
-            <p className="font-sans text-white/40 text-xs tracking-widest uppercase">
+            <p className="font-sans text-white/70 text-xs tracking-widest uppercase">
               &mdash; {c.quoteAuthor}
             </p>
           </div>
@@ -48,8 +48,8 @@ export default function WestLakeSection() {
               <div className="absolute inset-0 bg-[#1B2D4F]/20" />
             </div>
             <div className="absolute -bottom-5 -left-5 md:-left-8 bg-[#C9A84C] px-5 py-4">
-              <p className="font-mono text-white text-2xl font-medium">{c.scoreValue}</p>
-              <p className="label-tag text-white/80 mt-0.5">{c.scoreLabel}</p>
+              <p className="font-mono text-[#1A1A1A] text-2xl font-medium">{c.scoreValue}</p>
+              <p className="label-tag text-[#1A1A1A] mt-0.5">{c.scoreLabel}</p>
             </div>
           </div>
         </div>

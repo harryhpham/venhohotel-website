@@ -147,7 +147,7 @@ function RoomGallery({ room, viewLakeTag, viewAll }: { room: typeof rooms[number
         <div className="absolute inset-0 bg-[#1B2D4F]/20" />
         {room.view && (
           <div className="absolute top-6 left-6 z-10">
-            <span className="label-tag bg-[#C9A84C] text-white px-3 py-1">{viewLakeTag}</span>
+            <span className="label-tag bg-[#C9A84C] text-[#1A1A1A] px-3 py-1">{viewLakeTag}</span>
           </div>
         )}
         {/* Zoom hint */}
@@ -254,7 +254,7 @@ export default function RoomDetailClient({ slug }: { slug: string }) {
                   ) : (
                     <p className="font-sans text-[#6B6B6B] text-sm italic mb-4">{t.contactPrice}</p>
                   )}
-                  <Link href="/lien-he" className="block text-center w-full bg-[#C9A84C] text-white font-sans font-medium text-sm tracking-wide py-4 hover:bg-[#b8963d] transition-colors min-h-[44px]">
+                  <Link href="/lien-he" className="block text-center w-full bg-[#C9A84C] text-[#1A1A1A] font-sans font-semibold text-sm tracking-wide py-4 hover:bg-[#b8963d] transition-colors min-h-[44px]">
                     {t.bookButton}
                   </Link>
                   <a href="tel:02438474646" className="block text-center w-full mt-3 border border-[#D9D9D9] text-[#1A1A1A] font-sans text-sm py-4 hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors min-h-[44px]">

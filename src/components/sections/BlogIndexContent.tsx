@@ -38,7 +38,7 @@ export default function BlogIndexContent() {
           </p>
           <Link
             href="#latest"
-            className="mt-8 inline-flex items-center justify-center bg-[#C9A84C] px-6 py-3 font-sans text-sm font-semibold tracking-wide text-white hover:bg-[#b8963d] transition-colors"
+            className="mt-8 inline-flex items-center justify-center bg-[#C9A84C] px-6 py-3 font-sans text-sm font-semibold tracking-wide text-[#1A1A1A] hover:bg-[#b8963d] transition-colors"
           >
             {lang === "vi" ? "Khám phá bài mới" : "Read latest stories"}
           </Link>
@@ -126,7 +126,7 @@ export default function BlogIndexContent() {
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3">
-            <Link href="/phong" className="inline-flex items-center justify-center bg-[#C9A84C] px-6 py-3 font-sans text-sm font-semibold text-white hover:bg-[#b8963d] transition-colors">
+            <Link href="/phong" className="inline-flex items-center justify-center bg-[#C9A84C] px-6 py-3 font-sans text-sm font-semibold text-[#1A1A1A] hover:bg-[#b8963d] transition-colors">
               {lang === "vi" ? "Xem phòng" : "View rooms"}
             </Link>
             <Link href="/lien-he" className="inline-flex items-center justify-center border border-white/25 px-6 py-3 font-sans text-sm font-semibold text-white hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors">

@@ -18,9 +18,9 @@ const config: Config = {
         "light-gray": "#D9D9D9",
       },
       fontFamily: {
-        display: ["'Cormorant Garamond'", "serif"],
-        sans:    ["'DM Sans'", "sans-serif"],
-        mono:    ["'DM Mono'", "monospace"],
+        display: ["var(--font-display)"],
+        sans:    ["var(--font-sans)"],
+        mono:    ["var(--font-mono)"],
       },
       container: {
         center: true,

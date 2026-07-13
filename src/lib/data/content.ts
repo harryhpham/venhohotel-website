@@ -6,7 +6,7 @@ export const siteContent = {
     },
     mobileCta: {
       call: "Gọi Ngay",
-      book: "Đặt Trực Tiếp",
+      book: "Kiểm Tra Phòng",
     },
     hero: {
       label: "Tây Hồ, Hà Nội — Việt Nam",
@@ -178,7 +178,7 @@ export const siteContent = {
     },
     mobileCta: {
       call: "Call Now",
-      book: "Book Direct",
+      book: "Check Rooms",
     },
     hero: {
       label: "Tay Ho, Hanoi — Vietnam",

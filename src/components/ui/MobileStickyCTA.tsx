@@ -33,18 +33,18 @@ export default function MobileStickyCTA() {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-[#D9D9D9] bg-white/96 px-3 py-3 shadow-[0_-8px_24px_rgba(0,0,0,0.08)] backdrop-blur md:hidden">
-      <div className="mx-auto grid max-w-md grid-cols-[0.9fr_1.1fr] gap-2">
+      <div className="mx-auto grid w-full max-w-md grid-cols-2 gap-2">
         <a
           href="tel:02438474646"
           onClick={trackPhoneClick}
-          className="flex min-h-[46px] items-center justify-center border border-[#D9D9D9] px-3 text-center font-sans text-sm font-semibold tracking-wide text-[#1A1A1A] transition-colors hover:border-[#C9A84C] hover:text-[#C9A84C]"
+          className="flex min-w-0 items-center justify-center border border-[#D9D9D9] px-2 text-center font-sans text-xs font-semibold text-[#1A1A1A] transition-colors hover:border-[#C9A84C] hover:text-[#C9A84C]"
         >
           {t.call}
         </a>
         <Link
-          href="/lien-he"
+          href="/#booking"
           onClick={trackBookingClick}
-          className="flex min-h-[46px] items-center justify-center bg-[#C9A84C] px-3 text-center font-sans text-sm font-semibold tracking-wide text-white transition-colors hover:bg-[#b8963d]"
+          className="flex min-w-0 items-center justify-center bg-[#C9A84C] px-2 text-center font-sans text-xs font-semibold text-[#1A1A1A] transition-colors hover:bg-[#b8963d]"
         >
           {t.book}
         </Link>

@@ -51,7 +51,7 @@ export default function Footer() {
               <Image
                 src="/logonew.png"
                 alt="Ven Ho Hotel"
-                width={100}
+                width={44}
                 height={32}
                 className="h-8 w-auto object-contain"
               />
@@ -59,12 +59,12 @@ export default function Footer() {
             <p className="font-sans text-white/50 text-sm leading-relaxed">
               {c.tagline}
             </p>
-            <p className="font-sans text-white/40 text-xs mt-1">{c.address}</p>
+            <p className="font-sans text-white/70 text-xs mt-1">{c.address}</p>
           </div>
 
           {/* Nav */}
           <div>
-            <p className="label-tag text-white/40 mb-3">
+            <p className="label-tag text-white/70 mb-3">
               {lang === "vi" ? "Điều Hướng" : "Navigation"}
             </p>
             <ul className="space-y-1.5">
@@ -83,7 +83,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <p className="label-tag text-white/40 mb-3">
+            <p className="label-tag text-white/70 mb-3">
               {lang === "vi" ? "Liên Hệ" : "Contact"}
             </p>
             <div className="space-y-2">
@@ -115,10 +115,10 @@ export default function Footer() {
               >
                 Zalo OA
               </a>
-              <p className="font-sans text-white/40 text-xs">
+              <p className="font-sans text-white/70 text-xs">
                 {lang === "vi" ? `Check-in: ${c.checkin}` : `Check-in: ${c.checkin}`}
               </p>
-              <p className="font-sans text-white/40 text-xs">
+              <p className="font-sans text-white/70 text-xs">
                 {lang === "vi" ? `Check-out: ${c.checkout}` : `Check-out: ${c.checkout}`}
               </p>
             </div>
@@ -126,10 +126,10 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-2">
-          <p className="font-sans text-white/30 text-xs">
+          <p className="font-sans text-white/65 text-xs">
             &copy; {new Date().getFullYear()} Ven Hồ Hotel. All rights reserved.
           </p>
-          <p className="font-sans text-white/20 text-xs">{c.address}, Việt Nam</p>
+          <p className="font-sans text-white/65 text-xs">{c.address}, Việt Nam</p>
         </div>
       </div>
     </footer>

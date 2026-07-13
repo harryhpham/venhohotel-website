@@ -46,7 +46,7 @@ export default function AboutContent() {
             </div>
 
             <div className="mt-16 text-center">
-              <Link href="/lien-he" className="inline-flex items-center justify-center px-8 py-4 bg-[#C9A84C] text-white font-sans font-medium text-sm tracking-wide hover:bg-[#b8963d] transition-colors">
+              <Link href="/lien-he" className="inline-flex items-center justify-center px-8 py-4 bg-[#C9A84C] text-[#1A1A1A] font-sans font-semibold text-sm tracking-wide hover:bg-[#b8963d] transition-colors">
                 {t.cta}
               </Link>
             </div>

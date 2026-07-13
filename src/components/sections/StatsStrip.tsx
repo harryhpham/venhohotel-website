@@ -18,7 +18,7 @@ export default function StatsStrip() {
           {stats.map((stat) => (
             <div key={stat.label} className="flex flex-col items-center text-center py-2">
               <span className="font-mono text-xl md:text-3xl text-[#C9A84C] font-medium tracking-tight">{stat.value}</span>
-              <span className="label-tag text-white/60 mt-1 text-[0.6rem] md:text-[0.65rem]">{stat.label}</span>
+              <span className="label-tag text-white/80 mt-1 text-[0.6rem] md:text-[0.65rem]">{stat.label}</span>
             </div>
           ))}
         </div>

@@ -3,6 +3,7 @@ const nextConfig = {
   // Vercel handles SSG/ISR natively — no static export needed
   images: {
     formats: ["image/avif", "image/webp"],
+    qualities: [75, 80, 82, 85, 90, 95],
     // Optimize images automatically on Vercel
   },
   async headers() {
@@ -13,8 +14,8 @@ const nextConfig = {
       "frame-ancestors 'self'",
       "form-action 'self'",
       "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://connect.facebook.net",
-      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-      "font-src 'self' https://fonts.gstatic.com data:",
+      "style-src 'self' 'unsafe-inline'",
+      "font-src 'self' data:",
       "img-src 'self' data: blob: https://www.facebook.com https://www.googletagmanager.com",
       "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com",
       "frame-src https://www.google.com https://www.facebook.com",

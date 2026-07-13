@@ -185,7 +185,7 @@ export default function LocationBlock() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-[#C9A84C] text-white font-sans font-medium text-sm tracking-wide py-4 hover:bg-[#b8963d] transition-colors min-h-[44px] disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full bg-[#C9A84C] text-[#1A1A1A] font-sans font-semibold text-sm tracking-wide py-4 hover:bg-[#b8963d] transition-colors min-h-[44px] disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {isLoading ? (lang === "vi" ? "Đang gửi..." : "Sending...") : t.submit}
                 </button>

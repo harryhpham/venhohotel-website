@@ -112,7 +112,7 @@ export default function BlogArticleContent({ post }: { post: BlogPost }) {
                 <h2 className="font-display text-3xl text-white mb-3">{cta.title}</h2>
                 <p className="font-sans text-sm leading-relaxed text-white/70">{cta.body}</p>
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
-                  <Link href={cta.href} className="inline-flex items-center justify-center bg-[#C9A84C] px-5 py-3 font-sans text-sm font-semibold text-white hover:bg-[#b8963d] transition-colors">
+                  <Link href={cta.href} className="inline-flex items-center justify-center bg-[#C9A84C] px-5 py-3 font-sans text-sm font-semibold text-[#1A1A1A] hover:bg-[#b8963d] transition-colors">
                     {cta.primary}
                   </Link>
                   <a href="tel:02438474646" className="inline-flex items-center justify-center border border-white/25 px-5 py-3 font-sans text-sm font-semibold text-white hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors">

@@ -9,13 +9,29 @@ export function agodaUrl(campaign: string) {
   return `${AGODA_BASE}?utm_source=venhohotel.com&utm_medium=website&utm_campaign=${campaign}`;
 }
 
-export function bookingUrl(campaign: string) {
+type BookingOptions = {
+  checkin?: string;
+  checkout?: string;
+  adults?: number;
+  rooms?: number;
+  lang?: "vi" | "en";
+};
+
+export function bookingUrl(campaign: string, options: BookingOptions = {}) {
   const params = new URLSearchParams({
     aid: "304142",
     label: BOOKING_LABEL,
     utm_source: "venhohotel.com",
     utm_medium: "website",
     utm_campaign: campaign,
+    group_adults: String(options.adults ?? 2),
+    no_rooms: String(options.rooms ?? 1),
+    group_children: "0",
+    lang: options.lang === "en" ? "en-gb" : "vi",
   });
+
+  if (options.checkin) params.set("checkin", options.checkin);
+  if (options.checkout) params.set("checkout", options.checkout);
+
   return `${BOOKING_BASE}?${params.toString()}`;
 }

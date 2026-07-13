@@ -36,7 +36,7 @@ export default function RoomsContent() {
                     <Image src={room.images[0]} alt={name} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
                     {room.view && (
                       <div className="absolute top-4 left-4 z-10">
-                        <span className="label-tag bg-[#C9A84C] text-white px-3 py-1">{t.viewLakeTag}</span>
+                        <span className="label-tag bg-[#C9A84C] text-[#1A1A1A] px-3 py-1">{t.viewLakeTag}</span>
                       </div>
                     )}
                   </div>
@@ -59,7 +59,7 @@ export default function RoomsContent() {
                       <p className="font-sans text-[#6B6B6B] text-sm italic mb-6">{t.contactPrice}</p>
                     )}
                     <div className="flex flex-col sm:flex-row gap-3">
-                      <Link href="/lien-he" className="inline-flex items-center justify-center px-6 py-3 bg-[#C9A84C] text-white font-sans text-sm font-medium tracking-wide hover:bg-[#b8963d] transition-colors min-h-[44px]">
+                      <Link href="/lien-he" className="inline-flex items-center justify-center px-6 py-3 bg-[#C9A84C] text-[#1A1A1A] font-sans text-sm font-semibold tracking-wide hover:bg-[#b8963d] transition-colors min-h-[44px]">
                         {t.book}
                       </Link>
                       <Link href={`/phong/${room.slug}`} className="inline-flex items-center justify-center px-6 py-3 border border-[#D9D9D9] text-[#1A1A1A] font-sans text-sm tracking-wide hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors min-h-[44px]">

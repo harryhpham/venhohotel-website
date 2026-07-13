@@ -45,12 +45,11 @@ export default function Navbar() {
     }`}>
       <nav className="max-w-[1440px] mx-auto px-4 md:px-6 xl:px-20 flex items-center justify-between h-16 md:h-[76px]">
 
-        {/* Logo — 20% bigger: was h-10, now h-12 */}
         <Link href="/" className="flex items-center shrink-0">
           <Image
             src="/logonew.png"
             alt="Ven Ho Hotel"
-            width={144}
+            width={66}
             height={48}
             className="h-12 w-auto object-contain"
             priority
@@ -106,7 +105,7 @@ export default function Navbar() {
           {/* Book CTA */}
           <Link
             href="/lien-he"
-            className="px-5 py-2.5 bg-[#C9A84C] text-white text-sm font-sans font-semibold tracking-wide hover:bg-[#b8963d] transition-colors"
+            className="px-5 py-2.5 bg-[#C9A84C] text-[#1A1A1A] text-sm font-sans font-semibold tracking-wide hover:bg-[#b8963d] transition-colors"
           >
             {t.book}
           </Link>
@@ -155,7 +154,7 @@ export default function Navbar() {
           <Link
             href="/lien-he"
             onClick={() => setOpen(false)}
-            className="w-full max-w-xs text-center px-6 py-4 bg-[#C9A84C] text-white font-sans font-semibold tracking-wide hover:bg-[#b8963d] transition-colors min-h-[44px] flex items-center justify-center"
+            className="w-full max-w-xs text-center px-6 py-4 bg-[#C9A84C] text-[#1A1A1A] font-sans font-semibold tracking-wide hover:bg-[#b8963d] transition-colors min-h-[44px] flex items-center justify-center"
           >
             {t.book}
           </Link>

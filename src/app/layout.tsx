@@ -1,9 +1,32 @@
 import type { Metadata } from "next";
+import { Cormorant_Garamond, DM_Mono, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { LangProvider } from "@/lib/context/LangContext";
 import GoogleAnalytics from "@/components/ui/GoogleAnalytics";
 import MetaPixel from "@/components/ui/MetaPixel";
 import MobileStickyCTA from "@/components/ui/MobileStickyCTA";
+
+const displayFont = Cormorant_Garamond({
+  variable: "--font-cormorant",
+  subsets: ["latin", "vietnamese"],
+  weight: "variable",
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const sansFont = DM_Sans({
+  variable: "--font-dm-sans",
+  subsets: ["latin", "latin-ext"],
+  weight: "variable",
+  display: "swap",
+});
+
+const monoFont = DM_Mono({
+  variable: "--font-dm-mono",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://venhohotel.com"),
@@ -59,7 +82,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="vi" dir="ltr">
-      <body className="antialiased">
+      <body className={`${displayFont.variable} ${sansFont.variable} ${monoFont.variable} antialiased`}>
         <GoogleAnalytics />
         <MetaPixel />
         <LangProvider>
