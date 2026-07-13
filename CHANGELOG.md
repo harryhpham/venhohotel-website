@@ -5,6 +5,104 @@
 
 ---
 
+## 2026-07-13 — OTA-01 agent adapter (src/bff/ota/) — kết nối VENHO OS tới venho-ota-agent
+
+- **`src/bff/ota/ota-agent.dto.ts` + `ota-agent.client.ts` + `ota-agent.query.ts`** — BFF adapter server-only gọi Internal API của `venho-ota-agent` (repo riêng, headless) theo đúng `venho-ota-agent/docs/MOTHER_DASHBOARD_CONTRACT.md`: bearer token từ env (`OTA_AGENT_BASE_URL`, `OTA_AGENT_API_TOKEN`), timeout 3s, không bao giờ throw ra ngoài — trả `state: "ok"|"unreachable"|"not_configured"` để agent chết/chưa cấu hình không làm crash Mother Dashboard.
+- Thêm dependency `server-only` để ép module này không thể lọt vào client bundle.
+- Test: `tests/unit/bff/ota/ota-agent.query.test.ts` (mock fetch, 4 case: not_configured/ok/unreachable-network/unreachable-http). Đã smoke-test thật với server `venho-ota-agent` compiled đang chạy (`node packages/api/dist/server.js`) — adapter đọc đúng `mode: PAUSED` qua HTTP thật, không chỉ mock.
+- Thêm alias `server-only` → stub trong `vitest.config.ts` (Next.js tự alias module này khi build cho server, nhưng vitest thuần cần alias thủ công mới test được).
+- Tạo `.env.example` (chưa từng có trong repo) ghi lại `OTA_AGENT_BASE_URL`/`OTA_AGENT_API_TOKEN`.
+- **Chưa làm**: chưa wire `getOtaAgentSnapshot()` vào `AgentsSection`/`OperationsSection` hay `home-snapshot.query.ts` — hai section đó vẫn đang là placeholder "Stage C" có chủ đích, nối dữ liệu thật vào UI là bước tiếp theo, chưa phải việc hôm nay.
+
+---
+
+## 2026-07-13 — Xóa Streamlit M10 Dashboard — VenHo OS Next.js là UI duy nhất
+
+### Dọn dẹp Streamlit (venho-ai-studio)
+Streamlit đã được thay thế hoàn toàn bởi VenHo OS Next.js (`localhost:3000/os`). Xóa:
+- `ui/studio_app.py` + `ui/` directory (2.335 dòng)
+- `dashboard/gateway.py` + `dashboard/__init__.py` + `dashboard/` directory (774 dòng)
+- `tests/test_dashboard.py` (149 dòng — test cho module đã xóa)
+- `docs/how_to_run_studio_ui.md` (63 dòng — doc Streamlit)
+
+Test suite: 430 → 423 tests (7 dashboard tests đã remove, không có regression).
+
+**Cập nhật docs:** CLAUDE.md (Ven Hồ Hotel + Master) bỏ `localhost:8501`, chỉ còn `localhost:3000/os`.
+
+---
+
+## 2026-07-13 — VenHo OS Next.js Dashboard — Stage A+B+C Complete + Cleanup
+
+### VenHo OS — Next.js Dashboard (`src/app/os/`)
+Migrate toàn bộ Mother Dashboard (Streamlit) sang Next.js 16 App Router tại `localhost:3000/os`.  
+Architecture: RSC page (`os/page.tsx`) → section components, section routing qua `?section=` query param.
+
+**Stage A — Section Routing**
+- Sidebar navigation 9 items: Home Workspace, Workbench, Creative Studio, Knowledge, Projects, Tasks, Agents, Operations, Publishing, Reports, Settings
+- `SidebarNavigation.tsx` dùng `<Link>` từ `next/link`, active state với blue dot indicator
+- `WorkspaceHeader.tsx` hiển thị section title động
+- 8 placeholder sections với `PlaceholderSection` component
+
+**Stage B — Workbench + Creative Studio (tools thật)**
+- `src/lib/studio/paths.ts` — path constants (venho-ai-studio, VenHoSocialManager, video scripts)
+- `src/lib/studio/constants.ts` — port toàn bộ data constants từ Python (outfits, env blocks, pillars, scenes)
+- `src/lib/studio/prompt-builder.ts` — port 3 hàm logic thuần: `assembleImagePrompt`, `buildCaptionPrompt`, `generateVideoScript`
+- **API Routes**: `observe` (SSE streaming `venho vision observe`), `generate-image`, `file` (serve local files), `save-script`
+- **WorkbenchSection**: Mode A (Observe) + Mode B (Build DNA) với live log streaming (`LiveLog.tsx`)
+- **CreativeStudioSection**: Tạo Ảnh AI + Tạo Social Post + Tạo Video Script
+
+**Stage C — Knowledge + Reports (real data)**
+- **API Routes**: `dna` (list subjects + read COMPACT), `vault-search` (full-text search DNA), `social-index` (social post history)
+- **KnowledgeSection**: DNA Library (7 subjects, 3 colored blocks INVARIANT/ALLOWED/FORBIDDEN + manifest bar) + Vault Search (highlighted results grouped by subject) + Mode C Linh An DNA
+- **ReportsSection**: DNA Status (4 summary cards + subjects table) + Social Content Log (entries từ `database/index.json`, filter pillar, Drive link)
+
+**Cleanup**
+- `src/components/os/shared/ui.tsx` — shared UI primitives (`SectionHeader`, `Field`, `PrimaryBtn`, `CopyBtn`, `TabBar`, `inputCls`, `textareaCls`); xóa duplicate definitions trong 4 section files
+- Xóa `src/shared/kernel/result.ts` + `tests/unit/shared/kernel/result.test.ts` — dead code, không được import
+- Xóa `SCENARIO_SUBJECT` unused import, xóa `selectCls` alias vô nghĩa trong CreativeStudio
+- Build: ✓ 34/34 pages, 0 TypeScript error
+
+### run-venho-os.command (fix)
+- Đổi từ `.sh` → `.command` — macOS Finder chạy `.command` trong Terminal khi double-click; `.sh` chỉ mở text editor
+
+---
+
+## 2026-07-13 — Mother Dashboard v1.0 + Tạo Ảnh AI prompt fix
+
+### Mother Dashboard v1.0 (ui/studio_app.py) — tên chính thức đặt bởi Harry 2026-07-13
+- **Single sidebar nav** — xóa outer `mode` radio 7 mục, thay bằng 1 sidebar duy nhất 9 items theo spec (Home Workspace → Settings)
+- **Inter font** — CSS `@import` Google Fonts + `font-family: 'Inter', sans-serif` toàn app
+- **Creative Studio → 4 tabs**: Skills | Tạo Ảnh AI | Tạo Social Post | Tạo Video Script — tools thật thay vì placeholder
+- **Workbench → 3 tabs**: Pipeline View | Observe — Mode A | Build DNA — Mode B
+- **Quick Actions functional** — `st.button` thật với `_m10_nav_pending` pattern (fix `StreamlitAPIException: cannot modify after widget instantiated`)
+
+### Tạo Ảnh AI — 2 bug fixes
+- **Bug 1 (Textarea cache)** — bỏ `key="tai_prompt"`, textarea luôn reflect inputs hiện tại. Trước: session state cache giữ prompt cũ → user thay outfit/action → prompt không update → ảnh thiếu Linh An
+- **Bug 2 (Prompt structure action mode)** — character + environment giờ join `\n` (1 dòng) thành 1 block duy nhất thay vì `\n\n` riêng → gpt-image-2 không còn coi chúng là 2 entity tách biệt → Linh An xuất hiện trong ảnh
+- **Outfit E — Nike AeroSwift** — cập nhật từ ảnh thật: `mint-green Nike racerback loose crop tank top, dual Swoosh logos at collar, perforated ventilation panels on chest and back, mint-green Nike running shorts (3-inch inseam) with mesh waistband and small Swoosh logo on leg, white Nike running shoes, white ankle socks, sleek high ponytail`
+
+---
+
+## 2026-07-11 — Mode C: Linh An DNA Studio + Linh An DNA System v3.1 rollout
+
+### Mode C — Linh An DNA Studio (ui/studio_app.py)
+- **Tab mới "Linh An DNA — Mode C"** trong Workbench — tách biệt với Mode B (Ven Hồ Hotel)
+- Project `linh_an` độc lập: subjects = outfit wardrobe, DNA output vào `data/projects/linh_an/knowledge/`
+- **6 schema files mới** trong `config/projects/linh_an/subjects/`: `wardrobe.yaml` (base, 22 keys) + 5 preset outfits (`outfit_a_cafe`, `outfit_b_west_lake`, `outfit_c_street`, `outfit_d_business`, `outfit_e_sport`)
+- Workflow: chọn outfit category → upload ảnh trang phục/style reference → run pipeline → DNA text + prompt_snippet
+- Tab "Wardrobe DNA Library" hiển thị tất cả outfit DNA đã có
+- Hỗ trợ "New Outfit" tự đặt tên tùy ý (snake_case)
+
+### Linh An DNA System v3.1 — propagate ra toàn hệ thống
+- **Small pearl drop earrings** (signature, present in every image) — thêm vào Face Lock tất cả files
+- **Face Lock canonical** đồng bộ 9+ files: `very subtle outer corner lift, natural eye asymmetry`, `very subtle upward lip corners, slightly shorter philtrum`
+- **Rule 06** — "Beauty enhancement must never override character identity" (07A v3.1)
+- **Facial Impression DNA** section mới — Primary/Secondary impression, Avoid
+- Skill `tao-anh-ai.md` update: engine selector table (GPT Image 2 vs Google Flow), QC Scoring 4b (kill-switch + verdict threshold), reference table thêm 07B/07C/07E/07F
+- Files updated: `01_LINH_AN_VISUAL_DNA_v3.0.md`, `appearance.md`, `photo-engine.md`, `photo-templates.md`, `seedance-templates.md`, `veo-templates.md`, `tao-social-post.md`, `tao-anh-ai.md`, `projects/CLAUDE.md`, `Ven Ho Hotel/CLAUDE.md`
+
+---
+
 ## 2026-07-10 — Creative Studio: action prompt v2 + outfit Sport & Active
 
 - **Action prompt formula v2** (`ui/studio_app.py`): đổi từ `\n\n` block tách đôi sang một câu liên tục duy nhất — gpt-image-2 treats `\n\n` là paragraph separator, làm character block trở thành entity độc lập và nhân vật biến mất. Giờ dùng `"Linh An {action}, she is a Vietnamese female lifestyle influencer, 24 years old, ... MAIN SUBJECT in the foreground, full body visible, no conical hat, photorealistic."` — tất cả một câu
