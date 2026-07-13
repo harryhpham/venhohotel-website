@@ -1,1 +1,0 @@
-{"schema_version":"1.0","rule_version":"p0-mock-v1","rules":[{"condition_code":"NEGATIVE_INVENTORY","severity":"P1"},{"condition_code":"UNAUTHORIZED_WRITE","severity":"P1"},{"condition_code":"CONFIG_INVALID","severity":"P2"}]}

@@ -1,2 +1,0 @@
-import { describe,expect,it } from 'vitest';import { MockPmsConnector } from '@venho/adapters';import { BookingSchema } from '@venho/shared';
-describe('MockPmsConnector contract',()=>{it('returns schema-valid data and cannot write',async()=>{const connector=new MockPmsConnector();const page=await connector.readBookings();expect(page.items.every(item=>BookingSchema.safeParse(item).success)).toBe(true);expect(connector.capabilities().canWrite).toBe(false);});});

@@ -1,2 +1,0 @@
-import { createDatabase } from '@venho/adapters';import { mkdirSync } from 'node:fs';import { resolve } from 'node:path';
-const database=createDatabase();const dir=resolve(process.env.BACKUP_DIR??'./backups');mkdirSync(dir,{recursive:true});const stamp=new Date().toISOString().replaceAll(':','-');const target=resolve(dir,`ota-${stamp}.db`);await database.sqlite.backup(target);database.close();console.log(`Backup created: ${target}`);

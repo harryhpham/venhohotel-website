@@ -1,2 +1,0 @@
-export interface InventoryInput { physicalSellable:number; activeBookingNights:number; maintenanceBlocks:number; confirmedInternalHolds:number; safetyBuffer:number; }
-export function calculateInventory(input: InventoryInput): number { for (const [key,value] of Object.entries(input)) if (!Number.isInteger(value)||value<0) throw new RangeError(`${key} must be a non-negative integer`); return input.physicalSellable-input.activeBookingNights-input.maintenanceBlocks-input.confirmedInternalHolds-input.safetyBuffer; }
