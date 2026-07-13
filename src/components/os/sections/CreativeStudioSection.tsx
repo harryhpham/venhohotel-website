@@ -30,14 +30,21 @@ function TaoAnhAI() {
   const [useRef, setUseRef] = useState(true);
   const [size, setSize] = useState("portrait");
   const [count, setCount] = useState(1);
-  const [prompt, setPrompt] = useState("");
+  const [prompt, setPrompt] = useState(() => assembleImagePrompt(scenario, hasLinhAn, outfitKey, action, ""));
   const [loading, setLoading] = useState(false);
   const [imagePaths, setImagePaths] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  // `prompt` is user-editable (the textarea below allows manual overrides) but should reset to
+  // the assembled draft whenever an input that feeds it changes. Adjusting state while rendering
+  // (React docs: "you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes") avoids
+  // the extra render pass — and the lint violation — that setState-in-useEffect would cause.
+  const promptInputs = [scenario, hasLinhAn, outfitKey, action] as const;
+  const [prevPromptInputs, setPrevPromptInputs] = useState(promptInputs);
+  if (promptInputs.some((value, i) => value !== prevPromptInputs[i])) {
+    setPrevPromptInputs(promptInputs);
     setPrompt(assembleImagePrompt(scenario, hasLinhAn, outfitKey, action, ""));
-  }, [scenario, hasLinhAn, outfitKey, action]);
+  }
 
   const today = new Date();
   const dateStr = `${String(today.getDate()).padStart(2, "0")}-${String(today.getMonth() + 1).padStart(2, "0")}`;
