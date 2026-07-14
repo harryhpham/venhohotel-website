@@ -128,7 +128,7 @@ git push origin main
 | Module | Thư mục | Tài liệu |
 |--------|---------|----------|
 | Form đặt phòng (Resend) | `ops/email-form/` | `notes.md` |
-| Social Media AI (skill `/tao-social-post`) | `ops/VenHoSocialManager/` | `README.md` |
+| Social Media AI (skill `/tao-social-post`) | `venho-os/ops/VenHoSocialManager/` (repo riêng, chuyển 2026-07-14) | `venho-os/ops/VenHoSocialManager/README.md` |
 | **Social Video Content** | `local-generated/social-video/` | Local generated, không commit |
 | Phân tích đối thủ | `ops/competitor-analysis/` | `notes.md` |
 | Google Analytics GA4 | `ops/analytics/` | `notes.md` |
@@ -141,7 +141,7 @@ git push origin main
 | **Ho Tay Content Library** | `projects/01_BRANDS/WEST_LAKE/` | SceneLibrary, Prompts, References |
 | **Linh An Character Library** | `projects/01_BRANDS/LINH_AN/` | CharacterBible, Prompts, Wardrobe |
 | **ContentProduction** | `projects/04_PRODUCTION/` | Output content đã tạo |
-| **Module 01 — Knowledge Studio / DNA Studio / AI Vision Engine** | `projects/03_AI_STUDIO/venho-ai-studio/` | **Phase 0–8 ALL COMPLETE (2026-07-08)** · 258 tests · 0 API call · Roadmap: `docs/dna_studio_master_plan_v2_5_qc.md` · Mode A + Mode B · Pass 2A tất định · Curated Overlay (`overrides.yaml`) · ALLOWED IMPERFECTIONS · COMPACT output · English values rule · 1 subject = 1 hạng · FORBIDDEN = policy · QC gate linh_an · contract 1.1 · DNA subjects: `lake_view_room` · `deluxe_double` · `lobby` · `facade` · `linh_an` · `westlake` · `outside` (v1.1, 14 ảnh — gộp street-level + rooftop qua `space_type` variable) — tất cả có overrides.yaml · CLI: `venho vision observe --mode b --project venho_hotel --subject {subject} --input {dir}` · CLI all: `venho vision observe --all --project venho_hotel` · DNA: `data/projects/venho_hotel/knowledge/VENHO_HOTEL_{SUBJECT}_DNA.md` · vault search: `venho vault search "từ khóa"` · vault diff/export · EXIF reading `read_exif()` · `venho` CLI global (PATH: `/Users/hanhpham/Library/Python/3.9/bin`) · **`/tao-anh-ai` + `/tao-social-post` đọc `_DNA_COMPACT.md` tự động trước khi viết prompt** (DNA thắng nếu mâu thuẫn với block cứng) · Studio UI: **VenHo OS** `localhost:3000/os` (Next.js) |
+| **Module 01 — Knowledge Studio / DNA Studio / AI Vision Engine** | `projects/03_AI_STUDIO/venho-ai-studio/` | **Phase 0–8 ALL COMPLETE (2026-07-08)** · 258 tests · 0 API call · Roadmap: `docs/dna_studio_master_plan_v2_5_qc.md` · Mode A + Mode B · Pass 2A tất định · Curated Overlay (`overrides.yaml`) · ALLOWED IMPERFECTIONS · COMPACT output · English values rule · 1 subject = 1 hạng · FORBIDDEN = policy · QC gate linh_an · contract 1.1 · DNA subjects: `lake_view_room` · `deluxe_double` · `lobby` · `facade` · `linh_an` · `westlake` · `outside` (v1.1, 14 ảnh — gộp street-level + rooftop qua `space_type` variable) — tất cả có overrides.yaml · CLI: `venho vision observe --mode b --project venho_hotel --subject {subject} --input {dir}` · CLI all: `venho vision observe --all --project venho_hotel` · DNA: `data/projects/venho_hotel/knowledge/VENHO_HOTEL_{SUBJECT}_DNA.md` · vault search: `venho vault search "từ khóa"` · vault diff/export · EXIF reading `read_exif()` · `venho` CLI global (PATH: `/Users/hanhpham/Library/Python/3.9/bin`) · **`/tao-anh-ai` + `/tao-social-post` đọc `_DNA_COMPACT.md` tự động trước khi viết prompt** (DNA thắng nếu mâu thuẫn với block cứng) · Studio UI: **VenHo OS** `localhost:3000/os` — repo riêng `venho-os` (chuyển 2026-07-14) |
 | **Module 02 — Prompt Studio** | `projects/03_AI_STUDIO/venho-ai-studio/prompt_studio/` | **ALL 5 STAGES / 16 STEPS COMPLETE (2026-07-08)** · 347 tests · 0 API call · Roadmap: `VENHO_AI_STUDIO_Module_02_Prompt_Studio_Plan_v1.1.md` · Biến DNA JSON (Module 01) → prompt image/video/content/SEO, có version + validate 2 tầng (structural + faithfulness) · Pipeline: Build → Validate #1 → Optimize (Claude, temperature 0, chỉ gọt wording) → Validate #2 (cổng chính) → Manifest-aware Render/Store · Video đa DNA: `character_lock` + `environment_dna`, xung đột key giữa 2 bên → giữ cả hai + ghi `notes` · Content/SEO: `target_language` (vi/en/bilingual) từ `config/projects/venho_hotel/prompt_rules.yaml` · Manifest + Regeneration Policy: DNA/template không đổi → no_change · đổi → archive `_archive/` + bump version · CLI: `venho prompt --type {image,video,content,seo} --project venho_hotel --subject ... --brief "..."` (video: `--subject character,env1,env2`) · `--all` (image+content+seo) · `--allow-draft` · không flag → menu tương tác [A/B/C/D] · Output: `data/projects/venho_hotel/prompts/{image,video,content,seo}/` + `prompt_manifest.json` · **Brand naming trong AI prompt: "Ven Ho Hotel" không dấu** (khác tên hiển thị website có dấu) · optimizer thật dùng fake client test, chưa chạy thật 1 lần với API key thật · menu tương tác chưa có test tự động |
 | **Module 03 — Validator Studio** | `projects/03_AI_STUDIO/venho-ai-studio/validator_studio/` | **ALL COMPLETE (2026-07-08)** · 26 tests · 0 API call · Plan: `VENHO_AI_STUDIO_Module_03_Validator_Studio_Plan_v1_1.md` · 4 validator types: image/prompt/face/content · Scoring: AI observe enum → code score deterministic · Kill-switch: forbidden severity=high → cap=40, verdict=regenerate · Face: 07F binary gates + weighted score, grounding OFF · Content: brand_fit/tone/clarity/CTA/language_fit · CLI: `venho validate image\|prompt\|face\|content` |
 | **Module 04 — Automation Studio** | `projects/03_AI_STUDIO/venho-ai-studio/automation_studio/` | **ALL COMPLETE (2026-07-08)** · 7 tests · Plan: `VENHO_AI_STUDIO_Module_04_Automation_Studio_Plan_v1_1.md` · Điều phối M01–M03 qua adapter/registry · Config-first YAML workflows · Run lock + Resume + Dry-run + skip_dependents (BFS) · Manual gate (two-half pipeline) · CLI: `venho auto run {workflow_id}` · `venho auto resume {run_id}` |
@@ -150,7 +150,7 @@ git push origin main
 | **Module 07 — Publishing Gateway** | `projects/03_AI_STUDIO/venho-ai-studio/publishing_gateway/` | **COMPLETE offline dry-run MVP (2026-07-09) · Code review + 10 bugs fixed (2026-07-09)** · 19 tests · Plan: `VENHO_AI_STUDIO_Module_07_Publishing_Gateway_Development_Plan_v1_2_QC.md` · Nhận package đã duyệt từ M04 → kiểm contract/approval/brand/capability → queue/adapters → delivery receipt cho M08 · Không tạo/sửa content, không quyết định giờ đăng · `--approval-secret` bắt buộc (không còn default "test-secret") · CircuitBreaker dùng module-level singleton · Idempotency key không bao gồm approval block · CLI: `venho-publish` |
 | **Module 08 — Analytics & Feedback Loop** | `projects/03_AI_STUDIO/venho-ai-studio/analytics_feedback/` | **COMPLETE offline MVP (2026-07-09)** · 7 tests · Plan: `VENHO_AI_STUDIO_Module_08_Analytics_Feedback_Development_Plan_v1_2_QC.md` · Receipt M07 → collection tasks → mock metrics → unified snapshot → score/sentiment → alert/advisory/report · Advisory luôn pending approval, không tự apply vào M01/M05 · CLI: `venho-analytics` |
 | **Module 09 — Agent Studio** | `projects/03_AI_STUDIO/venho-ai-studio/agent_studio/` | **COMPLETE offline planning/orchestration MVP (2026-07-09)** · 10 tests · Plan: `VENHO_AI_STUDIO_Module_09_Agent_Studio_Development_Plan_v2_2_QC.md` · Goal tự nhiên → validate request → persona/context → missing knowledge → TaskPlan → risk → ModuleRequest qua M04 · Không tự publish, không sửa Knowledge, không gọi M07 trực tiếp · CLI: `venho-agent` |
-| **Module 10 — VenHo OS Dashboard** | **`src/app/os/` (Next.js `localhost:3000/os`)** | **COMPLETE v3.0 — Stage A+B+C (2026-07-13)** · Streamlit đã được thay thế hoàn toàn · Full suite 423/423 · Plan: `VENHO_AI_STUDIO_Module_10_Dashboard_Plan_v1_2.md` · RSC routing `?section=` · Workbench (Mode A+B SSE live log) · Creative Studio (Tạo Ảnh AI, Social Post, Video Script) · Knowledge (DNA Library + Vault Search + Mode C Linh An) · Reports (DNA Status + Social Content Log) · Shared UI primitives `src/components/os/shared/ui.tsx` · 7 API routes `/api/v1/studio/` · Build 34/34 pages, 0 TS error · **OTA-01 adapter (2026-07-13)**: `src/bff/ota/ota-agent.{client,dto,query}.ts` — server-only BFF gọi `GET /api/v1/agent/status` của repo riêng `venho-ota-agent` theo `MOTHER_DASHBOARD_CONTRACT.md` (`OTA_AGENT_BASE_URL`/`OTA_AGENT_API_TOKEN`, never-throw, degrade `unreachable`/`not_configured`); đã unit-test + smoke-test thật, **chưa wire vào** `AgentsSection`/`OperationsSection` (vẫn placeholder tĩnh) · **Chưa có auth middleware cho `/os`** — cần quyết định trước khi deploy thật vì route nằm chung repo/deploy với website công khai |
+| **Module 10 — VenHo OS Dashboard** | **Repo riêng `venho-os/` (Next.js `localhost:3000/os`) — tách khỏi repo này 2026-07-14** | **COMPLETE v3.1 — Stage A+B+C + tách repo (2026-07-14)** · Toàn bộ `/os`, `bff/`, API routes `api/v1/studio/*` + `api/v1/workspaces/*`, `ops/VenHoSocialManager/`, và workflow `social-content.yml` đã chuyển sang repo `venho-os` để website `venhohotel.com` chạy độc lập, không còn chứa code dashboard · Repo `Ven Ho Hotel` này chỉ còn website public — verify sạch: `npm run lint`/`build`/`test` không lỗi, không còn import treo · **OTA-01 adapter đã wire vào `AgentsSection`/`OperationsSection`** (2026-07-14, trước khi tách) — hiển thị `ok`/`not_configured`/`unreachable` thật, đã test qua browser · **Chưa có auth middleware cho `/os`** — việc tách repo giảm rủi ro lộ qua domain public, nhưng nếu sau này deploy `venho-os` lên domain công khai vẫn cần thêm auth riêng · Chi tiết đầy đủ, secrets cần điền lại, known issue (`STUDIO_DIR` path off-by-one có sẵn từ trước): xem `venho-os/CLAUDE.md` |
 | **AI Studio context** | `projects/03_AI_STUDIO/venho-ai-studio/` | `task_memory.md` — context chung M01–M10 cho AI Engine · `task_status.md` — status từng module · cập nhật mỗi khi kết thúc task |
 
 > Tài liệu chung (Venhohotel.md, DEPLOY-GUIDE.md): `docs/`
@@ -248,68 +248,7 @@ Yêu cầu: `ANTHROPIC_API_KEY` trong file `.env` · Chi phí ~700–1,000đ/scr
 
 ## VenHoSocialManager — Scripts CLI
 
-| Lệnh | Tác dụng |
-|------|----------|
-| `python3 generate_image.py "[prompt]" "database/YYYY/MM/folder" [portrait\|square\|story]` | Tạo ảnh gpt-image-2 |
-| `python3 google_drive.py upload "database/YYYY/MM/folder"` | Upload folder lên Drive, in ra URL |
-| `python3 send_email.py` | Gửi email bài mới nhất (tự scan database) |
-| `python3 send_email.py "database/YYYY/MM/folder"` | Gửi email bài cụ thể |
-
-**Sau Bước 5 (tạo ảnh) của skill `/tao-social-post`**, phải chạy Bước 5b:
-1. Upload Drive → lấy URL
-2. Cập nhật `meta.json` thêm `drive_url`
-3. Cập nhật `database/index.json` + `database/index.md`
-
-### AI Image Engines
-
-| Engine | Tool | Dùng khi |
-|--------|------|---------|
-| **GPT Image 2** (ChatGPT) | `generate_image.py --ref` | Volume, social posts, on-demand |
-| **Google Flow** (Nano Banana 2) | litmedia.ai → Ingredients system | Hero portrait, branding, series nhất quán |
-
-> **QC scoring:** Mọi ảnh Linh An chấm điểm theo rubric `07F_QC_CHECKLIST_SCORING_RUBRIC_v1_0.md` — ≥9.0 dùng hero, 8.0–8.9 dùng phụ, <8.0 regenerate.
-
-### Linh An — Image Generation (validated 2026-06-24)
-
-**BẮT BUỘC dùng `--ref` khi ảnh có Linh An** — text-only chỉ đạt 6–8.4/10, edit+reference đạt 9/10:
-
-```bash
-# Single ref (face only)
-python3 generate_image.py "[scene prompt]" "photos-ai/YYYY/DD-MM-slug" [size] --ref "assets/linh-an-master-face.png"
-
-# Dual ref (face + environment) — dùng khi có reference ảnh địa điểm thực
-python3 generate_image.py "[scene prompt]" "photos-ai/YYYY/DD-MM-slug" [size] --ref "assets/linh-an-master-face.png" --ref-env "assets/Rooftop-railing.png"
-```
-
-**Lưu ý `--ref-env`:** Phải là file PNG (không phải JPEG) — convert bằng `sips -s format png input.jpeg --out output.png` nếu cần.
-
-**Nguyên tắc prompt khi dùng `--ref`:** KHÔNG mô tả lại khuôn mặt — chỉ mô tả outfit, background, action, ánh sáng.
-
-**Proven formula (validated 2026-06-24):**
-- ✅ Standing / leaning at railing + portrait/medium framing (85mm) → khuôn mặt 9/10
-- ✅ Dual ref (face + env) → lan can, màu hồ, skyline accurate hơn rõ rệt
-- ✅ Hotel room: dùng `--ref-env "assets/View-Ho-room-from-inside.png"` → phòng đúng với thực tế
-- ✅ Hotel room: plain English editorial prompt (không dùng character block chi tiết) → tránh safety filter
-- ❌ Tránh: candid walking + wide shot (50mm) → AI feel
-- ❌ Tránh: nhiều props cùng lúc (ghế mây + nến + ly rượu) → drift sang resort generic
-- ❌ Tránh: "cream and beige palette / floor-to-ceiling window" cho hotel room → sai với thực tế
-
-**Reference images:** `ops/VenHoSocialManager/assets/`
-| File | Loại | Dùng khi |
-|------|------|---------|
-| `linh-an-master-face.png` | Face (~15° trái) | `--ref` cho mọi ảnh có Linh An |
-| `B3_Hero.png` | Face (3/4 trái) | Production chính thức |
-| `A2_Front.png` | Face (thẳng mặt) | Cần góc đối xứng |
-| `C_LeftProfile.png` | Face (profile trái) | Silhouette |
-| `D_RightProfile.png` | Face (profile phải) | Silhouette |
-| `Rooftop-railing.png` | Env — lan can + mặt hồ | `--ref-env` cho scene rooftop portrait |
-| `Rooftop-Panorama-view.jpeg` | Env — toàn cảnh rooftop | Tham khảo góc rộng |
-| `Rooftop-corner-view.jpeg` | Env — góc rooftop + skyline | Tham khảo skyline Hà Nội |
-| `View-Ho-room.png` | Env — phòng wide shot | `--ref-env` cho scene phòng (góc tổng) |
-| `View-Ho-room-from-inside.png` | Env — cửa sổ + hồ | `--ref-env` cho scene phòng (focus cửa sổ/railing) |
-| `Logo.png` | Logo Ven Hồ Hotel | Tham khảo khi mô tả logo trên vật phẩm (ly, thẻ phòng...) |
-
-**`google_drive.py`:** Đã nâng cấp — tự động `[UPDATE]` file đã tồn tại thay vì `[SKIP]`.
+**Đã chuyển sang repo `venho-os` ngày 2026-07-14** (tách dashboard VENHO OS độc lập khỏi website). Xem `venho-os/CLAUDE.md` § "VenHoSocialManager — Scripts CLI" cho toàn bộ chi tiết (CLI, AI Image Engines, reference images, workflow `.github/workflows/social-content.yml`). Skill `/tao-social-post` giờ thao tác trên thư mục `venho-os/ops/VenHoSocialManager/`, không còn trong repo này.
 
 ---
 

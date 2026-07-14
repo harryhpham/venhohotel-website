@@ -5,6 +5,17 @@
 
 ---
 
+## 2026-07-14 — Wiring OTA vào VENHO OS + tách dashboard sang repo `venho-os`
+
+- **Wiring UI**: `AgentsSection.tsx`/`OperationsSection.tsx` giờ gọi `getOtaAgentSnapshot()` thật (thêm `OtaAgentStatusCard.tsx` dùng chung) thay vì placeholder tĩnh — hiển thị 3 trạng thái `ok`/`not_configured`/`unreachable`, đã verify qua browser (`localhost:3000/os?section=agents|operations`), `npm run lint`/`build` sạch.
+- **Tách repo**: theo yêu cầu Harry ("từ nay website chạy độc lập"), toàn bộ Module 10 VENHO OS Dashboard (`src/app/os/`, `src/components/os/`, `src/bff/home/`, `src/bff/ota/`, `src/lib/studio/`, `src/shared/kernel/freshness.ts`, `src/modules/execution/domain/focus-scoring.ts`, `src/modules/module-registry/.../resolve-quick-actions.ts`, API routes `api/v1/studio/*` + `api/v1/workspaces/*`, toàn bộ `ops/VenHoSocialManager/`, workflow `.github/workflows/social-content.yml`, và 3 file test liên quan) đã chuyển sang **repo mới `venho-os`** (`/Users/hanhpham/Developer/Claude-Workspace/projects/venho-os`).
+- **Secrets không mang theo** — quyết định của Harry: `ops/VenHoSocialManager/.env`, `credentials.json`, `token.json` (chưa từng nằm trong git, chỉ trên đĩa) và GitHub Actions secrets của `social-content.yml` không copy sang repo mới; cần điền lại thật trong `venho-os` (danh sách đầy đủ trong `venho-os/CLAUDE.md`).
+- Copy an toàn: dùng `git archive HEAD` để chỉ export file đã track trong git (tự động loại bỏ mọi thứ bị `.gitignore`), cộng thêm rsync thủ công phần dữ liệu thật chưa track nhưng cần thiết (ảnh reference AI, ảnh đã generate, log, bài social cũ) — loại trừ rõ ràng `.env`/`credentials.json`/`token.json`.
+- Verify cả 2 phía: `venho-os` — `npm install && npm run build && npm run lint && npm run test` (10 route build sạch, 3 test file/25 test pass) + test thật `localhost:3000/os`, `/os?section=agents`, `/api/v1/studio/social-index` (đọc đúng database đã copy). `Ven Ho Hotel` sau khi xóa — `npm run build`/`lint` sạch, không còn import treo, route `/os` đã biến mất khỏi build output.
+- Cập nhật `CLAUDE.md` (cả `Ven Ho Hotel` và `projects/` master) trỏ sang `venho-os/CLAUDE.md`; cập nhật 2 launcher script `run-venho-os.sh`/`.command` trỏ sang thư mục mới.
+- **Phát hiện phụ (chưa tự sửa, đã flag trong `venho-os/CLAUDE.md`)**: `src/lib/studio/paths.ts`'s `STUDIO_DIR` dùng `../../03_AI_STUDIO/venho-ai-studio` — sai 1 cấp so với vị trí thật (`../03_AI_STUDIO/venho-ai-studio`), bug này đã tồn tại từ trước khi tách repo, không phải regression — nghĩa là Knowledge section (DNA/vault-search) có thể chưa từng đọc đúng file kể từ khi viết.
+- Chưa làm: chưa deploy `venho-os` lên đâu cả (vẫn chỉ chạy `npm run dev` local); chưa bật lại workflow `social-content.yml` (thiếu secrets thật); chưa thêm auth middleware cho `/os`.
+
 ## 2026-07-13 — OTA-01 agent adapter (src/bff/ota/) — kết nối VENHO OS tới venho-ota-agent
 
 - **`src/bff/ota/ota-agent.dto.ts` + `ota-agent.client.ts` + `ota-agent.query.ts`** — BFF adapter server-only gọi Internal API của `venho-ota-agent` (repo riêng, headless) theo đúng `venho-ota-agent/docs/MOTHER_DASHBOARD_CONTRACT.md`: bearer token từ env (`OTA_AGENT_BASE_URL`, `OTA_AGENT_API_TOKEN`), timeout 3s, không bao giờ throw ra ngoài — trả `state: "ok"|"unreachable"|"not_configured"` để agent chết/chưa cấu hình không làm crash Mother Dashboard.
