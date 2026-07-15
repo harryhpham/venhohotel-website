@@ -292,4 +292,4 @@ Yêu cầu: `ANTHROPIC_API_KEY` trong file `.env` · Chi phí ~700–1,000đ/scr
 
 ## Việc còn lại
 
-- [ ] Tạo tài khoản Zalo OA
+- [x] Tạo tài khoản Zalo OA — đã có (xác nhận 2026-07-15, trong lúc build kênh gửi P1 alert cho `venho-ota-agent` G0C-6). Còn thiếu: tạo Developer App trên developers.zalo.me để lấy App ID/Secret cho tích hợp gửi tin — xem `venho-ota-agent/task_memory.md` "'Tiếp tục G0C-6'".
