@@ -128,7 +128,7 @@ git push origin main
 | Module | Thư mục | Tài liệu |
 |--------|---------|----------|
 | Form đặt phòng (Resend) | `ops/email-form/` | `notes.md` |
-| Social Media AI (skill `/tao-social-post`) | `venho-os/ops/VenHoSocialManager/` (repo riêng, chuyển 2026-07-14) | `venho-os/ops/VenHoSocialManager/README.md` |
+| Social Media AI (skill `/tao-social-post`) | `venho-social-content-agent/` (repo riêng, chuyển 2026-07-14 → `venho-os`, tách tiếp 2026-07-20 → repo độc lập) | `venho-social-content-agent/README.md` |
 | **Social Video Content** | `local-generated/social-video/` | Local generated, không commit |
 | Phân tích đối thủ | `ops/competitor-analysis/` | `notes.md` |
 | Google Analytics GA4 | `ops/analytics/` | `notes.md` |
@@ -248,7 +248,7 @@ Yêu cầu: `ANTHROPIC_API_KEY` trong file `.env` · Chi phí ~700–1,000đ/scr
 
 ## VenHoSocialManager — Scripts CLI
 
-**Đã chuyển sang repo `venho-os` ngày 2026-07-14** (tách dashboard VENHO OS độc lập khỏi website). Xem `venho-os/CLAUDE.md` § "VenHoSocialManager — Scripts CLI" cho toàn bộ chi tiết (CLI, AI Image Engines, reference images, workflow `.github/workflows/social-content.yml`). Skill `/tao-social-post` giờ thao tác trên thư mục `venho-os/ops/VenHoSocialManager/`, không còn trong repo này.
+**Chuyển sang repo `venho-os` ngày 2026-07-14, rồi tách tiếp thành repo độc lập `venho-social-content-agent` ngày 2026-07-20** ("point publishing schedule to standalone social agent") — không còn nằm trong `venho-os` hay repo này. Xem `venho-social-content-agent/README.md` + `venho-social-content-agent/CLAUDE.md` (nếu có) cho toàn bộ chi tiết (CLI, AI Image Engines, reference images, workflow `.github/workflows/social-content.yml`, containment policy — xem mục "Ghi chú triển khai quan trọng" ở trên). Skill `/tao-social-post` giờ thao tác trên thư mục `venho-social-content-agent/`, không còn trong repo này hay `venho-os`.
 
 ---
 
@@ -273,14 +273,15 @@ Yêu cầu: `ANTHROPIC_API_KEY` trong file `.env` · Chi phí ~700–1,000đ/scr
   - Secrets: SKYHOTEL_USER, SKYHOTEL_PASS, GMAIL_USER, GMAIL_APP_PASS (GitHub repo settings)
   - Test thủ công: Actions → chọn workflow → Run workflow
   - Backup launchd local: `~/Library/LaunchAgents/com.venhohotel.daily-revenue.plist` (9:00 + 10:30 AM)
-- **VenHoSocialManager dùng GitHub Actions** (cloud) — không cần Mac bật
-  - Workflow: `.github/workflows/social-content.yml` — T2/T4/T6 lúc **8:00 AM** (UTC+7)
-  - Pipeline: gpt-5.5 → caption FB/IG/Threads + gpt-image-2 → lưu local → **upload Google Drive (set public) → lấy `image_public_url`** → email preview (song song, không chặn) → **POST JSON sang Make.com webhook → Make tự đăng thẳng lên Facebook Page** → commit rotation state + caption/meta/index text (không commit `image.png`)
-  - ⚠️ **Không có bước duyệt thủ công trước khi đăng** — bài lên Facebook Page thật ngay trong cùng lần chạy T2/T4/T6
+- **VenHoSocialManager — repo riêng `venho-social-content-agent`** (tách khỏi `venho-os` 2026-07-20, "point publishing schedule to standalone social agent") — GitHub Actions (cloud), không cần Mac bật, không còn nằm trong repo `Ven Ho Hotel` hay `venho-os`
+  - Workflow: `venho-social-content-agent/.github/workflows/social-content.yml` — T2/T4/T6 lúc **8:00 AM** (UTC+7)
+  - Pipeline: gpt-5.5 → caption FB/IG/Threads + gpt-image-2 → lưu local → **upload Google Drive (set public) → lấy `image_public_url`** → email preview (song song, không chặn) → **POST JSON sang Make.com webhook** → commit rotation state + caption/meta/index text (không commit `image.png`)
+  - ✅ **CÓ bước duyệt thủ công trước khi đăng thật** (xác nhận lại 2026-08-05, tài liệu cũ ở đây từng ghi sai là "không có") — repo đã có lớp **Phase 0 containment** (`containment_policy.json`: `auto_publish_enabled: false`, `require_final_approval: true`). Payload gửi Make.com kèm cờ `publish_to_facebook`/`publish_to_instagram` = `false` khi chưa có `final_approval` checksum hợp lệ (`containment.py::is_final_approval_valid`) → **bài KHÔNG tự lên Facebook** ngay khi cron chạy, chỉ tạo draft + gửi email preview cho Harry duyệt; sau khi duyệt cần chạy bước resend/approve riêng (`resend_to_make.py` / `regenerate_existing_image.py`) thì Make mới thực sự đăng
   - Secrets: `OPENAI_API_KEY`, `SOCIAL_GMAIL_SENDER`, `SOCIAL_GMAIL_APP_PASS`, `GOOGLE_DRIVE_TOKEN_JSON` (OAuth token Drive, tự refresh trong CI), `MAKE_WEBHOOK_URL`, `MAKE_WEBHOOK_SECRET` (optional)
   - Google Drive **không còn bị skip** (đã bỏ `SKIP_GOOGLE_DRIVE=1`) — bắt buộc chạy để lấy `image_public_url` cho Make; nếu Drive upload lỗi thì bước Make bị bỏ qua (không đăng)
-  - Make.com scenario chuẩn 3 module: `Webhooks (Custom webhook)` → `HTTP (Get a file)` → `Facebook Pages (Create a Post with Photos)` — chi tiết setup + lỗi thường gặp khi map field: `ops/VenHoSocialManager/README.md`
-  - Test thủ công: Actions → "Social Content Generator" → Run workflow (sẽ đăng bài thật nếu Make scenario đang `ON`)
+  - Make.com scenario chuẩn 3 module: `Webhooks (Custom webhook)` → `HTTP (Get a file)` → `Facebook Pages (Create a Post with Photos)` — chi tiết setup + lỗi thường gặp khi map field: `venho-social-content-agent/README.md`
+  - Test thủ công: Actions repo `venho-social-content-agent` → "Social Content Generator" → Run workflow (chỉ tạo draft, không tự đăng — theo containment policy ở trên)
+  - **Chạy song song với Growth Agent v3.1** (`growth-daily-cycle.yml` trong `venho-ai-studio`, chỉ Thứ Hai, luôn cần duyệt tay trên VENHO OS Dashboard, đang ở rollout stage `shadow`) — quyết định của Harry 2026-08-05: giữ cả 2 hệ thống chạy song song trong lúc Growth Agent còn ở stage `shadow`, chưa có cơ chế check chéo trùng chủ đề/ngày đăng giữa 2 registry riêng biệt — cần theo dõi thủ công nếu 2 bên cùng được duyệt đăng gần nhau
   - `git add -f` trong bước "Commit generated content" — `.gitignore` ignore toàn bộ `database/`, và git áp dụng exclude rule cho pathspec có wildcard (`**/*.json`, `**/*.txt`) trước khi resolve nên luôn khớp 0 file nếu không có `-f` (bug từng khiến job báo "All jobs have failed" dù bài đã đăng thật lên Facebook — 2026-07-08)
   - **Cron Mac cũ (`0 10 * * 1,3,5`) đã XÓA khỏi crontab** (2026-07-08) — từng chạy song song với GitHub Actions bằng code local, gây trùng rotation state vì local `.env` không có `MAKE_WEBHOOK_URL` nên âm thầm bỏ qua bước đăng Facebook. Giờ GitHub Actions là nguồn chạy duy nhất
   - **Ảnh dùng ref thật của khách sạn theo pillar** (2026-07-08): `pillars.json` có field `ref_image` (`thuong_hieu`→`Hotel-front-view.jpg` · `cong_tac`→`Lobby-1.jpeg` · `social_proof`→`Reception.jpeg` · `ho_tay`→`View-Ho-room-from-inside.png` · `am_thuc`→không dùng ref) — `generate_image()` tự chuyển sang `client.images.edit()` khi có ref thay vì text-to-image thuần (từng khiến ảnh AI không giống Ven Hồ Hotel thật)
