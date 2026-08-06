@@ -22,7 +22,7 @@ Tài liệu hướng dẫn cho Claude Code khi làm việc với project này.
 - **Không xóa file** nếu không được Harry cho phép rõ ràng
 - **Output mặc định:** `.docx` cho tài liệu
 - **Ngôn ngữ:** Trả lời bằng tiếng Việt trừ khi được yêu cầu khác
-- **"Kết thúc Task"** — khi Harry nhắn cụm này, tự động cập nhật `CLAUDE.md` + `CHANGELOG.md` + `task_memory.md` + `task_status.md` ngay, không hỏi
+- **"done-task"** — khi Harry nhắn cụm này, tự động cập nhật `CLAUDE.md` + `task_memory.md` + `task_status.md` ngay, không hỏi
 
 ---
 
@@ -282,6 +282,9 @@ Yêu cầu: `ANTHROPIC_API_KEY` trong file `.env` · Chi phí ~700–1,000đ/scr
   - Make.com scenario chuẩn 3 module: `Webhooks (Custom webhook)` → `HTTP (Get a file)` → `Facebook Pages (Create a Post with Photos)` — chi tiết setup + lỗi thường gặp khi map field: `venho-social-content-agent/README.md`
   - Test thủ công: Actions repo `venho-social-content-agent` → "Social Content Generator" → Run workflow (chỉ tạo draft, không tự đăng — theo containment policy ở trên)
   - **Chạy song song với Growth Agent v3.1** (`growth-daily-cycle.yml` trong `venho-ai-studio`, chỉ Thứ Hai, luôn cần duyệt tay trên VENHO OS Dashboard, đang ở rollout stage `shadow`) — quyết định của Harry 2026-08-05: giữ cả 2 hệ thống chạy song song trong lúc Growth Agent còn ở stage `shadow`, chưa có cơ chế check chéo trùng chủ đề/ngày đăng giữa 2 registry riêng biệt — cần theo dõi thủ công nếu 2 bên cùng được duyệt đăng gần nhau
+  - **Growth Agent dùng scenario Make.com RIÊNG, không dùng chung với legacy** (2026-08-06) — webhook riêng `MAKE_GROWTH_WEBHOOK_URL` trong `venho-ai-studio/.env.local`. Dùng chung 1 webhook như trước gây `BundleValidationError: Missing value of required parameter 'url'` vì payload Growth (`content` lồng + `image_url`) khác hẳn payload phẳng của legacy (`url`/`message`/`publish_to_facebook`). Scenario Growth: filter router theo `{{2.platform}}`, caption từ `{{2.content.text}}`, và có chốt an toàn chặn mọi `publication_id` chứa `test`
+  - **Ảnh fallback cho bài Growth không có ảnh sinh ra** (2026-08-06) — 4 ảnh thật của khách sạn host tại `public/images/Social-fallback/` của chính repo này (`hotel-front-view` · `lobby` · `reception` · `lake-view-room`), tái dùng đúng bộ `ref_image` của `pillars.json`. FB/IG bắt buộc có ảnh nên thiếu ảnh là bài chết cả text. Payload gắn cờ `image_is_fallback` để người duyệt phân biệt
+  - **Rollout stage `shadow` giờ chặn thật trong code** (2026-08-06) — trước đây chỉ là ghi chép quản trị. Ở stage `shadow`, bấm Approve trên dashboard **không đăng**: bài đậu ở `SHADOW_HELD`, giữ nguyên approval. Muốn đăng phải `venho-growth approve-and-dispatch --allow-shadow` từ terminal, hoặc tiến stage bằng `venho-rollout rollout-advance`
   - `git add -f` trong bước "Commit generated content" — `.gitignore` ignore toàn bộ `database/`, và git áp dụng exclude rule cho pathspec có wildcard (`**/*.json`, `**/*.txt`) trước khi resolve nên luôn khớp 0 file nếu không có `-f` (bug từng khiến job báo "All jobs have failed" dù bài đã đăng thật lên Facebook — 2026-07-08)
   - **Cron Mac cũ (`0 10 * * 1,3,5`) đã XÓA khỏi crontab** (2026-07-08) — từng chạy song song với GitHub Actions bằng code local, gây trùng rotation state vì local `.env` không có `MAKE_WEBHOOK_URL` nên âm thầm bỏ qua bước đăng Facebook. Giờ GitHub Actions là nguồn chạy duy nhất
   - **Ảnh dùng ref thật của khách sạn theo pillar** (2026-07-08): `pillars.json` có field `ref_image` (`thuong_hieu`→`Hotel-front-view.jpg` · `cong_tac`→`Lobby-1.jpeg` · `social_proof`→`Reception.jpeg` · `ho_tay`→`View-Ho-room-from-inside.png` · `am_thuc`→không dùng ref) — `generate_image()` tự chuyển sang `client.images.edit()` khi có ref thay vì text-to-image thuần (từng khiến ảnh AI không giống Ven Hồ Hotel thật)
