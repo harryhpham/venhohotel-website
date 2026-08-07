@@ -21,7 +21,7 @@ Nếu `$ARGUMENTS` trống, hỏi lần lượt:
 - Lấy ngày hôm nay `YYYY-MM-DD`
 - Tạo slug từ topic: chữ thường, không dấu, gạch ngang, tối đa 4 từ
   - VD: "Linh An uống cà phê rooftop" → `linh-an-cafe-rooftop`
-- **Local:** `ops/VenHoSocialManager/photos-ai/YYYY/DD-MM-{slug}/`
+- **Local:** `../venho-social-content-agent/photos-ai/YYYY/DD-MM-{slug}/`
 - **Drive:** `Photos AI / YYYY / DD-MM-{slug} /`
 
 ---
@@ -232,7 +232,7 @@ Thay đổi ít nhất 2 trong: góc máy, ánh sáng, action của Linh An, com
 
 ### Bước 4 — Lưu image_prompt.txt và generate ảnh
 
-Lưu toàn bộ prompt(s) vào `ops/VenHoSocialManager/photos-ai/YYYY/DD-MM-{slug}/image_prompt.txt`.
+Lưu toàn bộ prompt(s) vào `../venho-social-content-agent/photos-ai/YYYY/DD-MM-{slug}/image_prompt.txt`.
 
 **Chọn engine:**
 | Engine | Khi nào dùng |
@@ -243,7 +243,7 @@ Lưu toàn bộ prompt(s) vào `ops/VenHoSocialManager/photos-ai/YYYY/DD-MM-{slu
 Generate từng ảnh lần lượt (GPT Image 2):
 
 ```bash
-cd "ops/VenHoSocialManager"
+cd "../venho-social-content-agent"
 
 # Nếu có Linh An:
 python3 generate_image.py "[Prompt N]" "photos-ai/YYYY/DD-MM-slug" [size] --ref "assets/linh-an-master-face.png"
@@ -281,7 +281,7 @@ Chấm điểm từng ảnh sau khi generate. Dùng **10-second fast triage** tr
 
 ### Bước 5 — Tạo meta.json
 
-Tạo file `ops/VenHoSocialManager/photos-ai/YYYY/DD-MM-{slug}/meta.json`:
+Tạo file `../venho-social-content-agent/photos-ai/YYYY/DD-MM-{slug}/meta.json`:
 
 ```json
 {
@@ -303,7 +303,7 @@ Tạo file `ops/VenHoSocialManager/photos-ai/YYYY/DD-MM-{slug}/meta.json`:
 ### Bước 6 — Upload lên Google Drive
 
 ```bash
-cd "ops/VenHoSocialManager"
+cd "../venho-social-content-agent"
 python3 google_drive.py upload-photos-ai "photos-ai/YYYY/DD-MM-slug"
 ```
 
@@ -330,7 +330,7 @@ Subjects hiện có: `linh_an` · `westlake` · `outside` · `facade` · `lobby`
 | **Location Master Ref v2.7** | `projects/02_KNOWLEDGE/DNA/Linh An Universe/06_LOCATION_LIBRARY_SYSTEM/06_LOCATION_MASTER_REFERENCE_PACK_v2.7_FINAL.md` |
 | Hotel Master Reference Pack (LOCKED) | `projects/02_KNOWLEDGE/DNA/VENHO_HOTEL_MASTER_REFERENCE_PACK_v2.0_FINAL.md` |
 
-**Reference images** (`ops/VenHoSocialManager/assets/`):
+**Reference images** (`../venho-social-content-agent/assets/`):
 
 | File | Loại | Dùng khi |
 |------|------|---------|
