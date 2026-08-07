@@ -1,10 +1,11 @@
-import SidebarNavigation from "@/components/os/layout/SidebarNavigation";
+import SidebarNavigation, { isOSSection, type OSSection } from "@/components/os/layout/SidebarNavigation";
 import HermesNousSection from "@/components/os/sections/hermes-nous/HermesNousSection";
 import LunaSection from "@/components/os/sections/luna/LunaSection";
 
 export default async function OSPage({ searchParams }: { searchParams: Promise<{ section?: string }> }) {
   const params = await searchParams;
-  const section = params.section || "home";
+  const requestedSection = params.section || "";
+  const section: OSSection = isOSSection(requestedSection) ? requestedSection : "home";
   return (
     <main className="min-h-screen bg-[#F7F4EF] text-[#1A1A1A]">
       <div className="grid min-h-screen md:grid-cols-[220px_1fr]">
