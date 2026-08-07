@@ -8,6 +8,19 @@
 
 ---
 
+> ## ⚠️ TRẠNG THÁI THẬT (cập nhật 2026-07-15, chiều muộn — Kết thúc Task P1)
+>
+> Tài liệu này (v1.4 Implementation-Ready, bản đầy đủ Clean Architecture) **không còn là nguồn quy chuẩn triển khai hiện hành**. Việc build thật diễn ra trong repo riêng `venho-ota-agent` (headless agent, không nằm trong repo `Ven Ho Hotel` này), theo `docs/reference/VENHO_OS_OTA_01_G0_C_LEAN_IMPLEMENTATION_SPEC_v1.0.md` ("Lean v1.0") — bản rút gọn phù hợp điều kiện kinh tế thật (12 phòng, solo founder, **không thuê Channel Manager**), không phải bản dense v1.4 này. File này giữ lại làm tài liệu tham chiếu kiến trúc dài hạn (nếu sau này nâng cấp lên Channel Manager/API chính thức — xem Lean spec §27 "Điều kiện tái xét Channel Manager").
+>
+> **P1 (Lean v1.0, Phase G0C-0 → G0C-6) đã ĐÓNG 2026-07-15** — Harry xác nhận "Kết thúc Task", mở session mới cho P2. Tóm tắt:
+> - G0C-0 (audit/lock dữ liệu), G0C-1 (Skyhotel collector), G0C-2 (Gmail email ingestion — NEW+CANCELLED cả 2 OTA live), G0C-3 (dashboard VENHO OS), G0C-5 (guided-fill an toàn), G0C-6 (pilot 4 tuần, đồng hồ bắt đầu 2026-07-15) — **đều hoàn tất chức năng**.
+> - **G0C-4 (pricing/dynamic rate engine — chương trình lớn trong tài liệu v1.4 này, xem các mục pricing bên dưới) đã bị Owner chủ động DESCOPE** ngày 2026-07-15: Ven Hồ Hotel không có chính sách đổi giá theo mùa/thời điểm, agent OTA chỉ được đụng vào tên khách, hạng phòng, ngày check-in/check-out — không đụng giá. Code pricing vẫn tồn tại trong `venho-ota-agent` (tắt bằng `PRICING_ENGINE_ENABLED=false`), không xoá, phòng khi chính sách giá đổi sau này. **Mọi mục trong tài liệu v1.4 này liên quan đến pricing engine/rate recommendation/dynamic pricing hiện KHÔNG áp dụng cho phạm vi thực tế đang chạy.**
+> - Còn lại không code-closeable: mẫu email MODIFIED thật (cả Agoda và Booking.com — hiện chỉ có mẫu NEW/CANCELLED), theo dõi thêm vài tick lịch Skyhotel để chắc chắn ổn định lâu dài.
+>
+> **Nguồn sự thật cho trạng thái hiện tại:** `venho-ota-agent/PLAN_OTA.md` (top section) + `venho-ota-agent/task_memory.md`/`task_status.md`/`CHANGELOG.md`. Nếu P2 build tiếp trong `venho-ota-agent`, đọc các file đó trước khi đọc tài liệu v1.4 này.
+
+---
+
 # 0. HƯỚNG DẪN CHO AI CODING AGENT — ĐỌC PHẦN NÀY TRƯỚC
 
 > Tài liệu này là **nguồn sự thật duy nhất** khi build OTA-01. Nếu code và tài liệu mâu thuẫn, tài liệu thắng. Nếu tài liệu thiếu thông tin, dừng lại và hỏi Owner — không tự bịa nghiệp vụ.

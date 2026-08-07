@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
 import { useLang } from "@/lib/context/LangContext";
 import { bookingUrl } from "@/lib/data/ota";
+import { bookingIntentPayload } from "@/lib/tracking/meta-events";
 
 declare global {
   interface Window {
@@ -50,7 +51,7 @@ export default function BookingBar() {
 
     setError("");
     window.gtag?.("event", "booking_search", { source: "homepage_booking_bar", checkin, checkout, guests });
-    window.fbq?.("track", "InitiateCheckout", { source: "homepage_booking_bar", checkin, checkout, num_guests: guests });
+    window.fbq?.("track", "ViewContent", bookingIntentPayload("homepage_booking_bar"));
     window.open(bookingUrl("homepage_booking_bar", { checkin, checkout, adults: guests, lang }), "_blank", "noopener,noreferrer");
   }
 

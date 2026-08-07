@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useLang } from "@/lib/context/LangContext";
 import { siteContent } from "@/lib/data/content";
+import { contactPayload, leadPayload } from "@/lib/tracking/meta-events";
+import { currentAttribution } from "@/lib/tracking/attribution";
 
 declare global {
   interface Window {
@@ -36,6 +38,9 @@ export default function LocationBlock() {
           note: form.note,
           company: form.company,
           source: "homepage_quick_contact",
+          // Which published post this visit came from, if any (see
+          // lib/tracking/attribution.ts).
+          ...currentAttribution(),
         }),
       });
 
@@ -56,7 +61,7 @@ export default function LocationBlock() {
         event_category: "booking_form",
         form_location: "homepage_quick_contact",
       });
-      window.fbq?.("track", "Lead", { content_name: "homepage_quick_contact" });
+      window.fbq?.("track", "Lead", leadPayload("homepage_quick_contact"));
     } catch {
       setError(lang === "vi"
         ? "Không thể kết nối đến máy chủ. Vui lòng gọi trực tiếp 024 3847 4646."
@@ -102,7 +107,11 @@ export default function LocationBlock() {
                 <span className="text-[#C9A84C] mt-0.5">◎</span>
                 <div>
                   <p className="font-sans text-xs text-[#6B6B6B] uppercase tracking-widest mb-0.5">{t.phoneLabel}</p>
-                  <a href="tel:02438474646" className="font-mono text-[#1A1A1A] text-sm hover:text-[#C9A84C] transition-colors">
+                  <a
+                    href="tel:02438474646"
+                    onClick={() => window.fbq?.("track", "Contact", contactPayload("phone", "location_block"))}
+                    className="font-mono text-[#1A1A1A] text-sm hover:text-[#C9A84C] transition-colors"
+                  >
                     024 3847 4646
                   </a>
                 </div>

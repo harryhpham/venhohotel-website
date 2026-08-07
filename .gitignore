@@ -52,6 +52,8 @@ next-env.d.ts
 
 # local generated outputs and operational artifacts
 /local-generated/
+ops/ai-agent/
+.DS_Store
 *.xlsx
 ops/ai-agent/discovery*.png
 ops/VenHoSocialManager/database/

@@ -9,6 +9,7 @@ import { rooms } from "@/lib/data/rooms";
 import { useLang } from "@/lib/context/LangContext";
 import { siteContent } from "@/lib/data/content";
 import { agodaUrl, bookingUrl } from "@/lib/data/ota";
+import { bookingIntentPayload } from "@/lib/tracking/meta-events";
 
 declare global {
   interface Window {
@@ -23,9 +24,10 @@ function trackOtaClick(platform: "agoda" | "booking_com", roomSlug: string) {
     room_type: roomSlug,
     source: "room_detail",
   });
-  window.fbq?.("track", "InitiateCheckout", {
-    content_name: platform,
-    content_category: roomSlug,
+  window.fbq?.("track", "ViewContent", {
+    ...bookingIntentPayload("room_detail_ota_click"),
+    ota_platform: platform,
+    room_type: roomSlug,
   });
 }
 

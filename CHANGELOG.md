@@ -5,6 +5,111 @@
 
 ---
 
+## 2026-07-23 — venho-auto: đóng gap kiến trúc api_generic + tối ưu chi phí/thời gian
+
+- Phân tích lại chi phí VENHO Runtime Agent v2.0 sau khi thấy 1/12 task tốn hơn $100:
+  nguyên nhân chính là **số lần retry hội tụ kém** (VENHO-002 mất 41 attempt vì mỗi lần
+  retry làm lại worktree từ đầu), không phải giá model. Tài liệu:
+  `venho-auto/docs/VENHO_AUTO_COST_TIME_OPTIMIZATION_v1.md`.
+- **A1/A2**: `venho-auto worker reentry --mode {dev-fix,pm-only,verify-only}` — tái dùng
+  worktree có sẵn thay vì làm lại từ đầu mỗi lần retry sau `HUMAN_REVIEW`.
+- **B1**: PM Reviewer chuyển từ Claude Opus 4.8 sang `deepseek-v4-pro-pm` (rẻ hơn ~21 lần)
+  — đã có sẵn trong config `venho-os.json` nhưng bị khoá vì thiếu bảng giá; mở khoá + phát
+  hiện, sửa 1 bug thật (`api_generic` gửi sai `response_format`, DeepSeek từ chối request).
+- **Đóng gap kiến trúc**: `api_generic` trước đó chỉ có 1 slot `base_url`/`api_key` dùng
+  chung cho mọi alias — bật `deepseek-v4-pro-pm` cùng lúc với `claude-pm` sẽ khiến 1 trong
+  2 âm thầm gửi nhầm endpoint. Thêm `ModelRegistryEntry.api_generic_provider` để mỗi
+  provider (`deepseek`, `anthropic`) có slot cấu hình riêng. Khi nối `claude-pm` vào
+  Anthropic thật (Harry xác nhận Anthropic có endpoint OpenAI-compatible), phát hiện thêm
+  1 bug thật: Anthropic và DeepSeek đòi `response_format` **ngược nhau** — đã sửa thành
+  cấu hình theo từng provider, live-verify cả 2 chiều bằng gọi API thật (curl + full
+  production code path, cả Opus lẫn DeepSeek đều trả về payload đúng schema).
+- `make verify`: 561 test xanh. Chi tiết đầy đủ: `venho-auto/task_status.md`/
+  `task_memory.md` mục 2026-07-23.
+
+## 2026-07-17 — Xoá route callback Zalo OA tạm (đã huỷ hẳn tích hợp Zalo)
+
+- `venho-ota-agent`'s Zalo OA (G0C-6 P1-alert channel) chuyển từ "tạm dừng" (2026-07-15)
+  sang **huỷ hẳn** — email là kênh duy nhất từ giờ.
+- Xoá `src/app/api/zalo-oauth-callback/route.ts` — route bootstrap tạm, comment gốc đã
+  nói "nên xoá khi có refresh token lần đầu"; giả định "tạm dừng, chưa bỏ" không còn đúng.
+- `npm run build` verify sạch sau khi xoá.
+- Chi tiết đầy đủ (script/env vars/tokens bị xoá): xem `projects/venho-ota-agent/CHANGELOG.md`.
+
+## 2026-07-16 — venho-auto tách thành repo độc lập
+
+- venho-auto là project độc lập, không liên quan website/AI Studio — chuyển
+  `07_AUTOMATION/venho-auto/` ra `projects/venho-auto/` bằng `git subtree split`, **giữ
+  nguyên toàn bộ lịch sử commit** (16 commit riêng của thư mục này), rồi `git rm` khỏi
+  repo `Ven Ho Hotel`. Cùng pattern đã dùng để tách `venho-os` ngày 2026-07-14
+- Đã verify `make verify` chạy sạch (266 test) ngay tại vị trí mới trước khi xoá bản cũ
+- Từ nay xem `projects/venho-auto/CLAUDE.md`, `task_status.md`, `task_memory.md` cho mọi
+  cập nhật venho-auto — không còn nằm trong changelog của repo này
+
+## 2026-07-16 — venho-auto: real Claude Code CLI verify E2E thật + vá lỗ hổng HUMAN_REVIEW
+
+### Real Claude Code CLI — verify E2E thật lần đầu (venho-auto)
+- Cài `@anthropic-ai/claude-code` (2.1.197) và chạy thật (không mock) `venho-auto worker run-attempt --dev-provider claude-code --pm-provider claude-code` nhắm vào throwaway fixture repo (không bao giờ nhắm vào chính `venho-auto`, theo §23.0)
+- **Bug quan trọng tìm được và sửa**: field `$schema`/`$id` trong JSON Schema (dùng cho `--json-schema`) khiến `claude` CLI **âm thầm** không đăng ký tool `StructuredOutput` — không lỗi, exit code 0, tool chỉ biến mất khỏi session. Root-cause bằng A/B test có kiểm soát trên chính binary thật (0/2 khi có 2 field, 3/3 khi bỏ). Sửa tại `JsonSchemaRegistry.canonical_schema_json()` — loại 2 field này trước khi gửi cho provider, giữ nguyên validate nội bộ
+- Sau fix: 1 vòng Dev→PM→commit chạy trọn vẹn qua CLI thật, commit thật lên fixture repo với đúng trailer `Venho-Run`/`Venho-Task`/`Venho-Attempt` — lần đầu tiên quan sát được cả pipeline chạy không gián đoạn
+- Thêm test hồi quy; `make verify` sạch 261 test (từ 260)
+
+### HumanReviewService — vá lỗ hổng HUMAN_REVIEW không có lối thoát (venho-auto)
+- **Vấn đề phát hiện trong lúc verify trên**: task rơi vào `HUMAN_REVIEW` (provider lỗi, hết budget...) không có cách nào resume — endpoint API là stub vĩnh viễn từ Phase 1, chưa từng nối dù comment tự nhận "bắt đầu ở Phase 6" (Phase 6 đã xong từ lâu). Cách duy nhất là tạo run mới hoàn toàn
+- **Giải pháp**: `HumanReviewService.resolve()` mới — map `resume`/`skip`/`cancel` sang đúng state-machine event có sẵn, nối vào API route thật + lệnh CLI mới `venho-auto task human-action`
+- Verify bằng CLI round-trip thật: claim task → ép vào HUMAN_REVIEW → resume → claim lại thành công cùng `run_task_id`
+- 5 test tích hợp mới; `make verify` sạch 266 test (từ 261)
+
+Chi tiết đầy đủ (bug list, code, test): `07_AUTOMATION/venho-auto/task_status.md`
+
+---
+
+## 2026-07-15 — VenHoSocialManager QC Gate + M05 real generator + VenHo OS STUDIO_DIR fix
+
+### VenHoSocialManager — QC Gate với auto-retry (venho-os)
+- **Vấn đề:** ảnh sinh bởi gpt-image-2 không qua bước kiểm tra nào trước khi đăng Facebook
+- **Giải pháp:** thêm QC gate dùng GPT-4o-mini vision vào `generate_content.py`:
+  - `qc_image()` — gửi ảnh + REAL_SPACE_FACTS + UNIVERSAL_NEGATIVE_CONSTRAINTS → GPT-4o-mini → score 1–10
+  - `generate_image_with_qc()` — generate → QC → nếu fail → tighten prompt → retry (max 2 lần)
+  - Nếu fail sau 3 lần: skip Drive upload + Make.com, gửi QC alert email cho Harry
+  - Threshold: score ≥ 7 = pass; score < 7 = retry
+- **`send_qc_alert()`** thêm vào `send_email.py` — email đỏ với score/violations/folder path
+- Chi phí thêm: ~1–2 cent/lần chạy (1 GPT-4o-mini call; tối đa 3 nếu retry hết lần)
+
+### M05 Content Studio — Real Claude generator (venho-ai-studio)
+- Tạo `content_studio/generators/` — `claude_longform_generator()` gọi `claude-sonnet-5` tại `temperature=0`
+- 5 content types (blog/OTA/FAQ/email/website) mỗi type có JSON schema riêng gửi cho Claude
+- Longform builders nhận `generator_fn` optional — `None` → mock template cũ (423/423 tests pass)
+- Social posts không thay đổi — VenHoSocialManager xử lý end-to-end
+
+### VenHo OS — Fix STUDIO_DIR off-by-one (venho-os)
+- `venho-os/src/lib/studio/paths.ts`: đổi `../../03_AI_STUDIO` → `../03_AI_STUDIO`
+- Sau fix: DNA API trả 11 subjects, vault-search trả 14 results, single subject DNA load đúng
+- Đây là bug documented từ khi tách repo (2026-07-14), giờ mới fix
+
+---
+
+## 2026-07-28 — Fix vĩnh viễn email doanh thu gửi đôi + tắt cloud routine lỗi
+
+### Email gửi đôi — fix vĩnh viễn (Ven Hồ Hotel ops)
+- **Nguyên nhân gốc**: launchd local (`com.venhohotel.daily-revenue`) chạy song song GitHub Actions — cả 2 gửi email. `launchctl unload` (fix ngày 2026-07-15) chỉ hiệu lực trong session hiện tại, macOS auto-register lại plist sau login/reboot nên email đôi vẫn tiếp tục.
+- **Giải pháp vĩnh viễn**:
+  1. `launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.venhohotel.daily-revenue.plist` — eject hoàn toàn khỏi launchd
+  2. `mv ~/Library/LaunchAgents/com.venhohotel.daily-revenue.plist ~/Library/LaunchAgents/_disabled/` — ra khỏi auto-load directory (plist vẫn giữ để restore nếu cần)
+- Verify: `launchctl list | grep daily-revenue` trả về rỗng. GitHub Actions là nguồn duy nhất từ nay.
+
+### Cloud routine lỗi — tắt (Ven Hồ Hotel ops)
+- **Vấn đề**: Routine CCR `trig_01YVD8GP1HiyZQtKmmb8inbH` ("Ven Hồ — Báo Cáo Doanh Thu Hàng Ngày", tạo từ 2026-06-15) gửi thông báo lỗi 8h sáng hàng ngày vì cố kết nối tới `admin1.skyhotel.vn` từ môi trường Anthropic cloud — bị block bởi proxy policy (403).
+- **Giải pháp**: cập nhật `enabled: false` qua RemoteTrigger tool. Xóa hẳn: `https://claude.ai/code/routines` (phải làm thủ công, không xóa được qua tool).
+- GitHub Actions (`daily-revenue.yml`) chạy từ GitHub infrastructure — không bị proxy block, là nguồn scrape SkyHotel duy nhất hoạt động.
+
+---
+
+## 2026-07-15 — Fix email báo cáo doanh thu gửi đôi (attempt 1 — không đủ)
+
+- Chẩn đoán đúng: launchd local chạy song song GitHub Actions, lock file không chặn được.
+- Fix ban đầu `launchctl unload` không vĩnh viễn — xem entry 2026-07-28 cho fix thật.
+
 ## 2026-07-14 — Wiring OTA vào VENHO OS + tách dashboard sang repo `venho-os`
 
 - **Wiring UI**: `AgentsSection.tsx`/`OperationsSection.tsx` giờ gọi `getOtaAgentSnapshot()` thật (thêm `OtaAgentStatusCard.tsx` dùng chung) thay vì placeholder tĩnh — hiển thị 3 trạng thái `ok`/`not_configured`/`unreachable`, đã verify qua browser (`localhost:3000/os?section=agents|operations`), `npm run lint`/`build` sạch.

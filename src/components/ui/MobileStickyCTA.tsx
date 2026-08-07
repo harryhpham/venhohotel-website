@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useLang } from "@/lib/context/LangContext";
 import { siteContent } from "@/lib/data/content";
+import { bookingIntentPayload, contactPayload } from "@/lib/tracking/meta-events";
 
 declare global {
   interface Window {
@@ -16,7 +17,7 @@ function trackPhoneClick() {
     event_category: "contact",
     source: "mobile_sticky_cta",
   });
-  window.fbq?.("track", "Contact", { source: "mobile_sticky_cta" });
+  window.fbq?.("track", "Contact", contactPayload("phone", "mobile_sticky_cta"));
 }
 
 function trackBookingClick() {
@@ -24,7 +25,7 @@ function trackBookingClick() {
     event_category: "direct_booking",
     source: "mobile_sticky_cta",
   });
-  window.fbq?.("track", "Lead", { source: "mobile_sticky_cta" });
+  window.fbq?.("track", "ViewContent", bookingIntentPayload("mobile_sticky_cta"));
 }
 
 export default function MobileStickyCTA() {

@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useLang } from "@/lib/context/LangContext";
 import { siteContent } from "@/lib/data/content";
+import { contactPayload } from "@/lib/tracking/meta-events";
 
 declare global {
   interface Window {
@@ -18,12 +19,12 @@ function trackFacebookClick() {
 
 function trackPhoneClick() {
   window.gtag?.("event", "phone_click", { event_category: "contact" });
-  window.fbq?.("track", "Contact");
+  window.fbq?.("track", "Contact", contactPayload("phone", "footer"));
 }
 
 function trackZaloClick() {
   window.gtag?.("event", "zalo_click", { event_category: "contact" });
-  window.fbq?.("track", "Contact");
+  window.fbq?.("track", "Contact", contactPayload("zalo", "footer"));
 }
 
 export default function Footer() {

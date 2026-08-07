@@ -6,6 +6,8 @@ import Footer from "@/components/ui/Footer";
 import { useLang } from "@/lib/context/LangContext";
 import { siteContent } from "@/lib/data/content";
 import { agodaUrl, bookingUrl } from "@/lib/data/ota";
+import { contactPayload, leadPayload } from "@/lib/tracking/meta-events";
+import { currentAttribution } from "@/lib/tracking/attribution";
 
 declare global {
   interface Window {
@@ -46,7 +48,9 @@ export default function ContactClient() {
       const res = await fetch("/api/booking", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, source: "contact_page" }),
+        // currentAttribution() carries the ?utm_content=<publication_id> of
+        // the post this visit came from (see lib/tracking/attribution.ts).
+        body: JSON.stringify({ ...form, source: "contact_page", ...currentAttribution() }),
       });
 
       let data: { error?: string; success?: boolean } = {};
@@ -63,10 +67,7 @@ export default function ContactClient() {
           room_type: form.room || "not_selected",
         });
         trackPixel("Lead", {
-          content_name: form.room || "not_selected",
-          num_guests: form.guests || "0",
-          checkin: form.checkin || "",
-          checkout: form.checkout || "",
+          ...leadPayload("contact_page", form.room),
         });
       } else {
         setError(data.error || t.errorDefault);
@@ -105,7 +106,16 @@ export default function ContactClient() {
                           rel="noopener noreferrer"
                           onClick={item.track ? () => {
                             trackEvent(item.track, { event_category: "contact" });
-                            trackPixel(item.pixelEvent);
+                            if (item.pixelEvent === "Contact") {
+                              const channel = item.href?.startsWith("tel:")
+                                ? "phone"
+                                : item.href?.startsWith("mailto:")
+                                  ? "email"
+                                  : item.href?.includes("zalo")
+                                    ? "zalo"
+                                    : "messenger";
+                              trackPixel("Contact", contactPayload(channel, "contact_page"));
+                            }
                           } : undefined}
                           className="font-sans text-[#1A1A1A] hover:text-[#C9A84C] transition-colors"
                         >

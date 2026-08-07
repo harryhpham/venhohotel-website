@@ -1,6 +1,10 @@
 import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
 
+const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
+const RATE_LIMIT_MAX_REQUESTS = 5;
+const rateLimitBuckets = new Map<string, { count: number; resetAt: number }>();
+
 function escapeHtml(value: unknown) {
   return String(value ?? "")
     .replace(/&/g, "&amp;")
@@ -14,8 +18,38 @@ function normalizeText(value: unknown, maxLength = 500) {
   return String(value ?? "").replace(/[\r\n]+/g, " ").trim().slice(0, maxLength);
 }
 
+function getClientKey(req: NextRequest) {
+  const forwardedFor = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  return forwardedFor || req.headers.get("x-real-ip") || "unknown";
+}
+
+function isRateLimited(clientKey: string) {
+  const now = Date.now();
+  for (const [key, bucket] of rateLimitBuckets) {
+    if (bucket.resetAt <= now) {
+      rateLimitBuckets.delete(key);
+    }
+  }
+
+  const bucket = rateLimitBuckets.get(clientKey);
+  if (!bucket) {
+    rateLimitBuckets.set(clientKey, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return false;
+  }
+
+  bucket.count += 1;
+  return bucket.count > RATE_LIMIT_MAX_REQUESTS;
+}
+
 export async function POST(req: NextRequest) {
   try {
+    if (isRateLimited(getClientKey(req))) {
+      return NextResponse.json(
+        { error: "Bạn gửi quá nhiều yêu cầu. Vui lòng thử lại sau ít phút." },
+        { status: 429 }
+      );
+    }
+
     const body = await req.json();
     const company = normalizeText(body.company, 120);
 
@@ -39,6 +73,13 @@ export async function POST(req: NextRequest) {
     const guests = normalizeText(body.guests, 20);
     const note = normalizeText(body.note, 1200);
     const source = normalizeText(body.source, 80) || "booking_page";
+    // Campaign attribution captured on the landing page (see
+    // lib/tracking/attribution.ts). utm_content is the Growth Agent's
+    // publication_id, which is how an enquiry gets matched back to the exact
+    // post that produced it — `venho-analytics attribute` consumes this value.
+    const utmSource = normalizeText(body.utm_source, 120);
+    const utmMedium = normalizeText(body.utm_medium, 120);
+    const utmContent = normalizeText(body.utm_content, 120);
 
     // Validate bắt buộc
     if (!name || !phone) {
@@ -76,6 +117,9 @@ export async function POST(req: NextRequest) {
     const safeGuests = escapeHtml(guests);
     const safeNote = escapeHtml(note);
     const safeSource = escapeHtml(source);
+    const campaignLabel = [utmSource, utmMedium].filter(Boolean).join(" · ");
+    const safeCampaign = escapeHtml(campaignLabel);
+    const safeUtmContent = escapeHtml(utmContent);
 
     const formatDate = (d: string) => {
       if (!d) return "—";
@@ -194,6 +238,19 @@ export async function POST(req: NextRequest) {
                     <p style="margin:0;font-size:15px;color:#1A1A1A;">${safeSource}</p>
                   </td>
                 </tr>
+                ${
+                  utmContent || campaignLabel
+                    ? `<tr>
+                  <td style="padding:14px 0;border-bottom:1px solid #EDE8E0;vertical-align:top;">
+                    <p style="margin:0;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#999;">Bài Đăng Dẫn Đến</p>
+                  </td>
+                  <td style="padding:14px 0;border-bottom:1px solid #EDE8E0;vertical-align:top;">
+                    <p style="margin:0;font-size:15px;color:#1A1A1A;">${safeUtmContent || "—"}</p>
+                    ${campaignLabel ? `<p style="margin:4px 0 0;font-size:12px;color:#999;">${safeCampaign}</p>` : ""}
+                  </td>
+                </tr>`
+                    : ""
+                }
                 ${
                   note
                     ? `<tr>

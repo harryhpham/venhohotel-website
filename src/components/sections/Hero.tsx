@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useLang } from "@/lib/context/LangContext";
 import { siteContent } from "@/lib/data/content";
+import { bookingIntentPayload } from "@/lib/tracking/meta-events";
 
 declare global {
   interface Window {
@@ -38,7 +39,7 @@ export default function Hero() {
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <Link
             href="#booking"
-            onClick={() => window.fbq?.("track", "InitiateCheckout", { source: "hero_booking_button" })}
+            onClick={() => window.fbq?.("track", "ViewContent", bookingIntentPayload("hero_booking_button"))}
             className="inline-flex items-center justify-center px-7 py-3.5 bg-[#C9A84C] text-[#1A1A1A] font-sans font-semibold text-sm tracking-wide hover:bg-[#b8963d] transition-colors min-h-[44px]"
           >
             {c.cta_primary}

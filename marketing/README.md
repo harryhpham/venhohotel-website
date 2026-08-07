@@ -10,7 +10,7 @@
 | **Google Analytics GA4** | `ops/analytics/` | G-4242ESCGY7 — tracking, events |
 | **SEO** | `ops/seo/` | robots.ts, sitemap.ts, JSON-LD, metadata |
 | **Competitor Analysis** | `ops/competitor-analysis/` | 5 đối thủ khu Tây Hồ, Scheduled Agent |
-| **AI Agent Doanh Thu** | `ops/ai-agent/` | Playwright → SkyHotel PMS → email |
+| **AI Agent Doanh Thu** | `../venho-revenue-agent/` | Repo độc lập: Playwright → SkyHotel PMS → email |
 | **OTA** | `ops/agoda/` | Agoda + Booking.com deep links, UTM |
 
 ---
@@ -19,7 +19,7 @@
 
 - **Agoda:** 8.5/10 tổng thể · 9.2/10 vị trí (45 reviews)
 - **SEO:** robots.ts, sitemap.ts (9 URLs), JSON-LD Hotel + HotelRoom
-- **AI Agent:** launchd — chạy đúng kể cả khi Mac ngủ
+- **AI Agent:** GitHub Actions trong repo `venho-revenue-agent`; launchd local chỉ là backup
 
 ---
 
