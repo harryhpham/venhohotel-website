@@ -1,0 +1,48 @@
+{
+  "workspace": {
+    "name": "Ven Hồ Hotel",
+    "label": "Hotel Operations Workspace",
+    "lastSync": "08:42 ICT",
+    "user": "Hạnh Phạm"
+  },
+  "focus": {
+    "eyebrow": "Today's focus",
+    "objective": "Hoàn thiện content batch tuần này",
+    "priority": "Publish 3 bài social cho West Lake",
+    "milestone": "M02 Prompt → M03 Validate",
+    "nextAction": "Review prompt set",
+    "eta": "25 phút"
+  },
+  "currentWork": {
+    "title": "West Lake — July Content Batch",
+    "description": "Chuẩn hóa visual direction và caption cho tuần 3.",
+    "step": "2 / 5",
+    "progress": 40,
+    "status": "In progress",
+    "owner": "Creative Studio"
+  },
+  "needsReview": [
+    { "type": "Prompt", "title": "Sunrise balcony series", "source": "M02 Prompt", "age": "12 phút" },
+    { "type": "Image", "title": "Linh An — West Lake morning", "source": "M01 Knowledge", "age": "38 phút" },
+    { "type": "Caption", "title": "A quiet stay by the lake", "source": "A3 Creative", "age": "1 giờ" }
+  ],
+  "readyToPublish": [
+    { "platform": "Instagram", "title": "3 ways to slow down in West Lake", "status": "Ready" },
+    { "platform": "Facebook", "title": "Ven Hồ Sunday guide", "status": "Ready" },
+    { "platform": "Google Business", "title": "A calm morning at Ven Hồ", "status": "Scheduled" }
+  ],
+  "quickActions": [
+    { "label": "Build DNA", "description": "Brand knowledge" },
+    { "label": "Generate Prompt", "description": "Create next asset" },
+    { "label": "Validate", "description": "Check evidence" },
+    { "label": "Publish", "description": "Open publishing" },
+    { "label": "Video", "description": "Continue storyboard" },
+    { "label": "Automation", "description": "Review guardrails" }
+  ],
+  "activity": [
+    { "time": "08:39", "event": "Prompt set updated", "module": "M02 Prompt" },
+    { "time": "08:16", "event": "3 assets passed validation", "module": "M03 Validate" },
+    { "time": "07:52", "event": "New review request created", "module": "A3 Creative" },
+    { "time": "Yesterday", "event": "Content batch moved to in progress", "module": "Execution" }
+  ]
+}

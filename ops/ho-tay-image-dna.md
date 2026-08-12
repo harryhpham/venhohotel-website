@@ -60,8 +60,12 @@ tropical urban greenery
 ## 5. Street & Urban Elements
 
 ```
-Green painted iron lamp posts with curved arm,
-green metal railing along the lakeside promenade (Nguyen Dinh Thi),
+Green painted iron lamp posts with curved arm (set back by the road, none along the railing itself),
+ivory-white painted steel railing along the lakeside walk (Nguyen Dinh Thi):
+thick rounded top handrail, about seven thinner horizontal tube rails,
+flat S-curved ivory-white steel blade posts splayed at the base, bolted to a low concrete kerb,
+whole railing leaning slightly out over the water, weathered paint with rust freckles,
+no vertical pickets, no triangular truss frames, no stone pillars,
 wide clean asphalt road with white lane markings,
 tiled sidewalk/promenade, red-brick curb edge,
 low-rise 3–5 story buildings visible in background,
@@ -95,7 +99,8 @@ no crowds — unhurried, calm neighborhood feeling
 | Bầu trời | `#C8D8E4` — xanh nhạt hazy (sáng) / `#87CEEB` (chiều nắng) |
 | Cây xanh | `#4A7C3F` đến `#6FAE4A` — xanh nhiệt đới tươi |
 | Hoa phượng | `#CC2200` — đỏ rực, không cam |
-| Cột đèn/rào | `#2E6B3E` — xanh lá đậm |
+| Cột đèn | `#2E6B3E` — xanh lá đậm |
+| Lan can ven hồ | `#E8E6E0` — trắng ngà sơn thép, bạc màu, gỉ lấm tấm ở khớp nối |
 | Mặt đường | `#7A7A7A` — xám trung tính |
 | Vỉa hè | `#C8B89A` — gạch be/xám nhạt |
 | Xa skyline | `#A0B0B8` — xám xanh mờ (haze) |
@@ -109,6 +114,7 @@ no crowds — unhurried, calm neighborhood feeling
 - ❌ Kiến trúc hiện đại cao tầng sát hồ — khu này vẫn thấp tầng
 - ❌ Đường phố quá sạch bóng, trống rỗng hoàn toàn — cần có xe, người
 - ❌ Cảnh "postcard" generic Đông Nam Á — phải đặc trưng Tây Hồ
+- ❌ **Lan can xanh lá / trụ đá hồng / thanh dọc kiểu song sắt** — đường đã cải tạo, lan can hiện tại là thép sơn trắng ngà, thanh ngang, trụ dạng lưỡi cong (ảnh thật Harry chụp 12/08/2026: `venho-social-content-agent/assets/Westlake-railing-street.jpg` + `Westlake-railing-closeup.jpg`)
 - ❌ Ánh nắng quá gay gắt, bóng đổ cực đoan — Hà Nội có haze lọc sáng
 
 ---
@@ -122,7 +128,7 @@ Copy đoạn này vào đầu BẤT KỲ prompt ảnh nào liên quan đến H�
 Muted blue-green calm lake water (jade-teal tone), wide open lake view,
 low-rise cityscape across the water. Warm tropical atmosphere, soft Hanoi haze.
 Wide tree-lined boulevard, large mature tropical trees with broad spreading canopy,
-green lamp posts, green metal lakeshore railing.
+ivory-white painted steel lakeshore railing (leaning out over the water, flat S-curved blade posts), green lamp posts set back by the road.
 Authentic Vietnamese daily life — locals on motorbikes, flower vendor bicycle,
 person sitting on small stool facing the lake. Low-rise neighborhood, no skyscrapers.
 Real, unhurried, quietly beautiful. Not generic Asian city. Not tourist postcard.
